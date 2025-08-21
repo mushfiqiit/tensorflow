@@ -73,6 +73,9 @@ LIBS=(-L"$LIBDIR" -lprotobuf)
 HARNESS_BC="$PWD/harness.bc"
 IMPL_BC="$PWD/tf_tensor.bc"
 
+TENSOR_CC="$ROOT/tensorflow/core/framework/tensor.cc"
+TENSOR_BC="$PWD/tensor.bc"
+
 while (( round < MAX_ROUNDS )); do
   echo -e "\n=== ROUND $round =========================================="
 
@@ -84,9 +87,13 @@ while (( round < MAX_ROUNDS )); do
   $CLANG -emit-llvm -c "${CFLAGS[@]}" "${INCLUDES[@]}" "$SRC" -o "$HARNESS_BC" 2>> clang.err
   status2=$?
 
-  if (( status1 == 0 && status2 == 0 )); then
-    echo "🔗 Linking $HARNESS_BC + $IMPL_BC"
-    $LINK "$HARNESS_BC" "$IMPL_BC" -o "$OUT"
+  echo "🛠️ Compiling tensor.cc (provides TensorBuffer vtable/typeinfo)"
+  $CLANG -emit-llvm -c "${CFLAGS[@]}" "${INCLUDES[@]}" "$TENSOR_CC" -o "$TENSOR_BC" 2>> clang.err
+  status3=$?
+
+  if (( status1 == 0 && status2 == 0 && status3==0)); then
+    echo "🔗 Linking $HARNESS_BC + $IMPL_BC + $TENSOR_BC"
+    $LINK "$HARNESS_BC" "$IMPL_BC" "$TENSOR_BC" -o "$OUT"
     echo "✅ Success! Bitcode written to $OUT"
     rm -f clang.err
     exit 0

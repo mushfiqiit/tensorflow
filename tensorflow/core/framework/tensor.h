@@ -90,7 +90,7 @@ class TensorBuffer : public core::RefCounted {
 
   /// \brief Fills metadata about the allocation into the proto.
   virtual void FillAllocationDescription(
-      AllocationDescription* proto) const = 0;
+      AllocationDescription* /*proto*/ ) const = 0;
 
   virtual bool GetAllocatedBytes(size_t* out_bytes) const;
 
@@ -197,9 +197,9 @@ class Tensor {
   // scalar tensor in host memory.
   struct host_scalar_tag {};
 
-  class HostScalarTensorBufferBase;
+  /* class HostScalarTensorBufferBase;
   template <typename T>
-  struct ValueAndTensorBuffer;
+  struct ValueAndTensorBuffer; */
 
   // Creates a tensor with the given scalar `value` in CPU memory.
   template <typename T>
@@ -1018,7 +1018,7 @@ inline Tensor::Tensor(Tensor&& other)
   other.buf_ = nullptr;
 }
 
-class Tensor::HostScalarTensorBufferBase : public TensorBuffer {
+/* class Tensor::HostScalarTensorBufferBase : public TensorBuffer {
  public:
   using TensorBuffer::TensorBuffer;
   bool GetAllocatedBytes(size_t* out_bytes) const final;
@@ -1057,10 +1057,10 @@ struct Tensor::ValueAndTensorBuffer {
 
   T value;
   HostScalarTensorBuffer tensor_buffer;
-};
+}; */
 
 /* static */
-template <typename T>
+/* template <typename T>
 void Tensor::ValueAndTensorBuffer<T>::HostScalarTensorBuffer::operator delete(
     void* ptr) {
   // Use a dummy object to compute to offset of
@@ -1078,9 +1078,9 @@ void Tensor::ValueAndTensorBuffer<T>::HostScalarTensorBuffer::operator delete(
                     reinterpret_cast<intptr_t>(dummy_object);
 
   port::AlignedFree(static_cast<char*>(ptr) - offset);
-}
+} */
 
-template <typename T>
+/* template <typename T>
 Tensor::Tensor(T value, host_scalar_tag tag) {
   auto* value_and_buf = static_cast<Tensor::ValueAndTensorBuffer<T>*>(
       port::AlignedMalloc(sizeof(typename Tensor::ValueAndTensorBuffer<T>),
@@ -1091,7 +1091,7 @@ Tensor::Tensor(T value, host_scalar_tag tag) {
           value_and_buf);
   buf_ = &value_and_buf->tensor_buffer;
   set_dtype(DataTypeToEnum<T>::value);
-}
+} */
 
 inline Tensor& Tensor::operator=(Tensor&& other) {
   // Avoid self-assignment, since we might destroy our underlying buffer.

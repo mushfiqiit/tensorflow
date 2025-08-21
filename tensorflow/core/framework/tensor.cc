@@ -37,10 +37,10 @@ limitations under the License.
 #include <type_traits>
 #include <utility>
 
-#include "absl/log/check.h"
+/* #include "absl/log/check.h"
 #include "absl/strings/escaping.h"
 #include "absl/strings/str_cat.h"
-#include "absl/strings/string_view.h"
+#include "absl/strings/string_view.h" */
 #include "xla/tsl/util/byte_swap_array.h"
 #include "tensorflow/core/framework/allocation_description.pb.h"
 #include "tensorflow/core/framework/log_memory.h"
@@ -54,9 +54,9 @@ limitations under the License.
 #include "tensorflow/core/framework/types.h"
 #include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/framework/variant.h"
-#include "tensorflow/core/framework/variant_encode_decode.h"
-#include "tensorflow/core/framework/variant_op_registry.h"
-#include "tensorflow/core/framework/variant_tensor_data.h"
+//#include "tensorflow/core/framework/variant_encode_decode.h"
+//#include "tensorflow/core/framework/variant_op_registry.h"
+//#include "tensorflow/core/framework/variant_tensor_data.h"
 #include "tensorflow/core/lib/core/coding.h"
 #include "tensorflow/core/lib/core/errors.h"
 #include "tensorflow/core/lib/core/status.h"
@@ -65,7 +65,7 @@ limitations under the License.
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/numbers.h"
-#include "tensorflow/core/platform/protobuf.h"
+//#include "tensorflow/core/platform/protobuf.h"
 #include "tensorflow/core/platform/tensor_coding.h"
 #include "tensorflow/core/platform/types.h"
 #include "tsl/platform/ml_dtypes.h"
@@ -79,7 +79,7 @@ namespace tensorflow {
 // NOTE(mrry): The corresponding "copy function" registrations can be found in
 // ../common_runtime/copy_tensor.cc (due to dependencies on other common_runtime
 // code).
-REGISTER_UNARY_VARIANT_DECODE_FUNCTION(Tensor, "tensorflow::Tensor");
+//REGISTER_UNARY_VARIANT_DECODE_FUNCTION(Tensor, "tensorflow::Tensor");
 
 bool TensorBuffer::GetAllocatedBytes(size_t* out_bytes) const {
   AllocationDescription allocation_description;
@@ -95,7 +95,7 @@ bool TensorBuffer::GetAllocatedBytes(size_t* out_bytes) const {
 namespace {
 
 // An un-templated base class for Buffer.
-class BufferBase : public TensorBuffer {
+/*  class BufferBase : public TensorBuffer {
  public:
   explicit BufferBase(Allocator* alloc, void* data_ptr)
       : TensorBuffer(data_ptr), alloc_(alloc) {}
@@ -142,10 +142,10 @@ class BufferBase : public TensorBuffer {
   }
 
   Allocator* const alloc_;
-};
+}; */
 
 // Typed ref-counted buffer: T[n].
-template <typename T>
+/* template <typename T>
 class Buffer : public BufferBase {
  public:
   Buffer(Allocator* a, int64_t n);
@@ -589,9 +589,9 @@ template <typename T>
 Buffer<T>::~Buffer() {
   if (data()) {
     if (MemoryLoggingEnabled()) {
-      RecordDeallocation();
+      //RecordDeallocation();
     }
-    TypedAllocator::Deallocate<T>(alloc_, static_cast<T*>(data()), elem_);
+    //TypedAllocator::Deallocate<T>(alloc_, static_cast<T*>(data()), elem_);
   }
 }
 
@@ -683,12 +683,12 @@ template <>
 TensorBuffer* FromProtoField<uint4>(Allocator* a, const TensorProto& in,
                                     int64_t n) {
   return Int4OrInt2FromProtoField<uint4>(a, in, n);
-}
+} */
 
 // Separate implementation for `ResourceHandle` to handle the case when the
 // proto for the resource is invalid. See `resource_handle.h` constructor and
 // static factory builder.
-template <>
+/* template <>
 TensorBuffer* FromProtoField<ResourceHandle>(Allocator* a,
                                              const TensorProto& in, int64_t n) {
   CHECK_GT(n, 0);
@@ -723,9 +723,9 @@ TensorBuffer* FromProtoField<ResourceHandle>(Allocator* a,
     }
   }
   return buf;
-}
+} */
 
-template <>
+/* template <>
 TensorBuffer* FromProtoField<Variant>(Allocator* a, const TensorProto& in,
                                       int64_t n) {
   CHECK_GT(n, 0);
@@ -760,12 +760,12 @@ TensorBuffer* FromProtoField<Variant>(Allocator* a, const TensorProto& in,
     }
   }
   return buf;
-}
+} */
 
 // fp16 and bfloat16 are opaque to the protobuf, so we deserialize these
 // identical to uint16 but with data stored in half_val instead of int_val (ie.,
 // we don't use ProtoHelper<uint16>).
-template <>
+/* template <>
 TensorBuffer* FromProtoField<Eigen::half>(Allocator* a, const TensorProto& in,
                                           int64_t n) {
   CHECK_GT(n, 0);
@@ -787,9 +787,9 @@ TensorBuffer* FromProtoField<Eigen::half>(Allocator* a, const TensorProto& in,
     std::fill_n(data, n, 0);
   }
   return buf;
-}
+} */
 
-template <>
+/* template <>
 TensorBuffer* FromProtoField<bfloat16>(Allocator* a, const TensorProto& in,
                                        int64_t n) {
   CHECK_GT(n, 0);
@@ -811,11 +811,11 @@ TensorBuffer* FromProtoField<bfloat16>(Allocator* a, const TensorProto& in,
     std::fill_n(data, n, 0);
   }
   return buf;
-}
+} */
 
 // Copies T[n] stored in the buffer "in" into the repeated field in
 // "out" corresponding to type T.
-template <typename T>
+/* template <typename T>
 void ToProtoField(const TensorBuffer& in, int64_t n, TensorProto* out) {
   const T* data = in.base<const T>();
   // NOTE: T may not the same as
@@ -831,7 +831,7 @@ void RefIfNonNull(core::RefCounted* buf) {
 
 void UnrefIfNonNull(core::RefCounted* buf) {
   if (buf) buf->Unref();
-}
+} */
 
 }  // end namespace
 
@@ -840,17 +840,17 @@ Tensor::Tensor() : Tensor(DT_FLOAT) {}
 // Note: TensorShape has a valid constructor that takes DataType.
 Tensor::Tensor(DataType type) : shape_(type), buf_(nullptr) { set_dtype(type); }
 
-Tensor::Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
+/* Tensor::Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
     : shape_(shape), buf_(buf) {
   set_dtype(type);
   RefIfNonNull(buf);
-}
+} */
 
-Tensor::Tensor(DataType type, TensorShape shape,
+/* Tensor::Tensor(DataType type, TensorShape shape,
                core::RefCountPtr<TensorBuffer> buf)
     : shape_(std::move(shape)), buf_(buf.release()) {
   set_dtype(type);
-}
+} */
 
 bool Tensor::IsInitialized() const {
   return (buf_ != nullptr && buf_->data() != nullptr) ||
@@ -875,7 +875,7 @@ void Tensor::CheckIsAlignedAndSingleElement() const {
   CHECK_EQ(1, NumElements()) << "Must have a one element tensor";
 }
 
-Tensor::~Tensor() { UnrefIfNonNull(buf_); }
+/* Tensor::~Tensor() { UnrefIfNonNull(buf_); } */
 
 std::ostream& operator<<(std::ostream& out, const Tensor& tensor) {
   // The default is to show 3 elements, but this is often insufficient for
@@ -884,7 +884,7 @@ std::ostream& operator<<(std::ostream& out, const Tensor& tensor) {
   return out;
 }
 
-absl::Status Tensor::BitcastFrom(const Tensor& other, DataType dtype,
+/* absl::Status Tensor::BitcastFrom(const Tensor& other, DataType dtype,
                                  const TensorShape& shape) {
   int in_size = DataTypeSize(other.dtype());
   int out_size = DataTypeSize(dtype);
@@ -919,12 +919,12 @@ absl::Status Tensor::BitcastFrom(const Tensor& other, DataType dtype,
     }
   }
   return absl::OkStatus();
-}
+} */
 
 // Notice that buf_ either points to a regular TensorBuffer or a SubBuffer.
 // For the latter case, we have to make sure that the refcount is
 // one both for the SubBuffer _and_ the underlying TensorBuffer.
-bool Tensor::RefCountIsOne() const {
+/* bool Tensor::RefCountIsOne() const {
   return buf_ != nullptr && buf_->RefCountIsOne() &&
          buf_->root_buffer()->RefCountIsOne() && buf_->OwnsMemory();
 }
@@ -935,7 +935,7 @@ int Tensor::RefCount() const {
     return -1;
   }
   return buf_->RefCount();
-}
+} */
 
 // The macro CASES() expands to a switch statement conditioned on
 // TYPE_ENUM. Each case expands the STMTS after a typedef for T.
@@ -992,7 +992,7 @@ int Tensor::RefCount() const {
   CASES_WITH_DEFAULT(TYPE_ENUM, STMTS, LOG(FATAL) << "Type not set"; \
                      , LOG(FATAL) << "Unexpected type: " << TYPE_ENUM;)
 
-Tensor::Tensor(Allocator* a, DataType type, const TensorShape& shape)
+/* Tensor::Tensor(Allocator* a, DataType type, const TensorShape& shape)
     : shape_(shape), buf_(nullptr) {
   set_dtype(type);
   CHECK_NOTNULL(a);
@@ -1003,9 +1003,9 @@ Tensor::Tensor(Allocator* a, DataType type, const TensorShape& shape)
     LogMemory::RecordTensorAllocation("Unknown", LogMemory::UNKNOWN_STEP_ID,
                                       *this);
   }
-}
+} */
 
-Tensor::Tensor(Allocator* a, DataType type, const TensorShape& shape,
+/* Tensor::Tensor(Allocator* a, DataType type, const TensorShape& shape,
                const AllocationAttributes& allocation_attr)
     : shape_(shape), buf_(nullptr) {
   set_dtype(type);
@@ -1018,9 +1018,9 @@ Tensor::Tensor(Allocator* a, DataType type, const TensorShape& shape,
     LogMemory::RecordTensorAllocation("Unknown (with attributes)",
                                       LogMemory::UNKNOWN_STEP_ID, *this);
   }
-}
+} */
 
-absl::Status Tensor::BuildTensor(DataType type, const TensorShape& shape,
+/* absl::Status Tensor::BuildTensor(DataType type, const TensorShape& shape,
                                  Tensor* out_tensor) {
   // Avoid crashes due to invalid or unsupported types.
   CASES_WITH_DEFAULT(
@@ -1028,7 +1028,7 @@ absl::Status Tensor::BuildTensor(DataType type, const TensorShape& shape,
       return errors::InvalidArgument("Unexpected type: ", DataType_Name(type)));
   *out_tensor = Tensor(type, shape);
   return absl::OkStatus();
-}
+} */
 
 // NOTE(mrry): The default allocator for a Tensor (when none is specified) is
 // the default CPU allocator for NUMA zone 0. Accessing that currently involves
@@ -1038,13 +1038,13 @@ absl::Status Tensor::BuildTensor(DataType type, const TensorShape& shape,
 // Note also that it would be better if all Tensor allocations required the user
 // to specify an allocator, for purposes of accounting, etc. However, the
 // default allocator is widely used throughout the codebase and in client code.
-static Allocator* get_default_cpu_allocator() {
+/* static Allocator* get_default_cpu_allocator() {
   static Allocator* default_cpu_allocator =
       cpu_allocator(tsl::port::kNUMANoAffinity);
   return default_cpu_allocator;
-}
+} */
 
-Tensor::Tensor(DataType type, const TensorShape& shape)
+/* Tensor::Tensor(DataType type, const TensorShape& shape)
     : Tensor(get_default_cpu_allocator(), type, shape) {}
 
 bool Tensor::HostScalarTensorBufferBase::GetAllocatedBytes(
@@ -1052,9 +1052,9 @@ bool Tensor::HostScalarTensorBufferBase::GetAllocatedBytes(
   // `this->FillAllocationDescription()` never sets allocated bytes information,
   // so we can short-circuit the construction of an `AllocationDescription`.
   return false;
-}
+} */
 
-void Tensor::HostScalarTensorBufferBase::FillAllocationDescription(
+/* void Tensor::HostScalarTensorBufferBase::FillAllocationDescription(
     AllocationDescription* proto) const {
   proto->set_requested_bytes(size());
   proto->set_allocator_name("HostScalarTensorBuffer");
@@ -1190,9 +1190,9 @@ bool Tensor::FromProto(Allocator* a, const TensorProto& proto) {
                                       LogMemory::UNKNOWN_STEP_ID, *this);
   }
   return true;
-}
+} */
 
-void Tensor::AsProtoField(TensorProto* proto) const {
+/* void Tensor::AsProtoField(TensorProto* proto) const {
   proto->Clear();
   shape_.AsProto(proto->mutable_tensor_shape());
   proto->set_dtype(dtype());
@@ -1420,9 +1420,9 @@ string SummarizeArrayInternal(int64_t limit, int64_t num_elts,
   }
 
   return ret;
-}
+} */
 
-template <typename T>
+/* template <typename T>
 string SummarizeArray(int64_t limit, int64_t num_elts,
                       const TensorShape& tensor_shape, const char* data,
                       const bool print_v2) {
@@ -1625,6 +1625,6 @@ absl::InlinedVector<int64_t, 4UL> Tensor::ComputeFlatOuterDims(
     out_dims[num_out_dims - 1] *= orig[in_dim];
   }
   return out_dims;
-}
+} */
 
 }  // namespace tensorflow

@@ -59,10 +59,10 @@ class TF_ManagedBuffer : public tensorflow::TensorBuffer {
   size_t size() const override { return len_; }
   TensorBuffer* root_buffer() override { return this; }
   void FillAllocationDescription(
-      tensorflow::AllocationDescription* proto) const override {
-    int64_t rb = size();
+      tensorflow::AllocationDescription* /*proto*/ ) const override {
+    /* int64_t rb = size();
     proto->set_requested_bytes(rb);
-    proto->set_allocator_name(tensorflow::cpu_allocator()->Name());
+    proto->set_allocator_name(tensorflow::cpu_allocator()->Name()); */
   }
 
   bool OwnsMemory() const override { return owns_memory_; }

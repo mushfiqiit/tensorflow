@@ -1,0 +1,6 @@
+Error: failed external call: _ZN10tensorflow15TensorShapeBaseINS_11TensorShapeEEC2EN4absl12lts_202501274SpanIKlEE
+Stack: 
+	#000002225 in _ZN10tensorflow11TensorShapeCI2NS_15TensorShapeBaseIS0_EEEN4absl12lts_202501274SpanIKlEE(this=138626766663680, .coerce0=138946741727232, .coerce1=2)
+	#100001932 in _ZN12_GLOBAL__N_112CreateTensorEP16TF_ManagedBuffer11TF_DataTypePKlim(buf=139101360549888, dtype=1, dims=138616029245440, num_dims=2, len=16)
+	#200004367 in TF_NewTensor(dtype=1, dims=138616029245440, num_dims=2, data=138963921596416, len=16, deallocator=139825599410176, deallocator_arg=0)
+	#300000516 in main()

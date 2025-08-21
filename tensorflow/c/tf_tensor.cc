@@ -176,7 +176,7 @@ int64_t TF_TensorElementCount(const TF_Tensor* t) {
   return result;
 }
 
-void TF_TensorBitcastFrom(const TF_Tensor* from, TF_DataType type,
+/* void TF_TensorBitcastFrom(const TF_Tensor* from, TF_DataType type,
                           TF_Tensor* to, const int64_t* new_dims,
                           int num_new_dims, TF_Status* status) {
   TF_SetStatus(status, TF_OK, "");
@@ -187,7 +187,7 @@ void TF_TensorBitcastFrom(const TF_Tensor* from, TF_DataType type,
                   from->tensor),
               static_cast<tensorflow::DataType>(type), new_dims, num_new_dims));
   tsl::Set_TF_Status_from_Status(status, cc_status);
-}
+} */
 
 #endif  // LIBTPU_EXCLUDE_C_API_IMPL
 
@@ -249,7 +249,7 @@ void TensorInterface::SetShape(const int64_t* dims, int num_dims) {
   tensor_.set_shape(s);
 }
 
-absl::Status TensorInterface::BitcastFrom(const TensorInterface& from,
+/* absl::Status TensorInterface::BitcastFrom(const TensorInterface& from,
                                           DataType type,
                                           const int64_t* new_dims,
                                           int num_new_dims) {
@@ -258,13 +258,13 @@ absl::Status TensorInterface::BitcastFrom(const TensorInterface& from,
     TF_RETURN_IF_ERROR(s.AddDimWithStatus(new_dims[i]));
   }
   return tensor_.BitcastFrom(from.tensor_, type, s);
-}
+} */
 
-absl::Status TensorInterface::FromProto(const tensorflow::TensorProto& from) {
+/* absl::Status TensorInterface::FromProto(const tensorflow::TensorProto& from) {
   bool success = tensor_.FromProto(from);
   if (success) return absl::OkStatus();
   return errors::InvalidArgument("Unparseable tensor proto");
-}
+} */
 
 }  // namespace tensorflow
 
@@ -296,7 +296,7 @@ static TF_Tensor* EmptyTensor(TF_DataType dtype,
 
 namespace tensorflow {
 
-AbstractTensorInterface* TensorInterfaceFromTensor(const Tensor& src,
+/* AbstractTensorInterface* TensorInterfaceFromTensor(const Tensor& src,
                                                    absl::Status* status) {
   *status = absl::OkStatus();
   if (!src.IsInitialized()) {
@@ -317,15 +317,15 @@ AbstractTensorInterface* TensorInterfaceFromTensor(const Tensor& src,
     return nullptr;
   }
   return new tensorflow::TensorInterface(std::move(tensor));
-}
+} */
 
 // Non-static for testing.
-TF_Tensor* TF_TensorFromTensor(const tensorflow::Tensor& src,
+/* TF_Tensor* TF_TensorFromTensor(const tensorflow::Tensor& src,
                                absl::Status* status) {
   return new TF_Tensor{TensorInterfaceFromTensor(src, status)};
-}
+} */
 
-TF_Tensor* TF_TensorFromTensorShallow(const tensorflow::Tensor& src,
+/* TF_Tensor* TF_TensorFromTensorShallow(const tensorflow::Tensor& src,
                                       absl::Status* status) {
   *status = absl::OkStatus();
   if (!src.IsInitialized()) {
@@ -337,17 +337,17 @@ TF_Tensor* TF_TensorFromTensorShallow(const tensorflow::Tensor& src,
     return EmptyTensor(static_cast<TF_DataType>(src.dtype()), src.shape());
   }
   return new TF_Tensor{new tensorflow::TensorInterface(src)};
-}
+} */
 
-absl::Status TF_TensorToTensor(const TF_Tensor* src, Tensor* dst) {
+/* absl::Status TF_TensorToTensor(const TF_Tensor* src, Tensor* dst) {
   return tensorflow::down_cast<const tensorflow::TensorInterface*>(src->tensor)
       ->ToTensor(dst);
-}
+} */
 
-absl::Status TensorInterface::ToTensor(tensorflow::Tensor* dst) const {
+/* absl::Status TensorInterface::ToTensor(tensorflow::Tensor* dst) const {
   *dst = tensor_;
   return absl::OkStatus();
-}
+} */
 
 bool TensorInterface::IsAligned() const { return tensor_.IsAligned(); }
 
