@@ -19,11 +19,11 @@ limitations under the License.
 #include "tensorflow/core/platform/platform.h"
 #include "tensorflow/core/platform/thread_annotations.h"
 #include "tensorflow/core/platform/types.h"
-#include "tsl/platform/mutex.h"
+//#include "tsl/platform/mutex.h"
 
 namespace tensorflow {
 
-using tsl::Condition;
+/* using tsl::Condition;
 using tsl::condition_variable;
 using tsl::ConditionResult;
 using tsl::kCond_MaybeNotified;
@@ -33,7 +33,7 @@ using tsl::LinkerInitialized;
 using tsl::mutex;
 using tsl::mutex_lock;
 using tsl::tf_shared_lock;
-using tsl::WaitForMilliseconds;
+using tsl::WaitForMilliseconds; */
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_PLATFORM_MUTEX_H_

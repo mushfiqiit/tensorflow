@@ -20,9 +20,9 @@ limitations under the License.
 #include <map>
 #include <memory>
 
-#include "xla/tsl/platform/logging.h"
-#include "tsl/platform/mutex.h"
-#include "tsl/platform/thread_annotations.h"
+//#include "xla/tsl/platform/logging.h"
+//#include "tsl/platform/mutex.h"
+//#include "tsl/platform/thread_annotations.h"
 
 namespace tsl {
 namespace core {
@@ -78,7 +78,7 @@ class RefCounted {
 };
 
 // A deleter class to form a std::unique_ptr that unrefs objects.
-struct RefCountDeleter {
+/* struct RefCountDeleter {
   void operator()(const RefCounted* o) const { o->Unref(); }
 };
 
@@ -347,7 +347,7 @@ inline void RefCounted::NotifyDeleted() const {}
 
 inline bool RefCounted::RefCountIsOne() const {
   return (ref_.load(std::memory_order_acquire) == 1);
-}
+} */
 
 }  // namespace core
 }  // namespace tsl

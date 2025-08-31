@@ -1,0 +1,7 @@
+Error: failed external call: _ZNK10tensorflow4core10RefCounted3RefEv
+Stack: 
+	#000004189 in _ZN10tensorflow12_GLOBAL__N_112RefIfNonNullEPNS_4core10RefCountedE(buf=138978687545344)
+	#100004119 in _ZN10tensorflow6TensorC2E8DataTypeRKNS_11TensorShapeEPNS_12TensorBufferE(this=138510536110080, type=1, shape=138499798691840, buf=138978687545344)
+	#200001484 in _ZN12_GLOBAL__N_112CreateTensorEP16TF_ManagedBuffer11TF_DataTypePKlim(buf=138978687545344, dtype=1, dims=138493356240896, num_dims=2, len=16)
+	#300003774 in TF_NewTensor(dtype=1, dims=138493356240896, num_dims=2, data=138841248591872, len=16, deallocator=139702926405632, deallocator_arg=0)
+	#400000445 in main()

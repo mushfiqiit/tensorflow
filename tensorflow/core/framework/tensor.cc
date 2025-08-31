@@ -41,34 +41,34 @@ limitations under the License.
 #include "absl/strings/escaping.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h" */
-#include "xla/tsl/util/byte_swap_array.h"
-#include "tensorflow/core/framework/allocation_description.pb.h"
-#include "tensorflow/core/framework/log_memory.h"
-#include "tensorflow/core/framework/resource_handle.h"
-#include "tensorflow/core/framework/resource_handle.pb.h"
-#include "tensorflow/core/framework/tensor.pb.h"
-#include "tensorflow/core/framework/tensor_description.pb.h"
-#include "tensorflow/core/framework/tensor_util.h"
-#include "tensorflow/core/framework/type_traits.h"
-#include "tensorflow/core/framework/typed_allocator.h"
-#include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/framework/types.pb.h"
-#include "tensorflow/core/framework/variant.h"
+//#include "xla/tsl/util/byte_swap_array.h"
+//#include "tensorflow/core/framework/allocation_description.pb.h"
+//#include "tensorflow/core/framework/log_memory.h"
+//#include "tensorflow/core/framework/resource_handle.h"
+//#include "tensorflow/core/framework/resource_handle.pb.h"
+//#include "tensorflow/core/framework/tensor.pb.h"
+//#include "tensorflow/core/framework/tensor_description.pb.h"
+//#include "tensorflow/core/framework/tensor_util.h"
+//#include "tensorflow/core/framework/type_traits.h"
+//#include "tensorflow/core/framework/typed_allocator.h"
+//#include "tensorflow/core/framework/types.h"
+//#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/variant.h"
 //#include "tensorflow/core/framework/variant_encode_decode.h"
 //#include "tensorflow/core/framework/variant_op_registry.h"
 //#include "tensorflow/core/framework/variant_tensor_data.h"
-#include "tensorflow/core/lib/core/coding.h"
-#include "tensorflow/core/lib/core/errors.h"
-#include "tensorflow/core/lib/core/status.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
-#include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/logging.h"
-#include "tensorflow/core/platform/macros.h"
-#include "tensorflow/core/platform/numbers.h"
+//#include "tensorflow/core/lib/core/coding.h"
+//#include "tensorflow/core/lib/core/errors.h"
+//#include "tensorflow/core/lib/core/status.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/platform/errors.h"
+//#include "tensorflow/core/platform/logging.h"
+//#include "tensorflow/core/platform/macros.h"
+//#include "tensorflow/core/platform/numbers.h"
 //#include "tensorflow/core/platform/protobuf.h"
-#include "tensorflow/core/platform/tensor_coding.h"
-#include "tensorflow/core/platform/types.h"
-#include "tsl/platform/ml_dtypes.h"
+//#include "tensorflow/core/platform/tensor_coding.h"
+//#include "tensorflow/core/platform/types.h"
+//#include "tsl/platform/ml_dtypes.h"
 
 namespace tensorflow {
 
@@ -82,14 +82,15 @@ namespace tensorflow {
 //REGISTER_UNARY_VARIANT_DECODE_FUNCTION(Tensor, "tensorflow::Tensor");
 
 bool TensorBuffer::GetAllocatedBytes(size_t* out_bytes) const {
-  AllocationDescription allocation_description;
+  /* AllocationDescription allocation_description;
   FillAllocationDescription(&allocation_description);
   if (allocation_description.allocated_bytes() > 0) {
     *out_bytes = allocation_description.allocated_bytes();
     return true;
   } else {
     return false;
-  }
+  } */
+ return true;
 }
 
 namespace {
@@ -823,7 +824,7 @@ void ToProtoField(const TensorBuffer& in, int64_t n, TensorProto* out) {
   // ProtoHelper<T>::FieldType::value_type==int32.  If performance is
   // critical, we can specialize T=float and do memcpy directly.
   ProtoHelper<T>::Fill(data, n, out);
-}
+} */
 
 void RefIfNonNull(core::RefCounted* buf) {
   if (buf) buf->Ref();
@@ -831,20 +832,20 @@ void RefIfNonNull(core::RefCounted* buf) {
 
 void UnrefIfNonNull(core::RefCounted* buf) {
   if (buf) buf->Unref();
-} */
+}
 
 }  // end namespace
 
-Tensor::Tensor() : Tensor(DT_FLOAT) {}
+/* Tensor::Tensor() : Tensor(DT_FLOAT) {} */
 
 // Note: TensorShape has a valid constructor that takes DataType.
-Tensor::Tensor(DataType type) : shape_(type), buf_(nullptr) { set_dtype(type); }
+/* Tensor::Tensor(DataType type) : shape_(type), buf_(nullptr) { set_dtype(type); } */
 
-/* Tensor::Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
+Tensor::Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
     : shape_(shape), buf_(buf) {
   set_dtype(type);
   RefIfNonNull(buf);
-} */
+}
 
 /* Tensor::Tensor(DataType type, TensorShape shape,
                core::RefCountPtr<TensorBuffer> buf)
@@ -852,7 +853,7 @@ Tensor::Tensor(DataType type) : shape_(type), buf_(nullptr) { set_dtype(type); }
   set_dtype(type);
 } */
 
-bool Tensor::IsInitialized() const {
+/* bool Tensor::IsInitialized() const {
   return (buf_ != nullptr && buf_->data() != nullptr) ||
          shape_.num_elements() == 0;
 }
@@ -873,16 +874,24 @@ void Tensor::CheckTypeAndIsAligned(DataType expected_dtype) const {
 void Tensor::CheckIsAlignedAndSingleElement() const {
   CHECK(IsAligned()) << "Aligned and single element";
   CHECK_EQ(1, NumElements()) << "Must have a one element tensor";
+} */
+
+Tensor::~Tensor() { UnrefIfNonNull(buf_); } 
+
+Tensor::Tensor(Tensor&& other)
+    : shape_(std::move(other.shape_)),
+      buf_(other.buf_) {
+  set_dtype(other.dtype());
+  other.buf_ = nullptr;
 }
 
-/* Tensor::~Tensor() { UnrefIfNonNull(buf_); } */
 
-std::ostream& operator<<(std::ostream& out, const Tensor& tensor) {
+/* std::ostream& operator<<(std::ostream& out, const Tensor& tensor) {
   // The default is to show 3 elements, but this is often insufficient for
   // debugging.
-  out << tensor.DebugString(/*num_values=*/100);
+  out << tensor.DebugString(num_values=100);
   return out;
-}
+} */
 
 /* absl::Status Tensor::BitcastFrom(const Tensor& other, DataType dtype,
                                  const TensorShape& shape) {

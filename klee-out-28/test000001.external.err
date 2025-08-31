@@ -1,0 +1,5 @@
+Error: failed external call: _ZN10tensorflow6TensorC1EOS0_
+Stack: 
+	#000001569 in _ZN12_GLOBAL__N_112CreateTensorEP16TF_ManagedBuffer11TF_DataTypePKlim(buf=139604851171328, dtype=1, dims=139119519866880, num_dims=2, len=16)
+	#100004015 in TF_NewTensor(dtype=1, dims=139119519866880, num_dims=2, data=139467412217856, len=16, deallocator=140329090031616, deallocator_arg=0)
+	#200000450 in main()

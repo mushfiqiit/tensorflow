@@ -22,14 +22,14 @@ PRELOAD_INCLUDES=(
   "$ROOT/tensorflow/core"
   "$ROOT/tensorflow/tsl"
   "$ROOT/tensorflow/tsl/c"
-  "$ROOT/third_party/eigen3"
-  "$ROOT/third_party"
-  "$ROOT/third_party/xla"
-  "$ROOT/third_party/xla/xla"
-  "$ROOT/third_party/xla/xla/tsl"
-  "$ROOT/third_party/xla/third_party/tsl"
-  "$ROOT/third_party/absl"
-  "$ROOT/bazel-bin/external/com_google_absl"
+  #"$ROOT/third_party/eigen3"
+  #"$ROOT/third_party"
+  #"$ROOT/third_party/xla"
+  #"$ROOT/third_party/xla/xla"
+  #"$ROOT/third_party/xla/xla/tsl"
+  #"$ROOT/third_party/xla/third_party/tsl"
+  #"$ROOT/third_party/absl"
+  #"$ROOT/bazel-bin/external/com_google_absl"
 )
 
 for path in "${PRELOAD_INCLUDES[@]}"; do
@@ -37,14 +37,14 @@ for path in "${PRELOAD_INCLUDES[@]}"; do
 done
 
 # Bazel output paths for generated .pb.h files
-BAZEL_BIN="$HOME/.cache/bazel/_bazel_$(whoami)/execroot/org_tensorflow/bazel-out/k8-opt/bin"
-INCLUDES+=("-I$BAZEL_BIN")
-INCLUDES+=("-I$BAZEL_BIN/tensorflow")
-INCLUDES+=("-I$BAZEL_BIN/tensorflow/core")
-INCLUDES+=("-I$BAZEL_BIN/tensorflow/core/framework")
-INCLUDES+=("-I$BAZEL_BIN/xla")
-INCLUDES+=("-I$BAZEL_BIN/xla/tsl")
-INCLUDES+=("-I$BAZEL_BIN/xla/tsl/protobuf")
+#BAZEL_BIN="$HOME/.cache/bazel/_bazel_$(whoami)/execroot/org_tensorflow/bazel-out/k8-opt/bin"
+#INCLUDES+=("-I$BAZEL_BIN")
+#INCLUDES+=("-I$BAZEL_BIN/tensorflow")
+#INCLUDES+=("-I$BAZEL_BIN/tensorflow/core")
+#INCLUDES+=("-I$BAZEL_BIN/tensorflow/core/framework")
+#INCLUDES+=("-I$BAZEL_BIN/xla")
+#INCLUDES+=("-I$BAZEL_BIN/xla/tsl")
+##INCLUDES+=("-I$BAZEL_BIN/xla/tsl/protobuf")
 
 # Shim include if exists
 SHIM_PATH="$PWD/klee_shims.h"

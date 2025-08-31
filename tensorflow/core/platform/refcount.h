@@ -22,13 +22,13 @@ limitations under the License.
 namespace tensorflow {
 namespace core {
 // NOLINTBEGIN(misc-unused-using-decls)
-using ::tsl::core::RefCountDeleter;
+/* using ::tsl::core::RefCountDeleter; */
 using ::tsl::core::RefCounted;
-using ::tsl::core::RefCountPtr;
+/* using ::tsl::core::RefCountPtr;
 using ::tsl::core::ScopedUnref;
 using ::tsl::core::WeakNotifyFn;
 using ::tsl::core::WeakPtr;
-using ::tsl::core::WeakRefCounted;
+using ::tsl::core::WeakRefCounted; */
 // NOLINTEND(misc-unused-using-decls)
 }  // namespace core
 }  // namespace tensorflow

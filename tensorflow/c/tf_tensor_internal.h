@@ -22,14 +22,15 @@ limitations under the License.
 #include <utility>
 
 #include "tensorflow/c/tensor_interface.h"
-#include "tensorflow/c/tf_datatype.h"
+//#include "tensorflow/c/tf_datatype.h"
 #include "tensorflow/c/tf_tensor.h"
-#include "tensorflow/c/tf_tensor_helper.h"  // IWYU pragma: export
-#include "tensorflow/core/framework/allocation_description.pb.h"
+//#include "tensorflow/c/tf_tensor_helper.h"  // IWYU pragma: export
+//#include "tensorflow/core/framework/allocation_description.pb.h"
 #include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/platform/casts.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/framework/tensor_shape.h"
+//#include "tensorflow/core/platform/casts.h"
+//#include "tensorflow/core/platform/status.h"
+#include "tensorflow/core/platform/casts_stub.h"
 
 // Internal structures used by the C API. These are likely to change and should
 // not be depended on.
@@ -123,6 +124,20 @@ class TensorInterface : public AbstractTensorInterface {
  private:
   tensorflow::Tensor tensor_;
 };
+
+inline void TensorInterface::Release() { delete this; }
+inline ::DataType TensorInterface::Type() const { 
+  // if your Tensor stub has dtype(); otherwise return DT_INVALID
+  return /*tensor_.dtype()*/ ::DT_INVALID; 
+}
+inline int TensorInterface::NumDims() const { return 0; }              // or tensor_.dims()
+inline int64_t TensorInterface::Dim(int) const { return 0; }           // or tensor_.dim_size(i)
+inline int64_t TensorInterface::NumElements() const { return 0; }      // or tensor_.NumElements()
+inline size_t TensorInterface::ByteSize() const { return 0; }          // ok for your harness
+inline void* TensorInterface::Data() const { return nullptr; }         // ok for your harness
+inline bool TensorInterface::IsAligned() const { return true; }
+inline bool TensorInterface::CanMove() const { return true; }
+inline std::string TensorInterface::SummarizeValue() const { return {}; }
 
 inline Tensor& TensorFromInterface(AbstractTensorInterface* tensor) {
   return down_cast<TensorInterface*>(tensor)->Tensor();

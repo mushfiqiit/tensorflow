@@ -1,0 +1,5 @@
+Error: failed external call: TF_DataTypeSize
+Stack: 
+	#000001500 in _ZN12_GLOBAL__N_112CreateTensorEP16TF_ManagedBuffer11TF_DataTypePKlim(buf=139321517211648, dtype=1, dims=138836185907200, num_dims=2, len=16)
+	#100003876 in TF_NewTensor(dtype=1, dims=138836185907200, num_dims=2, data=139184078258176, len=16, deallocator=140045756071936, deallocator_arg=0)
+	#200000449 in main()

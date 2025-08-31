@@ -18,35 +18,40 @@ limitations under the License.
 #include <memory>
 #include <utility>
 #include <vector>
+#include <cstring>
 
-#include "tensorflow/c/tf_status.h"
-#include "tensorflow/c/tf_status_helper.h"
+//#include "tensorflow/c/tf_status.h"
+//#include "tensorflow/c/tf_status_helper.h"
 #include "tensorflow/c/tf_tensor_internal.h"
-#include "tensorflow/core/framework/allocation_description.pb.h"
-#include "tensorflow/core/framework/log_memory.h"
+//#include "tensorflow/core/framework/allocation_description.pb.h"
+//#include "tensorflow/core/framework/log_memory.h"
 #include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/framework/tensor_shape.pb.h"
-#include "tensorflow/core/framework/types.pb.h"
-#include "tensorflow/core/lib/core/coding.h"
-#include "tensorflow/core/platform/casts.h"
+#include "tensorflow/core/framework/tensorshapestub.h"
+#include "tensorflow/core/framework/allocatorstub.h"
+//#include "tensorflow/core/framework/tensor_shape.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/lib/core/coding.h"
+//#include "tensorflow/core/platform/casts.h"
+#include "tensorflow/core/framework/tensor_types_stub.h"
+#include "tensorflow/core/framework/datatype_memcpy_stub.h"
+#include "tensorflow/core/framework/allocator_cpu_stub.h"
 
-using tensorflow::Status;
+//using tensorflow::Status;
 using tensorflow::Tensor;
 using tensorflow::TensorBuffer;
-using tensorflow::errors::FailedPrecondition;
-using tensorflow::errors::InvalidArgument;
+//using tensorflow::errors::FailedPrecondition;
+//using tensorflow::errors::InvalidArgument; 
 
 #ifndef LIBTPU_EXCLUDE_C_API_IMPL
 
 namespace tensorflow {
 void* allocate_tensor(const char* operation, size_t len, Allocator* allocator) {
   void* data = allocator->AllocateRaw(EIGEN_MAX_ALIGN_BYTES, len);
-  if (LogMemory::IsEnabled() && data != nullptr) {
+  /* if (LogMemory::IsEnabled() && data != nullptr) {
     LogMemory::RecordRawAllocation(
         operation, LogMemory::EXTERNAL_TENSOR_ALLOCATION_STEP_ID, len, data,
         allocator);
-  }
+  } */
   return data;
 }
 
@@ -61,11 +66,11 @@ void deallocate_buffer(void* data, size_t len, void* arg) {
   } else {
     allocator = reinterpret_cast<Allocator*>(arg);
   }
-  if (LogMemory::IsEnabled() && data != nullptr) {
+  /* if (LogMemory::IsEnabled() && data != nullptr) {
     LogMemory::RecordRawDeallocation(
         "TensorFlow C Api", LogMemory::EXTERNAL_TENSOR_ALLOCATION_STEP_ID, data,
         allocator, false);
-  }
+  } */
   allocator->DeallocateRaw(data);
 }
 }  // namespace tensorflow
@@ -130,7 +135,7 @@ TF_Tensor* TF_NewTensor(TF_DataType dtype, const int64_t* dims, int num_dims,
   return CreateTensor(buf, dtype, dims, num_dims, len);
 }
 
-size_t TF_TensorDefaultAlignment() { return EIGEN_MAX_ALIGN_BYTES; }
+//size_t TF_TensorDefaultAlignment() { return EIGEN_MAX_ALIGN_BYTES; }
 
 TF_Tensor* TF_TensorMaybeMove(TF_Tensor* t) {
   return t->tensor->CanMove() ? t : nullptr;
@@ -152,10 +157,10 @@ TF_DataType TF_TensorType(const TF_Tensor* t) {
   return static_cast<TF_DataType>(t->tensor->Type());
 }
 
-void TF_SetShape(TF_Tensor* t, const int64_t* dims, int num_dims) {
+/* void TF_SetShape(TF_Tensor* t, const int64_t* dims, int num_dims) {
   tensorflow::down_cast<tensorflow::TensorInterface*>(t->tensor)->SetShape(
       dims, num_dims);
-}
+} */
 
 int TF_NumDims(const TF_Tensor* t) { return t->tensor->NumDims(); }
 
@@ -193,7 +198,7 @@ int64_t TF_TensorElementCount(const TF_Tensor* t) {
 
 namespace tensorflow {
 
-void TensorInterface::Release() {
+/* void TensorInterface::Release() {
   if (Type() == DT_STRING && NumElements() > 0) {
     TF_TString* data = static_cast<TF_TString*>(Data());
     if (CanMove() && data != nullptr) {
@@ -202,10 +207,10 @@ void TensorInterface::Release() {
       }
     }
   }
-  delete this;
-}
+  delete this; 
+} */
 
-bool TensorInterface::CanMove() const {
+/* bool TensorInterface::CanMove() const {
   // It is safe to move the Tensor if and only if we own the unique reference to
   // it. In that case, we might as well not delete and reallocate, but a future
   // implementation might need to do so.
@@ -215,10 +220,10 @@ bool TensorInterface::CanMove() const {
     return true;
   }
   return false;
-}
+} */
 
-std::string TensorInterface::SummarizeValue() const {
-  return tensor_.SummarizeValue(/*max_entries=*/3, /*print_v2=*/true);
+/* std::string TensorInterface::SummarizeValue() const {
+  return tensor_.SummarizeValue(3, true);
 }
 
 DataType TensorInterface::Type() const { return tensor_.dtype(); }
@@ -239,15 +244,15 @@ size_t TensorInterface::ByteSize() const {
 
 void* TensorInterface::Data() const {
   return tensorflow::TensorCApi::Buffer(tensor_)->data();
-}
+} */
 
-void TensorInterface::SetShape(const int64_t* dims, int num_dims) {
+/* void TensorInterface::SetShape(const int64_t* dims, int num_dims) {
   tensorflow::TensorShape s;
   for (int i = 0; i < num_dims; ++i) {
     s.AddDim(dims[i]);
   }
   tensor_.set_shape(s);
-}
+} */
 
 /* absl::Status TensorInterface::BitcastFrom(const TensorInterface& from,
                                           DataType type,
@@ -270,14 +275,14 @@ void TensorInterface::SetShape(const int64_t* dims, int num_dims) {
 
 // --------------------------------------------------------------------------
 
-static void DeleteArray(void* data, size_t size, void* arg) {
+/* static void DeleteArray(void* data, size_t size, void* arg) {
   DCHECK_EQ(data, arg);
   delete[] reinterpret_cast<char*>(arg);
-}
+} */
 
 // Create an empty tensor of type 'dtype'. 'shape' can be arbitrary, but has to
 // result in a zero-sized tensor.
-static TF_Tensor* EmptyTensor(TF_DataType dtype,
+/* static TF_Tensor* EmptyTensor(TF_DataType dtype,
                               const tensorflow::TensorShape& shape) {
   static char empty;
   int64_t nelems = 1;
@@ -292,7 +297,7 @@ static TF_Tensor* EmptyTensor(TF_DataType dtype,
   return TF_NewTensor(
       dtype, reinterpret_cast<const int64_t*>(dims.data()), shape.dims(),
       reinterpret_cast<void*>(&empty), 0, [](void*, size_t, void*) {}, nullptr);
-}
+} */
 
 namespace tensorflow {
 
@@ -349,8 +354,8 @@ namespace tensorflow {
   return absl::OkStatus();
 } */
 
-bool TensorInterface::IsAligned() const { return tensor_.IsAligned(); }
+/* bool TensorInterface::IsAligned() const { return tensor_.IsAligned(); } */
 
 }  // namespace tensorflow
 
-bool TF_TensorIsAligned(const TF_Tensor* t) { return t->tensor->IsAligned(); }
+//bool TF_TensorIsAligned(const TF_Tensor* t) { return t->tensor->IsAligned(); }
