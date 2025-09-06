@@ -43,6 +43,7 @@ void* allocate_tensor(const char* operation, size_t len, Allocator* allocator) {
         operation, LogMemory::EXTERNAL_TENSOR_ALLOCATION_STEP_ID, len, data,
         allocator);
   }
+  // Mushfiqur
   return data;
 }
 
