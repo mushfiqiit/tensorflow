@@ -1,0 +1,10 @@
+Error: memory error: invalid pointer: make_symbolic
+Stack: 
+	#000000568 in main()
+Info: 
+	address: (Add w64 139577533853696
+          (ZExt w64 (ReadLSB w32 0 offset)))
+	example: 139577533853697
+	range: [139577533853697, 139577533853727]
+	next: object at 139004155719680 of size 4
+		MO275[4] allocated at main():  %dtype = alloca i32, align 4

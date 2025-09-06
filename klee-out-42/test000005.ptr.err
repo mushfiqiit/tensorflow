@@ -1,0 +1,7 @@
+Error: memory error: invalid pointer: make_symbolic
+Stack: 
+	#000000563 in main()
+Info: 
+	address: 12370169555311111083
+	next: object at 138877457199104 of size 4
+		MO275[4] allocated at main():  %dtype = alloca i32, align 4

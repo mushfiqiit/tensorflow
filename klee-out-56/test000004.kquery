@@ -1,0 +1,23 @@
+array dims[24] : w32 -> w8 = symbolic
+array dtype[4] : w32 -> w8 = symbolic
+array len[8] : w32 -> w8 = symbolic
+array offset[4] : w32 -> w8 = symbolic
+(query [(Eq 1
+             (ReadLSB w32 0 dtype))
+         (Eq false
+             (Ult 0
+                  N0:(ReadLSB w64 0 len)))
+         (Eq false
+             (Eq 0
+                 (SRem w64 (Add w64 138985598459904
+                                    (ZExt w64 (ReadLSB w32 0 offset)))
+                           64)))
+         (Eq false
+             (Sle N1:(ReadLSB w64 0 dims)
+                  0))
+         (Eq false
+             (Sle N2:(ReadLSB w64 8 dims)
+                  0))
+         (Ult N0
+              (Mul w64 4 (Mul w64 N1 N2)))]
+        false)

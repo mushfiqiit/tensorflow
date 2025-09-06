@@ -1,0 +1,5 @@
+array dims[24] : w32 -> w8 = symbolic
+(query [(Eq false
+             (Sle 0
+                  (ReadLSB w64 0 dims)))]
+        false)

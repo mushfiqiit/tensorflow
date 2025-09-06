@@ -1,0 +1,7 @@
+Error: Wrong size given to klee_make_symbolic
+File: tensorflow/c/tf_tensor_harness.cc
+Line: 58
+assembly.ll line: 581
+State: 14
+Stack: 
+	#000000581 in main() at tensorflow/c/tf_tensor_harness.cc:58

@@ -64,7 +64,7 @@ else
   echo "⚠️  klee/klee.h not found in ~/.local/include — may cause errors later."
 fi
 
-CFLAGS=(-std=c++17 -DKLEE)
+CFLAGS=(-std=c++17 -g -DKLEE)
 round=0
 
 LIBDIR="$HOME/.cache/bazel/_bazel_mushfiqur/91253ec3e2fa4095808f37d0d7a190fc/external/com_google_protobuf/build"

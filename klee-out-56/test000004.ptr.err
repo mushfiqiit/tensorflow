@@ -1,0 +1,20 @@
+Error: memory error: invalid pointer: free
+File: tensorflow/core/framework/allocatorstub.h
+Line: 88
+assembly.ll line: 845
+State: 53
+Stack: 
+	#000000845 in _ZN10tensorflow9Allocator13DeallocateRawEPv(this=138710720552960, ptr=74365312) at tensorflow/core/framework/allocatorstub.h:88
+	#100001509 in _ZN10tensorflow17deallocate_bufferEPvmS0_(data=74365312, len=symbolic, arg=0) at tensorflow/c/tf_tensor.cc:74
+	#200004118 in _ZN16TF_ManagedBufferD2Ev(this=138916878983168) at tensorflow/c/tf_tensor_internal.h:57
+	#300004150 in _ZN16TF_ManagedBufferD0Ev(this=138916878983168) at tensorflow/c/tf_tensor_internal.h:56
+	#400002090 in _ZNK10tensorflow4core10RefCounted5UnrefEv(this=138916878983168) at tensorflow/core/framework/refcountstub.h:26
+	#500005030 in _ZN10tensorflow12_GLOBAL__N_114UnrefIfNonNullEPNS_4core10RefCountedE(buf=138916878983168) at tensorflow/core/framework/tensor.cc:834
+	#600004993 in _ZN10tensorflow6TensorD2Ev(this=138448727547904) at tensorflow/core/framework/tensor.cc:879
+	#700001859 in _ZN12_GLOBAL__N_112CreateTensorEP16TF_ManagedBuffer11TF_DataTypePKlim(buf=138916878983168, dtype=symbolic, dims=138440137613312, num_dims=2, len=symbolic) at tensorflow/c/tf_tensor.cc:94
+	#800004437 in TF_NewTensor(dtype=symbolic, dims=138440137613312, num_dims=2, data=symbolic, len=symbolic, deallocator=139640983625728, deallocator_arg=0) at tensorflow/c/tf_tensor.cc:135
+	#900000543 in main() at tensorflow/c/tf_tensor_harness.cc:62
+Info: 
+	address: 74365312
+	next: object at 138402556649472 of size 1
+		MO1744[1] allocated at _ZN12_GLOBAL__N_112CreateTensorEP16TF_ManagedBuffer11TF_DataTypePKlim():  %cleanup.isactive = alloca i1, align 1

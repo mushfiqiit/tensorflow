@@ -1,0 +1,7 @@
+Error: invalid klee_assume call (provably false)
+File: tensorflow/c/tf_tensor_harness.cc
+Line: 22
+assembly.ll line: 476
+State: 3
+Stack: 
+	#000000476 in main() at tensorflow/c/tf_tensor_harness.cc:22

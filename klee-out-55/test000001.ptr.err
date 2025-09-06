@@ -1,0 +1,14 @@
+Error: memory error: invalid pointer: make_symbolic
+File: tensorflow/c/tf_tensor_harness.cc
+Line: 58
+assembly.ll line: 538
+State: 11
+Stack: 
+	#000000538 in main() at tensorflow/c/tf_tensor_harness.cc:58
+Info: 
+	address: (Add w64 139257665388544
+          (ZExt w64 (ReadLSB w32 0 offset)))
+	example: 139257665388545
+	range: [139257665388545, 139257665388575]
+	next: object at 138684287254528 of size 4
+		MO275[4] allocated at main():  %dtype = alloca i32, align 4

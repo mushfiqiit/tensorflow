@@ -1,0 +1,16 @@
+Error: memory error: invalid pointer: free
+Stack: 
+	#000000868 in _ZN10tensorflow9Allocator13DeallocateRawEPv(this=139645728485376, ptr=68768320)
+	#100001478 in _ZN10tensorflow17deallocate_bufferEPvmS0_(data=68768320, len=symbolic, arg=0)
+	#200003891 in _ZN16TF_ManagedBufferD2Ev(this=139851886915584)
+	#300003922 in _ZN16TF_ManagedBufferD0Ev(this=139851886915584)
+	#400002024 in _ZNK10tensorflow4core10RefCounted5UnrefEv(this=139851886915584)
+	#500004743 in _ZN10tensorflow12_GLOBAL__N_114UnrefIfNonNullEPNS_4core10RefCountedE(buf=139851886915584)
+	#600004707 in _ZN10tensorflow6TensorD2Ev(this=139383735480320)
+	#700001807 in _ZN12_GLOBAL__N_112CreateTensorEP16TF_ManagedBuffer11TF_DataTypePKlim(buf=139851886915584, dtype=symbolic, dims=139375145545728, num_dims=2, len=symbolic)
+	#800004186 in TF_NewTensor(dtype=symbolic, dims=139375145545728, num_dims=2, data=symbolic, len=symbolic, deallocator=140576528429056, deallocator_arg=0)
+	#900000588 in main()
+Info: 
+	address: 68768320
+	next: object at 139337564581888 of size 1
+		MO1785[1] allocated at _ZN12_GLOBAL__N_112CreateTensorEP16TF_ManagedBuffer11TF_DataTypePKlim():  %cleanup.isactive = alloca i1, align 1
