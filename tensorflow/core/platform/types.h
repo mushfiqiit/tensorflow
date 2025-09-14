@@ -18,9 +18,10 @@ limitations under the License.
 
 #include <string>
 
-#include "tensorflow/core/platform/bfloat16.h"
-#include "tensorflow/core/platform/platform.h"
+//#include "tensorflow/core/platform/bfloat16.h"
+//#include "tensorflow/core/platform/platform.h"
 #include "tensorflow/core/platform/tstring.h"
+#include "bfloat16_stub.h"
 
 // Include appropriate platform-dependent implementations
 #if defined(PLATFORM_GOOGLE) || defined(GOOGLE_INTEGRAL_TYPES)

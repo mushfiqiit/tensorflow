@@ -15,7 +15,7 @@ limitations under the License.
 // Command line tool for embedding validation data in tflite models.
 #include <cstdint>
 #include <fstream>
-#include <iostream>
+//#include <iostream>
 #include <memory>
 #include <string>
 #include <vector>

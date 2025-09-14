@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CC_EXPERIMENTAL_LIBTF_TESTS_VALUE_IOSTREAM_H_
 #define TENSORFLOW_CC_EXPERIMENTAL_LIBTF_TESTS_VALUE_IOSTREAM_H_
 
-#include <iostream>
+//#include <iostream>
 
 #include "tensorflow/cc/experimental/libtf/value.h"
 

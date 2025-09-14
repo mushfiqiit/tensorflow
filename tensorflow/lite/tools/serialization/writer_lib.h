@@ -16,7 +16,7 @@ limitations under the License.
 
 #ifndef TENSORFLOW_LITE_TOOLS_SERIALIZATION_WRITER_LIB_H_
 #define TENSORFLOW_LITE_TOOLS_SERIALIZATION_WRITER_LIB_H_
-#include <iostream>
+//#include <iostream>
 #include <string>
 #include <unordered_map>
 

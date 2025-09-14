@@ -20,7 +20,7 @@ limitations under the License.
 #include <android/log.h>
 #include <stdlib.h>
 #include <time.h>
-#include <iostream>
+//#include <iostream>
 #include <sstream>
 
 LogMessage::LogMessage(const char* fname, int line, int severity)

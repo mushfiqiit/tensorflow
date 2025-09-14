@@ -16,39 +16,39 @@ limitations under the License.
 #include "tensorflow/c/tf_status.h"
 
 #include "tensorflow/c/tf_status_internal.h"
-#include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/errors.h"
+//#include "tensorflow/core/platform/status.h"
 
-using ::tensorflow::Status;
-using ::tensorflow::error::Code;
-using ::tensorflow::errors::IOError;
+/* using ::tensorflow::Status;
+using ::tensorflow::error::Code; */
+//using ::tensorflow::errors::IOError;
 
-TF_Status* TF_NewStatus() { return new TF_Status; }
+/* TF_Status* TF_NewStatus() { return new TF_Status; }
 
-void TF_DeleteStatus(TF_Status* s) { delete s; }
+void TF_DeleteStatus(TF_Status* s) { delete s; } */
 
-void TF_SetStatus(TF_Status* s, TF_Code code, const char* msg) {
+/* void TF_SetStatus(TF_Status* s, TF_Code code, const char* msg) {
   if (code == TF_OK) {
     s->status = ::tensorflow::OkStatus();
     return;
   }
   s->status = Status(static_cast<Code>(code), tensorflow::StringPiece(msg));
-}
+} */
 
-void TF_SetPayload(TF_Status* s, const char* key, const char* value) {
+/* void TF_SetPayload(TF_Status* s, const char* key, const char* value) {
   s->status.SetPayload(key, value);
-}
+} */
 
-void TF_SetStatusFromIOError(TF_Status* s, int error_code,
+/* void TF_SetStatusFromIOError(TF_Status* s, int error_code,
                              const char* context) {
   // TODO(b/139060984): Handle windows when changing its filesystem
   s->status = IOError(context, error_code);
-}
+} */
 
-TF_Code TF_GetCode(const TF_Status* s) {
+/* TF_Code TF_GetCode(const TF_Status* s) {
   return static_cast<TF_Code>(s->status.code());
 }
 
 const char* TF_Message(const TF_Status* s) {
   return s->status.error_message().c_str();
-}
+} */

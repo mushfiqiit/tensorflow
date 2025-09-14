@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_COMPILER_XLA_SERVICE_CPU_RUNTIME_MATMUL_ACL_H_
 #define TENSORFLOW_COMPILER_XLA_SERVICE_CPU_RUNTIME_MATMUL_ACL_H_
 
-#include <iostream>
+//#include <iostream>
 
 #include "tensorflow/core/platform/types.h"
 

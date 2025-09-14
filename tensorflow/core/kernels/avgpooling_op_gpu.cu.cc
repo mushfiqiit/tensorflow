@@ -19,7 +19,7 @@ limitations under the License.
 
 #include <stdio.h>
 
-#include <iostream>
+//#include <iostream>
 
 #include "tensorflow/core/framework/register_types.h"
 #include "tensorflow/core/framework/tensor_types.h"

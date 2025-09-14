@@ -68,7 +68,7 @@ index 27a1fb7..f056255 100644
 +#include "third_party/tensorrt/NvInferPlugin.h"
  #include <cstring>
  #include <cuda_runtime.h>
- #include <iostream>
+ //#include <iostream>
 diff --git a/plugin/efficientNMSPlugin/efficientNMSInference.cu b/plugin/efficientNMSPlugin/efficientNMSInference.cu.cc
 similarity index 99%
 rename from plugin/efficientNMSPlugin/efficientNMSInference.cu

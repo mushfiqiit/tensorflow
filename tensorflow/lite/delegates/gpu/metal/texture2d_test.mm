@@ -18,7 +18,7 @@ limitations under the License.
 #import <Metal/Metal.h>
 #import <XCTest/XCTest.h>
 
-#include <iostream>
+//#include <iostream>
 #include <vector>
 
 #include "tensorflow/lite/delegates/gpu/common/types.h"

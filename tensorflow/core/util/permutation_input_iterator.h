@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_UTIL_PERMUTATION_INPUT_ITERATOR_H_
 #define TENSORFLOW_CORE_UTIL_PERMUTATION_INPUT_ITERATOR_H_
 
-#include <iostream>
+//#include <iostream>
 #include <iterator>
 
 namespace tensorflow {

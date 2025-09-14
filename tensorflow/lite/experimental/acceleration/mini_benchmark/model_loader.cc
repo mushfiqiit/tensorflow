@@ -15,7 +15,7 @@ limitations under the License.
 #include "tensorflow/lite/experimental/acceleration/mini_benchmark/model_loader.h"
 
 #include <cstdlib>
-#include <iostream>
+//#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>

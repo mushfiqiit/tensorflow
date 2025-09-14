@@ -23,7 +23,7 @@ limitations under the License.
 #include <cstdarg>
 #include <cstdio>
 #include <fstream>
-#include <iostream>
+//#include <iostream>
 #include <sstream>
 #include <string>
 #include "tensorflow/lite/nnapi/nnapi_implementation.h"

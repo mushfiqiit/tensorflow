@@ -15,7 +15,7 @@ limitations under the License.
 
 #include <cstdint>
 #include <cstdlib>
-#include <iostream>
+//#include <iostream>
 #include <regex>  // NOLINT
 
 #include "absl/strings/match.h"

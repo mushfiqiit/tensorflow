@@ -15,7 +15,7 @@ limitations under the License.
 
 // Binary to test strip_buffers/reconstitution.h.
 #include <fstream>  // NOLINT
-#include <iostream>
+//#include <iostream>
 #include <sstream>
 #include <string>
 

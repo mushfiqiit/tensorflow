@@ -22,7 +22,7 @@ limitations under the License.
 #import <Metal/Metal.h>
 
 #include <vector>
-#include <iostream>
+//#include <iostream>
 
 @interface BufferTest : XCTestCase
 @end

@@ -18,7 +18,7 @@ limitations under the License.
 #import <Foundation/Foundation.h>
 
 #include <fstream>
-#include <iostream>
+//#include <iostream>
 
 namespace {
 // Returns NSURL for a temporary file.

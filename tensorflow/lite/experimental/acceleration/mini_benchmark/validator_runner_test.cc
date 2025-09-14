@@ -15,7 +15,7 @@ limitations under the License.
 #include "tensorflow/lite/experimental/acceleration/mini_benchmark/validator_runner.h"
 
 #include <fstream>
-#include <iostream>
+//#include <iostream>
 #include <memory>
 #include <string>
 #include <vector>

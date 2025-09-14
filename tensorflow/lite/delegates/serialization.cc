@@ -16,7 +16,7 @@ limitations under the License.
 
 #if defined(_WIN32)
 #include <fstream>
-#include <iostream>
+//#include <iostream>
 #else
 #include <errno.h>
 #include <fcntl.h>

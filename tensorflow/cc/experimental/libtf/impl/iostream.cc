@@ -15,7 +15,7 @@ limitations under the License.
 // Specializations of ostream::operator<< for API values. These are defined here
 // so that they don't need to be linked in executables that need to be kept
 // small (and don't use the functionality).
-#include <iostream>
+//#include <iostream>
 
 #include "tensorflow/cc/experimental/libtf/impl/none.h"
 #include "tensorflow/cc/experimental/libtf/impl/string.h"

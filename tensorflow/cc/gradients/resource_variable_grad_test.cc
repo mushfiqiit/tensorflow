@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#include <iostream>
+//#include <iostream>
 
 #include "tensorflow/cc/client/client_session.h"
 #include "tensorflow/cc/framework/grad_op_registry.h"

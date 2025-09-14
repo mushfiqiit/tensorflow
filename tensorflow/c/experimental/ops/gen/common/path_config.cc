@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 #include "tensorflow/c/experimental/ops/gen/common/path_config.h"
 
-#include <iostream>
+//#include <iostream>
 
 #include "tensorflow/core/lib/strings/str_util.h"
 

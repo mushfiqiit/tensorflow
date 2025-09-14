@@ -16,7 +16,7 @@ limitations under the License.
 #include "tensorflow/compiler/tf2xla/tf2xla_supported_ops.h"
 
 #include <algorithm>
-#include <iostream>
+//#include <iostream>
 #include <string>
 #include <vector>
 

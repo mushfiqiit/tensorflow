@@ -19,7 +19,7 @@ limitations under the License.
 // Usage:
 //   writer_test <input tflite>
 
-#include <iostream>
+//#include <iostream>
 
 #include "tensorflow/lite/kernels/register.h"
 #include "tensorflow/lite/model.h"

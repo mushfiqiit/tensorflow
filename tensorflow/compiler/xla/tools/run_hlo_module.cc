@@ -16,7 +16,7 @@ limitations under the License.
 #include "tensorflow/compiler/xla/tools/run_hlo_module.h"
 
 #include <functional>
-#include <iostream>
+//#include <iostream>
 #include <memory>
 #include <random>
 #include <string>

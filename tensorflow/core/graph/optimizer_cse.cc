@@ -38,7 +38,7 @@ limitations under the License.
 
 #include "tensorflow/core/graph/optimizer_cse.h"
 
-#include <iostream>
+//#include <iostream>
 #include <unordered_map>
 #include <utility>
 #include <vector>

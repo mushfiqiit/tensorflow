@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_COMPILER_XLA_SERVICE_CPU_RUNTIME_LIGHTWEIGHT_CHECK_H_
 
 #include <cstdlib>
-#include <iostream>
+//#include <iostream>
 
 // Aborts the program if the condition is false.
 //

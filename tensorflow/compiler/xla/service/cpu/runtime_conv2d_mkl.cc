@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 #include "tensorflow/compiler/xla/service/cpu/runtime_conv2d_mkl.h"
 
-#include <iostream>
+//#include <iostream>
 
 #include "absl/base/dynamic_annotations.h"
 #include "tensorflow/compiler/xla/executable_run_options.h"

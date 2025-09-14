@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "tensorflow/core/kernels/logging_ops.h"
 
-#include <iostream>
+//#include <iostream>
 
 #include "absl/strings/str_cat.h"
 #include "tensorflow/core/framework/logging.h"

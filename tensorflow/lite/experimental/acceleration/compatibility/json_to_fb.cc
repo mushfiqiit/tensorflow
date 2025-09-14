@@ -18,7 +18,7 @@ limitations under the License.
 //
 // The flatc command line is not available in all build environments.
 #include <fstream>
-#include <iostream>
+//#include <iostream>
 #include <string>
 #include <vector>
 

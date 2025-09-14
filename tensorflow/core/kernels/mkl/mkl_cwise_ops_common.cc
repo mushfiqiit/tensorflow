@@ -18,7 +18,7 @@ limitations under the License.
 // See docs in ../ops/math_ops.cc.
 
 #define EIGEN_USE_THREADS
-#include <iostream>
+//#include <iostream>
 #include <vector>
 
 #include "tensorflow/core/kernels/cwise_ops_common.h"

@@ -16,7 +16,7 @@ limitations under the License.
 // This program compiles an XLA program which computes 123 and writes the
 // resulting object file to stdout.
 
-#include <iostream>
+//#include <iostream>
 #include <vector>
 
 #include "llvm/ADT/Triple.h"

@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "tensorflow/compiler/xla/service/compilation_stats.h"
 
-#include <iostream>
+//#include <iostream>
 #include <memory>
 #include <string>
 

@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 #include "tensorflow/core/profiler/rpc/client/capture_profile.h"
 
-#include <iostream>
+//#include <iostream>
 #include <limits>
 #include <memory>
 #include <vector>

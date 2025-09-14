@@ -24,24 +24,25 @@ limitations under the License.
 #include <unordered_map>
 #include <utility>
 
-#include "absl/strings/string_view.h"
-#include "absl/types/optional.h"
-#include "tensorflow/core/platform/logging.h"
-#include "tensorflow/core/platform/macros.h"
+//#include "absl/strings/string_view.h"
+//#include "absl/types/optional.h"
+//#include "tensorflow/core/platform/logging.h"
+//#include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/stack_frame.h"
 #include "tensorflow/core/platform/types.h"
-#include "tensorflow/core/protobuf/error_codes.pb.h"
+//#include "tensorflow/core/protobuf/error_codes.pb.h"
+#include "error_codes_stub.h"
 
 namespace tensorflow {
 
-#if defined(__clang__)
+/* #if defined(__clang__)
 // Only clang supports warn_unused_result as a type annotation.
 class TF_MUST_USE_RESULT Status;
-#endif
+#endif */
 
-#if ABSL_HAVE_BUILTIN(__builtin_LINE) && ABSL_HAVE_BUILTIN(__builtin_FILE)
+/* #if ABSL_HAVE_BUILTIN(__builtin_LINE) && ABSL_HAVE_BUILTIN(__builtin_FILE)
 #define TF_INTERNAL_HAVE_BUILTIN_LINE_FILE 1
-#endif
+#endif */
 
 struct SourceLocation {
   uint32_t line;
@@ -68,7 +69,7 @@ struct SourceLocation {
 
 namespace errors {
 
-typedef ::tensorflow::error::Code Code;
+/* typedef ::tensorflow::error::Code Code; */
 
 }  // namespace errors
 /// @ingroup core
@@ -172,8 +173,8 @@ class Status {
   //
   // Returns the payload of a status given its unique `type_url` key, if
   // present.
-  absl::optional<absl::string_view> GetPayload(
-      absl::string_view type_url) const;
+  /* absl::optional<absl::string_view> GetPayload(
+      absl::string_view type_url) const; */
 
   // Sets the payload for a non-ok status using a `type_url` key, overwriting
   // any existing payload for that `type_url`.
@@ -183,7 +184,7 @@ class Status {
 
   // Erases the payload corresponding to the `type_url` key.  Returns `true` if
   // the payload was present.
-  bool ErasePayload(absl::string_view type_url);
+  /* bool ErasePayload(absl::string_view type_url); */
 
   // Iterates over the stored payloads and calls the
   // `visitor(type_key, payload)` callable for each one.
@@ -223,7 +224,7 @@ class Status {
 //
 // Returns an OK status, equivalent to a default constructed instance. Prefer
 // usage of `OkStatus()` when constructing such an OK status.
-Status OkStatus();
+/* Status OkStatus();
 
 // TODO(b/197552541) Move this namespace to errors.h.
 namespace errors {
@@ -231,49 +232,49 @@ namespace errors {
 void SetStackTrace(::tensorflow::Status& status,
                    std::vector<StackFrame> stack_trace);
 
-std::vector<StackFrame> GetStackTrace(const ::tensorflow::Status& status);
-}  // namespace errors
+std::vector<StackFrame> GetStackTrace(const ::tensorflow::Status& status); */
+//}  // namespace errors
 
 // Helper class to manage multiple child status values.
-class StatusGroup {
+/* class StatusGroup {
  public:
-  StatusGroup();
+  StatusGroup(); */
   // Constructor to form a StatusGroup from any N set of Status arguments.
   // Usage: StatusGroup({status_a, status_b, status_c});
-  StatusGroup(std::initializer_list<Status> statuses);
+ /*  StatusGroup(std::initializer_list<Status> statuses);
 
   // Utility function to mark a Status as derived. By marking derived status,
   // Derived status messages are ignored when reporting errors to end users.
   static Status MakeDerived(const Status& s);
-  static bool IsDerived(const Status& s);
+  static bool IsDerived(const Status& s); */
 
   // Enable warning and error log collection for appending to the aggregated
   // status. This function may be called more than once.
-  static void ConfigureLogHistory();
+  //static void ConfigureLogHistory();
 
   // Returns merged payloads of all statuses. In case multiple statuses have the
   // same payload key, non-derived statuses have priority over derived ones,
   // otherwise one payload value will be chosen in an unspecified but
   // deterministic order.
   // NOTE: The payload marking derived statuses as derived will not be returned.
-  std::unordered_map<std::string, std::string> GetPayloads() const;
+  //std::unordered_map<std::string, std::string> GetPayloads() const;
 
   // Return a merged status with combined child status messages with a summary.
-  Status as_summary_status() const;
+  /* Status as_summary_status() const;
   // Return a merged status with combined child status messages with
   // concatenation.
-  Status as_concatenated_status() const;
+  Status as_concatenated_status() const; */
 
-  bool ok() const { return ok_; }
+  //bool ok() const { return ok_; }
 
   // Augment this group with the child status `status`.
-  void Update(const Status& status);
+  /* void Update(const Status& status); */
 
   // Attach recent warning and error log messages
-  void AttachLogMessages();
-  bool HasLogMessages() const { return !recent_logs_.empty(); }
+  //void AttachLogMessages();
+  /* bool HasLogMessages() const { return !recent_logs_.empty(); } */
 
- private:
+ /* private:
   bool ok_ = true;
   size_t num_ok_ = 0;
 
@@ -289,9 +290,9 @@ class StatusGroup {
   std::set<Status, CompareStatus> non_derived_;
 
   std::vector<std::string> recent_logs_;  // recent warning and error logs
-};
+}; */
 
-inline Status::Status(const Status& s)
+/* inline Status::Status(const Status& s)
     : state_((s.state_ == nullptr) ? nullptr : new State(*s.state_)) {}
 
 inline Status& Status::operator=(const Status& s) {
@@ -301,7 +302,7 @@ inline Status& Status::operator=(const Status& s) {
     SlowCopyFrom(s.state_.get());
   }
   return *this;
-}
+} */
 
 #ifndef SWIG
 inline Status::Status(Status&& s, SourceLocation loc) noexcept
@@ -326,7 +327,7 @@ inline bool Status::operator!=(const Status& x) const { return !(*this == x); }
 /// @ingroup core
 std::ostream& operator<<(std::ostream& os, const Status& x);
 
-typedef std::function<void(const Status&)> StatusCallback;
+/* typedef std::function<void(const Status&)> StatusCallback;
 
 extern tensorflow::string* TfCheckOpHelperOutOfLine(
     const ::tensorflow::Status& v, const char* msg);
@@ -337,7 +338,7 @@ inline tensorflow::string* TfCheckOpHelper(::tensorflow::Status v,
                                            const char* msg) {
   if (v.ok()) return nullptr;
   return TfCheckOpHelperOutOfLine(v, msg);
-}
+} */
 
 #define TF_DO_CHECK_OK(val, level)                                \
   while (auto _result = ::tensorflow::TfCheckOpHelper(val, #val)) \

@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_COMPILER_AOT_QUANTIZE_H_
 
 #include <functional>
-#include <iostream>
+//#include <iostream>
 #include <ostream>
 
 #include "tensorflow/compiler/tf2xla/tf2xla.pb.h"

@@ -21,7 +21,7 @@ limitations under the License.
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
-#include <iostream>
+//#include <iostream>
 #include <string>
 
 #include "tensorflow/lite/examples/label_image/log.h"

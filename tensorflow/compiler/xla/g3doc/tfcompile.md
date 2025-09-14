@@ -215,7 +215,7 @@ Example of invoking the generated function based on
 #define EIGEN_USE_THREADS
 #define EIGEN_USE_CUSTOM_THREAD_POOL
 
-#include <iostream>
+//#include <iostream>
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/compiler/aot/tests/test_graph_tfmatmul.h" // generated
 

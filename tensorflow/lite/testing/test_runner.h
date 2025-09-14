@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef TENSORFLOW_LITE_TESTING_TEST_RUNNER_H_
 #define TENSORFLOW_LITE_TESTING_TEST_RUNNER_H_
 
-#include <iostream>
+//#include <iostream>
 #include <memory>
 #include <string>
 #include <vector>

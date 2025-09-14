@@ -16,7 +16,7 @@ limitations under the License.
 #include "tensorflow/core/platform/cpu_feature_guard.h"
 
 #ifndef __ANDROID__
-#include <iostream>
+//#include <iostream>
 #endif
 #include <mutex>
 #include <string>

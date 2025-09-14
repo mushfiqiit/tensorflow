@@ -17,7 +17,7 @@ limitations under the License.
 #include "tensorflow/core/kernels/nth_element_op.h"
 
 #include <algorithm>
-#include <iostream>
+//#include <iostream>
 #include <vector>
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/register_types.h"

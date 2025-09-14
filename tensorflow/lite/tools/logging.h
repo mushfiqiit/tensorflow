@@ -19,7 +19,7 @@ limitations under the License.
 // LOG and CHECK macros for tflite tooling.
 
 #include <cstdlib>
-#include <iostream>
+//#include <iostream>
 #include <sstream>
 
 #ifdef _WIN32

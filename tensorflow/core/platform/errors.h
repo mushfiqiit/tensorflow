@@ -20,13 +20,14 @@ limitations under the License.
 #include <string>
 #include <utility>
 
-#include "absl/base/attributes.h"
-#include "absl/strings/str_join.h"
-#include "tensorflow/core/platform/logging.h"
+//#include "absl/base/attributes.h"
+//#include "absl/strings/str_join.h"
+//#include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/str_util.h"
 #include "tensorflow/core/platform/strcat.h"
+#include "error_codes_stub.h"
 
 namespace tensorflow {
 namespace errors {
@@ -149,12 +150,12 @@ template <typename... Args>
       ::tensorflow::strings::StrCat(
           ::tensorflow::errors::internal::PrepareForStrCat(args)...));
 }
-template <typename... Args>
+/* template <typename... Args>
 ::tensorflow::Status CancelledWithPayloads(
     const ::tensorflow::StringPiece& message,
     const std::unordered_map<std::string, std::string>& payloads) {
   return errors::Create(::tensorflow::error::CANCELLED, message, payloads);
-}
+} */
 
 // InvalidArgument
 template <typename... Args>

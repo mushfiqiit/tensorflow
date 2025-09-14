@@ -15,7 +15,7 @@ limitations under the License.
 
 #import <Metal/Metal.h>
 
-#include <iostream>
+//#include <iostream>
 #include <string>
 
 #include "tensorflow/lite/builtin_ops.h"

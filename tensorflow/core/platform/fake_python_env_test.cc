@@ -18,7 +18,7 @@ limitations under the License.
 
 #include <sys/stat.h>
 #include <unistd.h>
-#include <iostream>
+//#include <iostream>
 #include <string>
 
 #include "tensorflow/core/lib/core/status_test_util.h"

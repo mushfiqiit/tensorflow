@@ -1,0 +1,5 @@
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tf_status.cc:18:
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tf_status_internal.h:25:3: error: use of undeclared identifier 'tensorflow'
+  tensorflow::Status status;
+  ^
+1 error generated.

@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_LITE_EXAMPLES_LABEL_IMAGE_LOG_H_
 #define TENSORFLOW_LITE_EXAMPLES_LABEL_IMAGE_LOG_H_
 
-#include <iostream>
+//#include <iostream>
 #include <sstream>
 
 namespace tflite {

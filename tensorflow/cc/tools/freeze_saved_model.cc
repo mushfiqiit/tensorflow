@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "tensorflow/cc/tools/freeze_saved_model.h"
 
-#include <iostream>
+//#include <iostream>
 #include <queue>
 
 #include "tensorflow/core/framework/attr_value.pb.h"

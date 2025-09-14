@@ -12,7 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-#include <iostream>
+//#include <iostream>
 #include "tensorflow/lite/schema/builtin_ops_header/generator.h"
 
 // This executable is used to generate builtin_ops.h in TensorFlow Lite.

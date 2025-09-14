@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "tensorflow/lite/testing/generate_testspec.h"
 
-#include <iostream>
+//#include <iostream>
 #include <random>
 #include <string>
 #include <utility>

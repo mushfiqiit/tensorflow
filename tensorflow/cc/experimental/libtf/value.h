@@ -23,7 +23,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CC_EXPERIMENTAL_LIBTF_VALUE_H_
 #define TENSORFLOW_CC_EXPERIMENTAL_LIBTF_VALUE_H_
 
-#include <iostream>
+//#include <iostream>
 #include <memory>
 #include <utility>
 #include <vector>

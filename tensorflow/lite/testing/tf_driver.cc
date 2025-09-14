@@ -15,7 +15,7 @@ limitations under the License.
 #include "tensorflow/lite/testing/tf_driver.h"
 
 #include <fstream>
-#include <iostream>
+//#include <iostream>
 #include <string>
 
 #include "absl/strings/escaping.h"

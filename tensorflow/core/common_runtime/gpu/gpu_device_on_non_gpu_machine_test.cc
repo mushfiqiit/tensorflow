@@ -20,7 +20,7 @@ limitations under the License.
 #include "tensorflow/core/common_runtime/gpu/gpu_device.h"
 
 #include <algorithm>
-#include <iostream>
+//#include <iostream>
 #include <vector>
 
 #include "tensorflow/core/common_runtime/device.h"

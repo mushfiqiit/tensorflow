@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 #include "tensorflow/lite/experimental/acceleration/compatibility/android_info.h"
 
-#include <iostream>
+//#include <iostream>
 #include <string>
 
 #include "absl/status/status.h"

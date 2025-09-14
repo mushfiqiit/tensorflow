@@ -15,24 +15,24 @@ limitations under the License.
 
 #include "tensorflow/core/platform/status.h"
 
-#include <stdio.h>
+/* #include <stdio.h>
 
 #include <deque>
 #include <functional>
 #include <memory>
-#include <string>
+#include <string> */
 
-#include "absl/base/call_once.h"
-#include "absl/strings/escaping.h"
-#include "absl/strings/match.h"
-#include "absl/types/optional.h"
-#include "tensorflow/core/platform/mutex.h"
-#include "tensorflow/core/platform/stacktrace.h"
-#include "tensorflow/core/platform/str_util.h"
-#include "tensorflow/core/platform/strcat.h"
-#include "tensorflow/core/platform/stringprintf.h"
-#include "tensorflow/core/protobuf/error_codes.pb.h"
-#include "tensorflow/core/protobuf/status.pb.h"
+//#include "absl/base/call_once.h"
+//#include "absl/strings/escaping.h"
+//#include "absl/strings/match.h"
+//#include "absl/types/optional.h"
+//#include "tensorflow/core/platform/mutex.h"
+//#include "tensorflow/core/platform/stacktrace.h"
+//#include "tensorflow/core/platform/str_util.h"
+//#include "tensorflow/core/platform/strcat.h"
+//#include "tensorflow/core/platform/stringprintf.h"
+//#include "tensorflow/core/protobuf/error_codes.pb.h"
+//#include "tensorflow/core/protobuf/status.pb.h"
 
 namespace tensorflow {
 

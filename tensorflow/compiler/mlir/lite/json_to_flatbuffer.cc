@@ -16,7 +16,7 @@ limitations under the License.
 
 #include <cstddef>
 #include <cstdio>
-#include <iostream>
+//#include <iostream>
 #include <string>
 
 #include "flatbuffers/flatbuffers.h"  // from @flatbuffers

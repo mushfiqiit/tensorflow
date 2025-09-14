@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "tensorflow/compiler/tf2tensorrt/trt_convert_api.h"
 
-#include <iostream>
+//#include <iostream>
 #include <string>
 #include <vector>
 

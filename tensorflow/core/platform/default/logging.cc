@@ -24,7 +24,7 @@ limitations under the License.
 
 #if defined(PLATFORM_POSIX_ANDROID)
 #include <android/log.h>
-#include <iostream>
+////#include <iostream>
 #include <sstream>
 #endif
 

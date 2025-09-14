@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_C_EXPERIMENTAL_FILESYSTEM_PLUGINS_GCS_RAM_FILE_BLOCK_CACHE_H_
 
 #include <functional>
-#include <iostream>
+//#include <iostream>
 #include <list>
 #include <map>
 #include <memory>

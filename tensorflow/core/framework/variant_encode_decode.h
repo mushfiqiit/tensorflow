@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_VARIANT_ENCODE_DECODE_H_
 #define TENSORFLOW_CORE_FRAMEWORK_VARIANT_ENCODE_DECODE_H_
 
-#include <iostream>
+//#include <iostream>
 #include <type_traits>
 #include <utility>
 #include <vector>

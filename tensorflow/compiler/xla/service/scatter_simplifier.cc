@@ -16,7 +16,7 @@ limitations under the License.
 #include "tensorflow/compiler/xla/service/scatter_simplifier.h"
 
 #include <algorithm>
-#include <iostream>
+//#include <iostream>
 #include <iterator>
 #include <utility>
 #include <vector>

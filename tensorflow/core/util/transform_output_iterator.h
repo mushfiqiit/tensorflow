@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_UTIL_TRANSFORM_OUTPUT_ITERATOR_H_
 #define TENSORFLOW_UTIL_TRANSFORM_OUTPUT_ITERATOR_H_
 
-#include <iostream>
+//#include <iostream>
 #include <iterator>
 
 namespace tensorflow {

@@ -16,7 +16,7 @@ limitations under the License.
 // A tool for reading a HloModule from a HloProto file and execute the module on
 // given platform(s). See kUsage for details.
 
-#include <iostream>
+//#include <iostream>
 #include <random>
 #include <string>
 #include <vector>

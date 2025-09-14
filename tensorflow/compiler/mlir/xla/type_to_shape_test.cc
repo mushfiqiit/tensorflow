@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "tensorflow/compiler/mlir/xla/type_to_shape.h"
 
-#include <iostream>
+//#include <iostream>
 #include <utility>
 
 #include "mlir/IR/Builders.h"  // from @llvm-project

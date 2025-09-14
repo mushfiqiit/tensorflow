@@ -20,7 +20,7 @@ limitations under the License.
 #include <stdint.h>
 
 #include <fstream>
-#include <iostream>
+//#include <iostream>
 #include <string>
 
 #include "flatbuffers/flatbuffers.h"  // from @flatbuffers

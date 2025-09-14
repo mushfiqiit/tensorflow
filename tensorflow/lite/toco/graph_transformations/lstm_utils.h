@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef TENSORFLOW_LITE_TOCO_GRAPH_TRANSFORMATIONS_LSTM_UTILS_H_
 #define TENSORFLOW_LITE_TOCO_GRAPH_TRANSFORMATIONS_LSTM_UTILS_H_
 
-#include <iostream>
+//#include <iostream>
 #include <string>
 #include <vector>
 
