@@ -20,7 +20,7 @@ limitations under the License.
 #include <vector>
 
 #include "tensorflow/core/common_runtime/eager/tensor_handle.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/status_test_util.h"
 #include "tensorflow/core/platform/error_payloads.h"
 #include "tensorflow/core/platform/test.h"

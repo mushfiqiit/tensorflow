@@ -26,7 +26,7 @@ limitations under the License.
 #include <string>
 
 #include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/util/stat_summarizer_options.h"
 #include "tensorflow/core/util/stats_calculator.h"

@@ -17,7 +17,7 @@ limitations under the License.
 
 #include "tensorflow/core/framework/allocator.h"
 #include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/lib/gtl/manual_constructor.h"
 
 namespace tensorflow {

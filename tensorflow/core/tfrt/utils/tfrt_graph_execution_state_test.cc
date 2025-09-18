@@ -28,7 +28,7 @@ limitations under the License.
 #include "tensorflow/core/framework/device_factory.h"
 #include "tensorflow/core/framework/graph.pb.h"
 #include "tensorflow/core/framework/tensor_testutil.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/grappler/utils/grappler_test.h"
 #include "tensorflow/core/lib/core/status_test_util.h"
 #include "tensorflow/core/protobuf/rewriter_config.pb.h"

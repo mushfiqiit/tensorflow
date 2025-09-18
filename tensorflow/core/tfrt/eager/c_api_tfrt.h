@@ -31,7 +31,7 @@ limitations under the License.
 #include "tensorflow/core/common_runtime/eager/context.h"
 #include "tensorflow/core/framework/cancellation.h"
 #include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/refcount.h"
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/protobuf/config.pb.h"

@@ -32,19 +32,19 @@ limitations under the License.
 #include <memory>
 #include <string>
 
-#include "tensorflow/core/framework/allocator.h"
-#include "tensorflow/core/framework/control_flow.h"
-#include "tensorflow/core/framework/device_attributes.pb.h"
+//#include "tensorflow/core/framework/allocator.h"
+//#include "tensorflow/core/framework/control_flow.h"
+//#include "tensorflow/core/framework/device_attributes.pb.h"
 #include "tensorflow/core/framework/device_base.h"
-#include "tensorflow/core/framework/graph.pb.h"
-#include "tensorflow/core/framework/op_kernel.h"
-#include "tensorflow/core/framework/op_segment.h"
-#include "tensorflow/core/framework/resource_mgr.h"
-#include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/graph/graph.h"
-#include "tensorflow/core/graph/types.h"
-#include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/macros.h"
+//#include "tensorflow/core/framework/graph.pb.h"
+//#include "tensorflow/core/framework/op_kernel.h"
+//#include "tensorflow/core/framework/op_segment.h"
+//#include "tensorflow/core/framework/resource_mgr.h"
+//#include "tensorflow/core/framework/types.h"
+//#include "tensorflow/core/graph/graph.h"
+//#include "tensorflow/core/graph/types.h"
+//#include "tensorflow/core/platform/errors.h"
+//#include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/util/device_name_utils.h"
@@ -63,9 +63,9 @@ class Device : public DeviceBase {
   const std::string& name() const override { return device_attributes_.name(); }
 
   // Parsed name of this device
-  const DeviceNameUtils::ParsedName& parsed_name() const {
+  /* const DeviceNameUtils::ParsedName& parsed_name() const {
     return parsed_name_;
-  }
+  } */
 
   // Describes what kind of device this is.  This is intended to be
   // human-readable and not computer-parsed, except that two devices
@@ -84,7 +84,7 @@ class Device : public DeviceBase {
   //
   // Subclasses may override this function if they wish to perform
   // some initialization before each compute.
-  virtual void Compute(OpKernel* op_kernel, OpKernelContext* context) {
+  /* virtual void Compute(OpKernel* op_kernel, OpKernelContext* context) {
     op_kernel->Compute(context);
   }
 
@@ -92,7 +92,7 @@ class Device : public DeviceBase {
   virtual void ComputeAsync(AsyncOpKernel* op_kernel, OpKernelContext* context,
                             AsyncOpKernel::DoneCallback done) {
     op_kernel->ComputeAsync(context, std::move(done));
-  }
+  } */
 
   // Blocks until all operations queued on the device at the time of
   // the call have completed.  Returns any error pending on the device
@@ -123,10 +123,10 @@ class Device : public DeviceBase {
   // current status in a non-blocking way, without using blocking calls such as
   // Stream::BlockHostUntilDone or Device::Sync. When applicable, the device
   // status is also updated with the retrieved stream status.
-  virtual Status RefreshStatus() {
+  /* virtual Status RefreshStatus() {
     return errors::Unimplemented(
         "RefreshStatus is not supported on this device.");
-  }
+  } */
 
   // Optionally modify the device's GraphDef before execution.
   //
@@ -136,9 +136,9 @@ class Device : public DeviceBase {
   //
   // 'graph' supplies the partition of the graph assigned to this
   // device.
-  virtual Status MaybeRewriteGraph(std::unique_ptr<Graph>* /*graph*/) {
+  /* virtual Status MaybeRewriteGraph(std::unique_ptr<Graph>* ) {
     return OkStatus();
-  }
+  } */
 
   // Sets `out_context` a new DeviceContext* for executing a graph, or nullptr
   // if the device does not support contexts. Returns an error status if any
@@ -146,23 +146,23 @@ class Device : public DeviceBase {
   //
   // The caller takes ownership of one reference on the output DeviceContext*,
   // and should call Unref().
-  virtual Status TryGetDeviceContext(DeviceContext** out_context) {
+  /* virtual Status TryGetDeviceContext(DeviceContext** out_context) {
     *out_context = nullptr;
     return OkStatus();
-  }
+  } */
 
   // Returns the op segment of this device.  The caller can reuse op
   // kernels registered for the same session running on this device.
-  OpSegment* op_segment() { return &op_seg_; }
+  /* OpSegment* op_segment() { return &op_seg_; } */
 
   // Returns the resource manager associated w/ this device.
   virtual ResourceMgr* resource_manager() { return rmgr_; }
 
   // Summarizes the status of this Device, for debugging.
-  std::string DebugString() const { return device_attributes_.DebugString(); }
+  /* std::string DebugString() const { return device_attributes_.DebugString(); } */
 
   // Assembles the parameter components into a complete DeviceAttributes value.
-  static DeviceAttributes BuildDeviceAttributes(
+  /* static DeviceAttributes BuildDeviceAttributes(
       const std::string& name, DeviceType device, Bytes memory_limit,
       const DeviceLocality& locality, const std::string& physical_device_desc);
 
@@ -171,7 +171,7 @@ class Device : public DeviceBase {
       const DeviceLocality& locality) {
     // Pass in an empty string as physical device name.
     return BuildDeviceAttributes(name, device, memory_limit, locality, "");
-  }
+  } */
 
   // Updates `attributes()`, indicating the XLA global ID associated with this
   // device. This ID is unique across clients in a multi-client setup. For TPUs
@@ -181,7 +181,7 @@ class Device : public DeviceBase {
   }
 
   // Clears the resource manager associated with this device.
-  void ClearResourceMgr() { rmgr_->Clear(); }
+  /* void ClearResourceMgr() { rmgr_->Clear(); } */
 
   virtual bool IsLocal() const { return true; }
 
@@ -189,17 +189,17 @@ class Device : public DeviceBase {
   virtual bool IsRemoteCallAllowed() const;
 
  protected:
-  void DeleteResourceMgr() {
+  /* void DeleteResourceMgr() {
     delete rmgr_;
     rmgr_ = nullptr;
-  }
+  } */
 
  private:
   DeviceAttributes device_attributes_;
   DeviceNameUtils::ParsedName parsed_name_;
 
   // op_seg_ maps session handle and op name to OpKernel objects.
-  OpSegment op_seg_;
+  /* OpSegment op_seg_; */
 
   // Resources associated w/ this device. E.g., shared variables, etc.
   ResourceMgr* rmgr_ = nullptr;

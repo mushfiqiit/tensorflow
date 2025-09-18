@@ -25,7 +25,7 @@ limitations under the License.
 #include <vector>
 
 #include "absl/container/flat_hash_map.h"
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/types/span.h"
 #include "tensorflow/compiler/xla/service/dfs_hlo_visitor_with_default.h"
 #include "tensorflow/compiler/xla/service/hlo_instruction.h"

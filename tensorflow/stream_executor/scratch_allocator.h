@@ -19,7 +19,7 @@ limitations under the License.
 #include <memory>
 #include <utility>
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "tensorflow/stream_executor/device_memory.h"
 #include "tensorflow/stream_executor/device_memory_allocator.h"
 #include "tensorflow/stream_executor/lib/statusor.h"

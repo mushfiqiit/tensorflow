@@ -18,7 +18,7 @@ limitations under the License.
 #include <gtest/gtest.h>
 #include "tensorflow/compiler/tf2tensorrt/convert/convert_nodes.h"
 #include "tensorflow/compiler/tf2tensorrt/convert/op_converter_registry.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/status_test_util.h"
 #include "tensorflow/core/platform/status_matchers.h"
 #include "tensorflow/core/protobuf/error_codes.pb.h"

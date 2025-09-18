@@ -18,7 +18,7 @@ limitations under the License.
 #include <utility>
 #include <vector>
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_join.h"
 #include "tensorflow/compiler/tf2tensorrt/common/datavec.h"
@@ -38,7 +38,7 @@ limitations under the License.
 #include "tensorflow/core/framework/tensor_shape.pb.h"
 #include "tensorflow/core/framework/tensor_types.h"
 #include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/kernels/ops_testutil.h"
 #include "tensorflow/core/lib/core/status_test_util.h"
 #include "tensorflow/core/lib/io/record_reader.h"

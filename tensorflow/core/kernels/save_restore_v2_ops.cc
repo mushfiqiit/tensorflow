@@ -23,7 +23,7 @@ limitations under the License.
 #include "tensorflow/core/framework/resource_mgr.h"
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/kernels/checkpoint_callback_manager.h"
 #include "tensorflow/core/kernels/save_restore_tensor.h"
 #include "tensorflow/core/lib/core/status.h"

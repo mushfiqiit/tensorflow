@@ -22,7 +22,7 @@ limitations under the License.
 #include "tensorflow/c/tf_tensor_internal.h"
 #include "tensorflow/core/lib/core/coding.h"
 #include "tensorflow/core/lib/core/errors.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/python/lib/core/bfloat16.h"
 #include "tensorflow/python/lib/core/ndarray_tensor_bridge.h"

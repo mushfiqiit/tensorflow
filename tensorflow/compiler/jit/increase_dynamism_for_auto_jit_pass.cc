@@ -16,7 +16,7 @@ limitations under the License.
 #include "tensorflow/compiler/jit/increase_dynamism_for_auto_jit_pass.h"
 #include <iterator>
 #include "absl/algorithm/container.h"
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_replace.h"
 #include "absl/types/optional.h"

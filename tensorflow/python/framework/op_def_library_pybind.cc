@@ -32,7 +32,7 @@ limitations under the License.
 #include "tensorflow/core/framework/op.h"
 #include "tensorflow/core/framework/op_def.pb.h"
 #include "tensorflow/core/framework/op_def_util.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/protobuf.h"
 #include "tensorflow/python/framework/op_def_util.h"
 #include "tensorflow/python/lib/core/pybind11_status.h"

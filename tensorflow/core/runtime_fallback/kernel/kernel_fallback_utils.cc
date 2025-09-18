@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 #include "tensorflow/core/runtime_fallback/kernel/kernel_fallback_utils.h"
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "tensorflow/core/framework/device.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/runtime_fallback/kernel/kernel_fallback_compat_request_state.h"

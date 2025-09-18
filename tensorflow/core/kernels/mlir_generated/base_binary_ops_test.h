@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_KERNELS_MLIR_GENERATED_BASE_BINARY_OPS_TEST_H_
 #define TENSORFLOW_CORE_KERNELS_MLIR_GENERATED_BASE_BINARY_OPS_TEST_H_
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/strings/string_view.h"
 #include "llvm/ADT/STLExtras.h"
 #include "tensorflow/core/common_runtime/device.h"

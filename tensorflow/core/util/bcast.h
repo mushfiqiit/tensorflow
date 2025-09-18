@@ -19,7 +19,7 @@ limitations under the License.
 #include <algorithm>
 
 #include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/types.h"
 

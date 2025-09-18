@@ -23,7 +23,7 @@ limitations under the License.
 #include "dnnl.hpp"
 #include "tensorflow/core/framework/numeric_op.h"
 #include "tensorflow/core/framework/register_types.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/util/mkl_util.h"
 
 using dnnl::stream;

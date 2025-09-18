@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_COMMON_RUNTIME_EAGER_EXECUTE_H_
 #define TENSORFLOW_CORE_COMMON_RUNTIME_EAGER_EXECUTE_H_
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/types/span.h"
 #include "tensorflow/core/common_runtime/device.h"
 #include "tensorflow/core/common_runtime/eager/context.h"

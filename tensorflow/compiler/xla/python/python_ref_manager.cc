@@ -15,7 +15,7 @@ limitations under the License.
 
 #include "tensorflow/compiler/xla/python/python_ref_manager.h"
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 
 namespace xla {
 

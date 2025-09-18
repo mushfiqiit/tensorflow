@@ -21,8 +21,8 @@ limitations under the License.
 #include <functional>
 #include <limits>
 
-#include "absl/strings/string_view.h"
-#include "absl/types/optional.h"
+//#include "absl/strings/string_view.h"
+//#include "absl/types/optional.h"
 #include "tensorflow/core/framework/numeric_types.h"
 #include "tensorflow/core/framework/type_traits.h"
 #include "tensorflow/core/platform/logging.h"
@@ -67,7 +67,7 @@ struct AllocationAttributes {
 // Runtime statistics collected by an allocator. Exactly the same as
 // stream_executor::AllocatorStats, but independently defined to preserve the
 // mutual independence of StreamExecutor and TensorFlow.
-struct AllocatorStats {
+/* struct AllocatorStats {
   int64_t num_allocs;          // Number of allocations.
   int64_t bytes_in_use;        // Number of bytes in use.
   int64_t peak_bytes_in_use;   // The peak bytes in use.
@@ -96,7 +96,7 @@ struct AllocatorStats {
         largest_free_block_bytes(0) {}
 
   std::string DebugString() const;
-};
+}; */
 
 // The type of the allocated memory.
 enum class AllocatorMemoryType {
@@ -210,7 +210,7 @@ class Allocator {
   }
 
   // Fills in 'stats' with statistics collected by this allocator.
-  virtual absl::optional<AllocatorStats> GetStats() { return absl::nullopt; }
+  //virtual absl::optional<AllocatorStats> GetStats() { return absl::nullopt; }
 
   // If implemented, clears the internal stats except for the `in_use` fields
   // and sets the `peak_bytes_in_use` to be equal to the `bytes_in_use`. Returns

@@ -34,7 +34,7 @@ limitations under the License.
 #include "tensorflow/core/kernels/sparse/sparse_matrix.h"
 #include "tensorflow/core/kernels/sparse/transpose_op.h"
 #include "tensorflow/core/kernels/transpose_functor.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/platform/threadpool.h"
 
 #if GOOGLE_CUDA || TENSORFLOW_USE_ROCM

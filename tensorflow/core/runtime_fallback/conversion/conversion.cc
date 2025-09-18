@@ -18,7 +18,7 @@ limitations under the License.
 
 #include "tensorflow/core/runtime_fallback/conversion/conversion.h"
 
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/runtime_fallback/kernel/kernel_fallback_tensor.h"
 #include "tensorflow/core/runtime_fallback/kernel/tensor_util.h"
 #include "tensorflow/core/runtime_fallback/runtime/runtime_fallback_tensor.h"

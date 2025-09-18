@@ -20,7 +20,7 @@ limitations under the License.
 
 #include <array>
 
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 
 namespace tensorflow {
 

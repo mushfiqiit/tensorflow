@@ -28,7 +28,7 @@ limitations under the License.
 #include "absl/strings/string_view.h"
 #include "llvm/ADT/Optional.h"
 #include "llvm/ADT/SmallVector.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/lite/tools/optimize/reduced_precision_support.h"
 
 namespace mlir {

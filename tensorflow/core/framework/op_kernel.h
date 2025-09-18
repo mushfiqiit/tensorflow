@@ -44,7 +44,7 @@ limitations under the License.
 #include "tensorflow/core/framework/tensor_shape.pb.h"  // TODO(b/62899350): Remove
 #include "tensorflow/core/framework/tracking_allocator.h"
 #include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/errors.h"
 #include "tensorflow/core/lib/core/status.h"
 #include "tensorflow/core/lib/gtl/array_slice.h"
@@ -618,7 +618,7 @@ class OpKernelContext {
 
     // Mechanism used by this op kernel invocation to communicate with
     // computations running on other devices.
-    RendezvousInterface* rendezvous = nullptr;
+    //RendezvousInterface* rendezvous = nullptr;
 
     // Mechanism for executing a collective op that needs to coordinate
     // with parallel instances running on other devices.
@@ -1061,7 +1061,7 @@ class OpKernelContext {
   //
   // An op kernel communicates with outside environment through
   // Rendezvous Send() and Recv().
-  RendezvousInterface* rendezvous() const { return params_->rendezvous; }
+  //RendezvousInterface* rendezvous() const { return params_->rendezvous; }
 
   CollectiveExecutor* collective_executor() const {
     return params_->collective_executor;

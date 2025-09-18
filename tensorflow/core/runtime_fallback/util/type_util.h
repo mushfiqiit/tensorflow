@@ -16,7 +16,7 @@ limitations under the License.
 #define TENSORFLOW_CORE_RUNTIME_FALLBACK_UTIL_TYPE_UTIL_H_
 
 #include "llvm/Support/ErrorHandling.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tfrt/dtype/dtype.h"  // from @tf_runtime
 

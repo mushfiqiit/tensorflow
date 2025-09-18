@@ -23,7 +23,7 @@ limitations under the License.
 
 #include "absl/types/span.h"
 #include "tensorflow/core/framework/op_def.pb.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/python/framework/op_def_util.h"
 #include "tensorflow/python/framework/python_tensor_converter.h"

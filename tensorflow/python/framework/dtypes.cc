@@ -16,7 +16,7 @@ limitations under the License.
 #include "pybind11/detail/common.h"
 #include "pybind11/pybind11.h"
 #include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 
 namespace {
 

@@ -30,7 +30,7 @@
 
 #include "src/FixedPoint/FixedPointTypes.h"
 
-// Use optimized implementations whenever available
+/* // Use optimized implementations whenever available
 #if defined (EIGEN_VECTORIZE_AVX512DQ) || defined (EIGEN_VECTORIZE_AVX512BW)
 #include "src/FixedPoint/PacketMathAVX512.h"
 #include "src/FixedPoint/TypeCastingAVX512.h"
@@ -53,6 +53,6 @@
 // Use the default implementation when no optimized code is available
 #include "src/FixedPoint/MatMatProduct.h"
 #include "src/FixedPoint/MatVecProduct.h"
-
+ */
 
 #endif // EIGEN_CXX11_FIXED_POINT_MODULE

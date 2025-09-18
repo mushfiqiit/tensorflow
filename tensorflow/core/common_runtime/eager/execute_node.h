@@ -25,7 +25,7 @@ limitations under the License.
 #include "tensorflow/core/platform/platform.h"
 // clang-format on
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include "absl/types/span.h"

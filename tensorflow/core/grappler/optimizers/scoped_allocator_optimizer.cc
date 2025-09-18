@@ -24,7 +24,7 @@ limitations under the License.
 #include "tensorflow/core/grappler/grappler_item.h"
 #include "tensorflow/core/grappler/op_types.h"
 #include "tensorflow/core/grappler/utils/frame.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 
 // Like TF_RETURN_IF_ERROR, but also logs a WARNING.
 #define LOG_WARNING_AND_RETURN_IF_ERROR(...)            \

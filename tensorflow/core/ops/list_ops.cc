@@ -17,7 +17,7 @@ limitations under the License.
 #include "tensorflow/core/framework/full_type.pb.h"
 #include "tensorflow/core/framework/op.h"
 #include "tensorflow/core/framework/shape_inference.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 
 namespace tensorflow {
 namespace {

@@ -35,7 +35,7 @@ limitations under the License.
 #include "tensorflow/compiler/mlir/tfjs/tf_tfjs_passes.h"
 #include "tensorflow/compiler/mlir/tfjs/transforms/passes.h"
 #include "tensorflow/compiler/mlir/tfjs/translate/tf_to_tfjs_json.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/errors.h"
 #include "tensorflow/stream_executor/lib/statusor.h"
 

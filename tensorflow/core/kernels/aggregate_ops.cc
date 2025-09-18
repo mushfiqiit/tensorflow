@@ -27,7 +27,7 @@ limitations under the License.
 #include "tensorflow/core/framework/variant_op_registry.h"
 #include "tensorflow/core/kernels/aggregate_ops_cpu.h"
 #include "tensorflow/core/kernels/variant_ops_util.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 
 namespace tensorflow {
 

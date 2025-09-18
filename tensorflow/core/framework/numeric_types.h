@@ -17,13 +17,13 @@ limitations under the License.
 #define TENSORFLOW_CORE_FRAMEWORK_NUMERIC_TYPES_H_
 
 #include <complex>
-#include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
+//#include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 // Disable clang-format to prevent 'FixedPoint' header from being included
 // before 'Tensor' header on which it depends.
 // clang-format off
-#include "third_party/eigen3/unsupported/Eigen/CXX11/FixedPoint"
+//#include "third_party/eigen3/unsupported/Eigen/CXX11/FixedPoint"
 // clang-format on
-
+#include "FixedPointStub.h"
 #include "tensorflow/core/platform/types.h"
 
 namespace tensorflow {
@@ -53,6 +53,7 @@ static inline tensorflow::bfloat16 FloatToBFloat16(float float_val) {
 }
 
 namespace Eigen {
+const int HugeCost = 10000;
 template <>
 struct NumTraits<tensorflow::tstring> : GenericNumTraits<tensorflow::tstring> {
   enum {

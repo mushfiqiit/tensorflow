@@ -16,7 +16,7 @@ limitations under the License.
 #include "tensorflow/core/tpu/tpu_node_device_util.h"
 
 #include "tensorflow/compiler/tf2xla/tf2xla_util.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/stringpiece.h"
 
 namespace tensorflow {

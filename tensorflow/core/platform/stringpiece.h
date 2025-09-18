@@ -26,7 +26,8 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_PLATFORM_STRINGPIECE_H_
 #define TENSORFLOW_CORE_PLATFORM_STRINGPIECE_H_
 
-#include "absl/strings/string_view.h"  // IWYU pragma: export
+//#include "absl/strings/string_view.h"  // IWYU pragma: export
+#include "string_view_stub.h"
 
 namespace tensorflow {
 

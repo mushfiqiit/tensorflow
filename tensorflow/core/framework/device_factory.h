@@ -19,7 +19,7 @@ limitations under the License.
 #include <string>
 #include <vector>
 
-#include "absl/base/attributes.h"
+//#include "absl/base/attributes.h"
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/types.h"
 
@@ -34,12 +34,12 @@ class DeviceFactory {
   static void Register(const std::string& device_type,
                        std::unique_ptr<DeviceFactory> factory, int priority,
                        bool is_pluggable_device);
-  ABSL_DEPRECATED("Use the `Register` function above instead")
-  static void Register(const std::string& device_type, DeviceFactory* factory,
+  /* ABSL_DEPRECATED("Use the `Register` function above instead") */
+  /* static void Register(const std::string& device_type, DeviceFactory* factory,
                        int priority, bool is_pluggable_device) {
     Register(device_type, std::unique_ptr<DeviceFactory>(factory), priority,
              is_pluggable_device);
-  }
+  } */
   static DeviceFactory* GetFactory(const std::string& device_type);
 
   // Append to "*devices" CPU devices.

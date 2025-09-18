@@ -1,9 +1,12 @@
 #include <stdio.h>
 //#include <tensorflow/c/c_api.h>
-//#include "tensorflow/c/tf_status.h"
+#include <tensorflow/c/eager/c_api.h>
+#include "tensorflow/c/tf_status.h"
 
 int main() {
-  //TF_Status* status = TF_NewStatus();
+  TF_Status* status = TF_NewStatus();
+  TFE_ContextOptions* opts = TFE_NewContextOptions();
+  TFE_Context* ctx = TFE_NewContext(opts, status);
   return 0;
 }
 

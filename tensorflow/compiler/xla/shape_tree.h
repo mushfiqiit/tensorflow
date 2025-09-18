@@ -25,7 +25,7 @@ limitations under the License.
 #include <vector>
 
 #include "absl/algorithm/container.h"
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/functional/function_ref.h"
 #include "absl/types/span.h"
 #include "tensorflow/compiler/xla/shape_util.h"

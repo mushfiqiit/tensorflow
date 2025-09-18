@@ -20,7 +20,7 @@ limitations under the License.
 #include "tensorflow/c/experimental/saved_model/core/test_utils.h"
 #include "tensorflow/c/tensor_interface.h"
 #include "tensorflow/cc/saved_model/constants.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/status_test_util.h"
 #include "tensorflow/core/platform/path.h"
 #include "tensorflow/core/platform/stringpiece.h"

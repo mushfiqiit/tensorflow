@@ -24,7 +24,7 @@ limitations under the License.
 #include "tensorflow/c/tensor_interface.h"
 #include "tensorflow/core/framework/device_attributes.pb.h"
 #include "tensorflow/core/framework/op_def.pb.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/casts.h"
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/util/managed_stack_trace.h"

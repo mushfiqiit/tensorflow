@@ -1,0 +1,294 @@
+#ifndef EIGEN_THREADPOOL_DEVICE_STUB_H_
+#define EIGEN_THREADPOOL_DEVICE_STUB_H_
+
+#include <algorithm>
+#include <atomic>
+#include <cstddef>
+#include <cstdint>
+#include <cstring>
+#include <cstdlib>
+#include <condition_variable>
+#include <functional>
+#include <mutex>
+#include <new>
+#include <thread>
+#include <vector>
+#include <tuple> 
+
+namespace Eigen {
+
+// ---- macros used in Eigen/TF code paths ----
+#ifndef EIGEN_STRONG_INLINE
+#define EIGEN_STRONG_INLINE inline
+#endif
+#ifndef EIGEN_DEVICE_FUNC
+#define EIGEN_DEVICE_FUNC
+#endif
+#ifndef EIGEN_PREDICT_FALSE
+#define EIGEN_PREDICT_FALSE(x) (x)
+#endif
+
+using Index = std::ptrdiff_t;
+
+// ---- aligned alloc helpers (no external deps) ----
+namespace internal {
+inline void* aligned_malloc(std::size_t n, std::size_t align = alignof(std::max_align_t)) {
+#if (__cplusplus >= 201703L)
+  if (align < sizeof(void*)) align = sizeof(void*);
+  if (n == 0) n = align;
+  // std::aligned_alloc requires size be a multiple of alignment
+  std::size_t size = ((n + align - 1) / align) * align;
+  void* p = std::aligned_alloc(align, size);
+  if (!p) throw std::bad_alloc();
+  return p;
+#else
+  void* p = nullptr;
+  if (posix_memalign(&p, align, n) != 0) p = nullptr;
+  if (!p) throw std::bad_alloc();
+  return p;
+#endif
+}
+inline void aligned_free(void* p) { std::free(p); }
+}  // namespace internal
+
+// ---- simple cache size helpers ----
+inline std::size_t l1CacheSize() { return 32 * 1024; }
+inline std::size_t l3CacheSize() { return 8 * 1024 * 1024; }
+
+// ---- minimal interfaces expected by ThreadPoolDevice ----
+struct ThreadPoolInterface {
+  virtual ~ThreadPoolInterface() = default;
+  virtual void Schedule(std::function<void()> fn) = 0;
+  virtual int NumThreads() const = 0;
+  // Returns -1 for non-pool threads by default.
+  virtual int CurrentThreadId() const { return -1; }
+};
+
+struct Allocator {
+  virtual ~Allocator() = default;
+  virtual void* allocate(std::size_t n) = 0;
+  virtual void deallocate(void* p) = 0;
+};
+
+// ---- Notification & Barrier primitives ----
+class Notification {
+ public:
+  Notification() : ready_(false) {}
+  void Notify() {
+    { std::lock_guard<std::mutex> lk(mu_); ready_ = true; }
+    cv_.notify_all();
+  }
+  void Wait() {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait(lk, [&]{ return ready_; });
+  }
+ private:
+  std::mutex mu_;
+  std::condition_variable cv_;
+  bool ready_;
+};
+
+class Barrier {
+ public:
+  explicit Barrier(int expected) : expected_(expected), count_(0) {}
+  void Notify() {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (++count_ >= expected_) cv_.notify_all();
+  }
+  void Wait() {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait(lk, [&]{ return count_ >= expected_; });
+  }
+ private:
+  int expected_;
+  int count_;
+  std::mutex mu_;
+  std::condition_variable cv_;
+};
+
+// ---- numext helpers used by Eigen code ----
+namespace numext {
+template <typename T> EIGEN_STRONG_INLINE T mini(T a, T b) { return a < b ? a : b; }
+template <typename T> EIGEN_STRONG_INLINE T maxi(T a, T b) { return a > b ? a : b; }
+template <typename T> EIGEN_STRONG_INLINE T div_ceil(T a, T b) { return (a + b - 1) / b; }
+}  // namespace numext
+
+// ---- cost model stubs (just enough to compile) ----
+struct TensorOpCost {
+  TensorOpCost(double, double, double) {}  // (load, store, compute) ignored
+};
+
+template <typename Device>
+struct TensorCostModel {
+  static double taskSize(std::size_t /*iters*/, const TensorOpCost& /*c*/) { return 1.0; }
+  static std::size_t numThreads(std::size_t /*n*/, const TensorOpCost& /*c*/, int max_threads) {
+    return static_cast<std::size_t>(std::max(1, max_threads));
+  }
+};
+
+// ---- The ThreadPoolDevice stub ----
+struct ThreadPoolDevice {
+  // Note: pool is non-owning (matches Eigen semantics)
+  ThreadPoolDevice(ThreadPoolInterface* pool, int num_cores, Allocator* allocator = nullptr)
+      : pool_(pool), num_threads_(num_cores), allocator_(allocator) {}
+
+  EIGEN_STRONG_INLINE void* allocate(std::size_t num_bytes) const {
+    return allocator_ ? allocator_->allocate(num_bytes) : internal::aligned_malloc(num_bytes);
+  }
+  EIGEN_STRONG_INLINE void deallocate(void* buffer) const {
+    if (allocator_) allocator_->deallocate(buffer);
+    else internal::aligned_free(buffer);
+  }
+  EIGEN_STRONG_INLINE void* allocate_temp(std::size_t n) const { return allocate(n); }
+  EIGEN_STRONG_INLINE void deallocate_temp(void* p) const { deallocate(p); }
+
+  template <typename Type>
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Type get(Type data) const { return data; }
+
+  EIGEN_STRONG_INLINE void memcpy(void* dst, const void* src, std::size_t n) const { ::memcpy(dst, src, n); }
+  EIGEN_STRONG_INLINE void memcpyHostToDevice(void* dst, const void* src, std::size_t n) const { memcpy(dst, src, n); }
+  EIGEN_STRONG_INLINE void memcpyDeviceToHost(void* dst, const void* src, std::size_t n) const { memcpy(dst, src, n); }
+  EIGEN_STRONG_INLINE void memset(void* buffer, int c, std::size_t n) const { ::memset(buffer, c, n); }
+
+  template <typename T>
+  EIGEN_STRONG_INLINE void fill(T* begin, T* end, const T& value) const { std::fill(begin, end, value); }
+
+  EIGEN_STRONG_INLINE int numThreads() const { return num_threads_; }
+  EIGEN_STRONG_INLINE int numThreadsInPool() const { return pool_ ? pool_->NumThreads() : num_threads_; }
+
+  EIGEN_STRONG_INLINE std::size_t firstLevelCacheSize() const { return l1CacheSize(); }
+  EIGEN_STRONG_INLINE std::size_t lastLevelCacheSize() const {
+    return num_threads_ > 0 ? l3CacheSize() / static_cast<std::size_t>(num_threads_) : l3CacheSize();
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void synchronize() const {}
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE int majorDeviceVersion() const { return 1; }
+
+template <class Function, class... Args>
+EIGEN_STRONG_INLINE Notification* enqueue(Function&& f, Args&&... args) const {
+  Notification* n = new Notification();
+
+  // C++17-safe: capture func + tuple of args, no pack in capture
+  auto func = std::forward<Function>(f);
+  auto tup  = std::make_tuple(std::forward<Args>(args)...);
+
+  auto task = [n, func = std::move(func), tup = std::move(tup)]() mutable {
+    std::apply(func, tup);
+    n->Notify();
+  };
+  pool_->Schedule(std::move(task));
+  return n;
+}
+
+template <class Function, class... Args>
+EIGEN_STRONG_INLINE void enqueue_with_barrier(Barrier* b, Function&& f, Args&&... args) const {
+  auto func = std::forward<Function>(f);
+  auto tup  = std::make_tuple(std::forward<Args>(args)...);
+
+  auto task = [b, func = std::move(func), tup = std::move(tup)]() mutable {
+    std::apply(func, tup);
+    b->Notify();
+  };
+  pool_->Schedule(std::move(task));
+}
+
+template <class Function, class... Args>
+EIGEN_STRONG_INLINE void enqueueNoNotification(Function&& f, Args&&... args) const {
+  auto func = std::forward<Function>(f);
+  auto tup  = std::make_tuple(std::forward<Args>(args)...);
+
+  auto task = [func = std::move(func), tup = std::move(tup)]() mutable {
+    std::apply(func, tup);
+  };
+  pool_->Schedule(std::move(task));
+}
+
+  EIGEN_STRONG_INLINE int currentThreadId() const { return pool_ ? pool_->CurrentThreadId() : -1; }
+
+  // Synchronous parallelFor (simple blocked execution; waits for completion).
+  void parallelFor(Index n, const TensorOpCost& /*cost*/,
+                   std::function<Index(Index)> block_align,
+                   std::function<void(Index, Index)> f) const {
+    if (EIGEN_PREDICT_FALSE(n <= 0)) return;
+    const int threads = std::max(1, numThreads());
+    if (n == 1 || threads == 1) { f(0, n); return; }
+
+    Index block_size = std::max<Index>(1, n / threads);
+    if (block_align) {
+      Index aligned = block_align(block_size);
+      if (aligned > 0) block_size = std::min<Index>(aligned, n);
+    }
+    Index blocks = numext::div_ceil(n, block_size);
+
+    Barrier barrier(static_cast<int>(blocks - 1));
+    for (Index b = 1; b < blocks; ++b) {
+      Index first = b * block_size;
+      Index last  = std::min<Index>(n, first + block_size);
+      pool_->Schedule([=, &f, &barrier]() { f(first, last); barrier.Notify(); });
+    }
+    // Run the first block inline
+    f(0, std::min<Index>(n, block_size));
+    barrier.Wait();
+  }
+
+  void parallelFor(Index n, const TensorOpCost& cost,
+                   std::function<void(Index, Index)> f) const {
+    parallelFor(n, cost, nullptr, std::move(f));
+  }
+
+  // Asynchronous parallelFor: schedules all blocks; calls done() after the last finishes.
+  void parallelForAsync(Index n, const TensorOpCost& /*cost*/,
+                        std::function<Index(Index)> block_align,
+                        std::function<void(Index, Index)> f,
+                        std::function<void()> done) const {
+    if (n <= 0) { done(); return; }
+    const int threads = std::max(1, numThreads());
+    if (n == 1 || threads == 1) { f(0, n); done(); return; }
+
+    Index block_size = std::max<Index>(1, n / threads);
+    if (block_align) {
+      Index aligned = block_align(block_size);
+      if (aligned > 0) block_size = std::min<Index>(aligned, n);
+    }
+    Index blocks = numext::div_ceil(n, block_size);
+
+    struct Ctx {
+      std::atomic<Index> cnt;
+      std::function<void()> done;
+      std::function<void(Index,Index)> f;
+    };
+    auto* ctx = new Ctx{blocks, std::move(done), std::move(f)};
+
+    for (Index b = 0; b < blocks; ++b) {
+      Index first = b * block_size;
+      Index last  = std::min<Index>(n, first + block_size);
+      pool_->Schedule([ctx, first, last]() {
+        ctx->f(first, last);
+        if (ctx->cnt.fetch_sub(1) == 1) {
+          auto cb = std::move(ctx->done);
+          delete ctx;
+          cb();
+        }
+      });
+    }
+  }
+
+  void parallelForAsync(Index n, const TensorOpCost& cost,
+                        std::function<void(Index, Index)> f,
+                        std::function<void()> done) const {
+    parallelForAsync(n, cost, nullptr, std::move(f), std::move(done));
+  }
+
+  // Accessors
+  ThreadPoolInterface* getPool() const { return pool_; }
+  Allocator* allocator() const { return allocator_; }
+
+ private:
+  ThreadPoolInterface* pool_;
+  int num_threads_;
+  Allocator* allocator_;
+};
+
+}  // namespace Eigen
+
+#endif  // EIGEN_THREADPOOL_DEVICE_STUB_H_

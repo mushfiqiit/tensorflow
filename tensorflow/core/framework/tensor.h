@@ -12,7 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-
+#define EIGEN_MAX_ALIGN_BYTES 0
 #ifndef TENSORFLOW_CORE_FRAMEWORK_TENSOR_H_
 #define TENSORFLOW_CORE_FRAMEWORK_TENSOR_H_
 
@@ -24,11 +24,11 @@ limitations under the License.
 #include "tensorflow/core/framework/tensor_shape.h"
 #include "tensorflow/core/framework/tensor_types.h"
 #include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/refcount.h"
 #include "tensorflow/core/lib/core/status.h"
 #include "tensorflow/core/lib/core/stringpiece.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/mem.h"
@@ -245,8 +245,8 @@ class Tensor {
       : Tensor(scalar_value, host_scalar_tag{}) {}
   explicit Tensor(Eigen::half scalar_value)
       : Tensor(scalar_value, host_scalar_tag{}) {}
-  explicit Tensor(ResourceHandle scalar_value)
-      : Tensor(std::move(scalar_value), host_scalar_tag{}) {}
+  /* explicit Tensor(ResourceHandle scalar_value)
+      : Tensor(std::move(scalar_value), host_scalar_tag{}) {} */
 
   // NOTE: The `const char*` host-scalar constructor is provided as a
   // convenience because otherwise passing a string literal would surprisingly
@@ -659,10 +659,10 @@ class Tensor {
   /// Like BitcastFrom, but CHECK fails if any preconditions are not met.
   ///
   /// Deprecated. Use BitcastFrom instead and check the returned Status.
-  void UnsafeCopyFromInternal(const Tensor& other, DataType dtype,
+  /* void UnsafeCopyFromInternal(const Tensor& other, DataType dtype,
                               const TensorShape& shape) {
     TF_CHECK_OK(BitcastFrom(other, dtype, shape));
-  }
+  } */
 
   // Returns true if the refcount on buf_ and any possible underlying root
   // buffer is one.
@@ -758,7 +758,7 @@ T* Tensor::base() const {
   return buf_ == nullptr ? nullptr : buf_->base<T>();
 }
 
-template <typename T, size_t NDIMS>
+/* template <typename T, size_t NDIMS>
 typename TTypes<T, NDIMS>::Tensor Tensor::tensor() {
   CheckTypeAndIsAligned(DataTypeToEnum<T>::v());
   return typename TTypes<T, NDIMS>::Tensor(base<T>(),
@@ -784,7 +784,7 @@ typename TTypes<T, NDIMS>::ConstTensor Tensor::bit_casted_tensor() const {
   CHECK(IsAligned());
   return typename TTypes<T, NDIMS>::ConstTensor(base<const T>(),
                                                 shape().AsEigenDSizes<NDIMS>());
-}
+} */
 
 template <typename T, size_t NDIMS>
 typename TTypes<T, NDIMS>::Tensor Tensor::reinterpret_last_dimension() {

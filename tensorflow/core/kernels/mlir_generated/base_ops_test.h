@@ -18,7 +18,7 @@ limitations under the License.
 
 #include <string>
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/strings/string_view.h"
 #include "llvm/ADT/STLExtras.h"
 #include "tensorflow/core/framework/tensor_shape.h"

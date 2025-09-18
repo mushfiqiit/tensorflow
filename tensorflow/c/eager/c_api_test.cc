@@ -21,7 +21,7 @@ limitations under the License.
 
 // clang-format off
 #include "tensorflow/core/framework/attr_value.pb.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/platform.h"
 // clang-format on
 

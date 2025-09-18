@@ -21,23 +21,23 @@ limitations under the License.
 #include <string>
 #include <vector>
 
-#include "absl/algorithm/container.h"
-#include "absl/memory/memory.h"
-#include "tensorflow/c/c_api.h"
+//#include "absl/algorithm/container.h"
+//#include "absl/memory/memory.h"
 #include "tensorflow/c/c_api_internal.h"
+/* #include "tensorflow/c/eager/c_api_internal.h"
 #include "tensorflow/c/eager/abstract_tensor_handle.h"
-#include "tensorflow/c/eager/c_api_experimental.h"
+#include "tensorflow/c/eager/c_api_experimental.h" */
 #include "tensorflow/c/eager/c_api_internal.h"
-#include "tensorflow/c/eager/immediate_execution_operation.h"
+/* #include "tensorflow/c/eager/immediate_execution_operation.h"
 #include "tensorflow/c/eager/immediate_execution_tensor_handle.h"
 #include "tensorflow/c/eager/tfe_context_internal.h"
 #include "tensorflow/c/eager/tfe_op_internal.h"
 #include "tensorflow/c/eager/tfe_tensorhandle_internal.h"
 #include "tensorflow/c/tf_tensor_internal.h"
 #include "tensorflow/core/common_runtime/copy_tensor.h"
-#include "tensorflow/core/common_runtime/device.h"
+#include "tensorflow/core/common_runtime/device.h" */
 #include "tensorflow/core/common_runtime/device_factory.h"
-#include "tensorflow/core/common_runtime/device_mgr.h"
+/* #include "tensorflow/core/common_runtime/device_mgr.h"
 #include "tensorflow/core/common_runtime/eager/attr_builder.h"
 #include "tensorflow/core/common_runtime/eager/context.h"
 #include "tensorflow/core/common_runtime/eager/custom_device.h"
@@ -49,24 +49,27 @@ limitations under the License.
 #include "tensorflow/core/framework/attr_value.pb.h"
 #include "tensorflow/core/framework/device_attributes.pb.h"
 #include "tensorflow/core/framework/function.h"
-#include "tensorflow/core/framework/node_def_util.h"
-#include "tensorflow/core/framework/rendezvous.h"
-#include "tensorflow/core/framework/tensor_shape.pb.h"
+#include "tensorflow/core/framework/node_def_util.h" */ 
+//#include "tensorflow/core/framework/rendezvous.h"
+/* #include "tensorflow/core/framework/tensor_shape.pb.h"
 #include "tensorflow/core/framework/types.h"
 #include "tensorflow/core/platform/casts.h"
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/platform.h"
-#include "tensorflow/core/platform/status.h"
-#include "tensorflow/core/profiler/lib/traceme.h"
+#include "tensorflow/core/platform/platform.h" */
+//#include "tensorflow/core/platform/status.h"
+/* #include "tensorflow/core/profiler/lib/traceme.h"
 #include "tensorflow/core/protobuf/error_codes.pb.h"
-#include "tensorflow/core/public/version.h"
+#include "tensorflow/core/public/version.h" */
+#include "tensorflow/c/tf_status_internal.h"
+#include "tensorflow/core/common_runtime/device_mgr.h"
+
 
 // "tensorflow/core/platform/platform.h" must be included first before using
 // PLATFORM_GOOGLE, IS_MOBILE_PLATFORM, etc.
-#if defined(PLATFORM_GOOGLE) && !defined(LIBTPU_ON_GCE)
+/* #if defined(PLATFORM_GOOGLE) && !defined(LIBTPU_ON_GCE)
 #include "tensorflow/core/tfrt/eager/c_api_tfrt.h"
 #include "tensorflow/core/tfrt/eager/c_api_tfrt_distributed_impl.h"
-#endif  // PLATFORM_GOOGLE && !LIBTPU_ON_GCE
+#endif  // PLATFORM_GOOGLE && !LIBTPU_ON_GCE */
 
 #if !defined(IS_MOBILE_PLATFORM)
 #include "tensorflow/core/common_runtime/eager/context_distributed_manager.h"
@@ -76,7 +79,7 @@ using tensorflow::string;
 
 namespace {
 
-string DeviceName(const tensorflow::Device* d) {
+/* string DeviceName(const tensorflow::Device* d) {
   return (d == nullptr) ? "cpu:0" : d->name();
 }
 
@@ -87,7 +90,7 @@ void AnnotateEagerRuntimeConstructionContext(
   tensorflow::AttrValue value;
   SetAttrValue("kEagerRuntime", &value);
   (*function_def.mutable_attr())["_construction_context"] = value;
-}
+} */
 
 }  // namespace
 
@@ -95,7 +98,7 @@ extern "C" {
 
 TFE_ContextOptions* TFE_NewContextOptions() { return new TFE_ContextOptions; }
 
-void TFE_ContextOptionsSetConfig(TFE_ContextOptions* options, const void* proto,
+/* void TFE_ContextOptionsSetConfig(TFE_ContextOptions* options, const void* proto,
                                  size_t proto_len, TF_Status* status) {
   TF_SetConfig(&options->session_options, proto, proto_len, status);
 }
@@ -108,29 +111,11 @@ void TFE_ContextOptionsSetAsync(TFE_ContextOptions* options,
 void TFE_ContextOptionsSetDevicePlacementPolicy(
     TFE_ContextOptions* options, TFE_ContextDevicePlacementPolicy policy) {
   options->device_placement_policy = policy;
-}
+} */
 
 void TFE_DeleteContextOptions(TFE_ContextOptions* options) { delete options; }
 
 TFE_Context* TFE_NewContext(const TFE_ContextOptions* opts, TF_Status* status) {
-  if (opts->use_tfrt) {
-#if defined(PLATFORM_GOOGLE) && !defined(LIBTPU_ON_GCE)
-    tfrt::tf::ContextInterface* tfrt_context = new tfrt::tf::ContextInterface(
-        opts->session_options.options,
-        static_cast<tensorflow::ContextDevicePlacementPolicy>(
-            opts->device_placement_policy),
-        opts->async, opts->use_tfrt_distributed_runtime);
-#if !defined(IS_MOBILE_PLATFORM)
-    tfrt_context->SetDistributedManager(
-        tfrt::tf::CreateDistributedManagerContext(
-            tfrt_context->GetCoreRuntime()->GetHostContext()));
-#endif  // !IS_MOBILE_PLATFORM
-    return tensorflow::wrap(tfrt_context);
-#else
-    status->status = tensorflow::errors::Unimplemented("TFRT is not supported");
-    return nullptr;
-#endif  // PLATFORM_GOOGLE && !LIBTPU_ON_GCE
-  }
   std::vector<std::unique_ptr<tensorflow::Device>> devices;
   status->status = tensorflow::DeviceFactory::AddDevices(
       opts->session_options.options, "/job:localhost/replica:0/task:0",
@@ -146,11 +131,11 @@ TFE_Context* TFE_NewContext(const TFE_ContextOptions* opts, TF_Status* status) {
       static_cast<tensorflow::ContextDevicePlacementPolicy>(
           opts->device_placement_policy),
       opts->async, device_mgr.release(),
-      /*device_mgr_owned*/ true, r,
-      /*cluster_flr=*/nullptr,
-      /*collective_executor_mgr=*/nullptr,
-      /*run_eager_op_as_function=*/opts->run_eager_op_as_function,
-      /*jit_compile_rewrite=*/opts->jit_compile_rewrite);
+      true, r,
+      nullptr,
+      nullptr,
+      opts->run_eager_op_as_function,
+      opts->jit_compile_rewrite);
 #if !defined(IS_MOBILE_PLATFORM)
   eager_context->SetDistributedManager(
       std::make_unique<tensorflow::EagerContextDistributedManager>(
@@ -165,10 +150,10 @@ void TFE_DeleteContext(TFE_Context* ctx) {
   }
 
   // ctx->RefCountIsOne() should be true here.
-  tensorflow::unwrap(ctx)->Release();
+  //tensorflow::unwrap(ctx)->Release();
 }
 
-TF_DeviceList* TFE_ContextListDevices(TFE_Context* ctx, TF_Status* status) {
+/* TF_DeviceList* TFE_ContextListDevices(TFE_Context* ctx, TF_Status* status) {
   TF_DeviceList* l = new TF_DeviceList;
   tensorflow::unwrap(ctx)->ListDevices(&l->response);
   return l;
@@ -196,7 +181,7 @@ TF_CAPI_EXPORT extern void TFE_ContextSetServerDef(TFE_Context* ctx,
   }
   status->status =
       tensorflow::unwrap(ctx)->GetDistributedManager()->SetOrUpdateServerDef(
-          server_def, /*reset_context=*/true, keep_alive_secs);
+          server_def,true, keep_alive_secs);
 #endif  // !IS_MOBILE_PLATFORM
 }
 
@@ -223,7 +208,7 @@ TF_CAPI_EXPORT extern void TFE_ContextUpdateServerDef(TFE_Context* ctx,
   }
   status->status =
       tensorflow::unwrap(ctx)->GetDistributedManager()->SetOrUpdateServerDef(
-          server_def, /*reset_context=*/false, keep_alive_secs);
+          server_def, false, keep_alive_secs);
 #endif  // !IS_MOBILE_PLATFORM
 }
 
@@ -579,7 +564,7 @@ TFE_TensorHandle* TFE_NewTensorHandleFromDeviceMemory(
   // the device?
   TF_ManagedBuffer* buf =
       new TF_ManagedBuffer(data, len, deallocator, deallocator_arg,
-                           /*owns_memory=*/false);
+                          false);
 
   tensorflow::Tensor t(static_cast<tensorflow::DataType>(dtype),
                        tensorflow::TensorShape(dimvec), buf);
@@ -1129,12 +1114,12 @@ TFE_TensorHandle* DefaultCustomDevicePack(TFE_Context* context,
   TF_SetStatus(status, TF_UNIMPLEMENTED,
                "This custom device does not support packing tensors.");
   return nullptr;
-}
+} */
 }  // namespace
 
 extern "C" {
 
-void TFE_RegisterCustomDevice(TFE_Context* ctx, TFE_CustomDevice device,
+/* void TFE_RegisterCustomDevice(TFE_Context* ctx, TFE_CustomDevice device,
                               const char* device_name, void* device_info,
                               TF_Status* status) {
   // Fill in default values for optional functionality.
@@ -1145,6 +1130,6 @@ void TFE_RegisterCustomDevice(TFE_Context* ctx, TFE_CustomDevice device,
       ctx, device, device_info, device_name);
   status->status = tensorflow::unwrap(ctx)->RegisterCustomDevice(
       device_name, std::move(custom_device));
-}
+} */
 
 }  // extern "C"

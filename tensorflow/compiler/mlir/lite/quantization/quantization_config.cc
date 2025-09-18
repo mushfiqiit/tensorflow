@@ -26,7 +26,7 @@ limitations under the License.
 #include "absl/strings/string_view.h"
 #include "llvm/Support/Debug.h"
 #include "llvm/Support/raw_ostream.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 
 // Is this dtype a quantization type from TensorFlow.
 static bool IsQuantizationType(tensorflow::DataType dtype) {

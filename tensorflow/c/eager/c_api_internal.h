@@ -17,17 +17,17 @@ limitations under the License.
 
 #include "tensorflow/c/c_api_internal.h"
 #include "tensorflow/c/eager/c_api.h"
-#include "tensorflow/c/eager/c_api_experimental.h"
-#include "tensorflow/c/eager/tfe_cancellation_manager_internal.h"  // IWYU pragma: export
-#include "tensorflow/c/eager/tfe_executor_internal.h"  // IWYU pragma: export
-#include "tensorflow/c/eager/tfe_monitoring_internal.h"  // IWYU pragma: export
-#include "tensorflow/c/eager/tfe_op_attrs_internal.h"  // IWYU pragma: export
-#include "tensorflow/c/eager/tfe_tensor_debug_info_internal.h"  // IWYU pragma: export
+//#include "tensorflow/c/eager/c_api_experimental.h"
+//#include "tensorflow/c/eager/tfe_cancellation_manager_internal.h"  // IWYU pragma: export
+//#include "tensorflow/c/eager/tfe_executor_internal.h"  // IWYU pragma: export
+//#include "tensorflow/c/eager/tfe_monitoring_internal.h"  // IWYU pragma: export
+//#include "tensorflow/c/eager/tfe_op_attrs_internal.h"  // IWYU pragma: export
+//#include "tensorflow/c/eager/tfe_tensor_debug_info_internal.h"  // IWYU pragma: export
 
 // TODO(b/154564140): Move this to its own header. This requires splitting
 // c_api_experimental.h
 struct TFE_ContextOptions {
-  TF_SessionOptions session_options;
+  //TF_SessionOptions session_options;
   // true if async execution is enabled.
   bool async = false;
   TFE_ContextDevicePlacementPolicy device_placement_policy{

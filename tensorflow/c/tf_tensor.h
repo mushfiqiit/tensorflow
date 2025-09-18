@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_C_TF_TENSOR_H_
 #define TENSORFLOW_C_TF_TENSOR_H_
 
-//#include <stdbool.h>
+#include <stdbool.h>
 #include <stdint.h>
 
 #include "tensorflow/c/c_api_macros.h"

@@ -18,8 +18,8 @@ limitations under the License.
 #include <memory>
 #include <vector>
 
-#include "absl/types/optional.h"
-#include "absl/types/span.h"
+//#include "absl/types/optional.h"
+//#include "absl/types/span.h"
 #include "tensorflow/c/eager/abstract_context.h"
 #include "tensorflow/c/eager/immediate_execution_distributed_manager.h"
 #include "tensorflow/c/eager/immediate_execution_operation.h"
@@ -29,7 +29,7 @@ limitations under the License.
 #include "tensorflow/core/framework/function.pb.h"
 #include "tensorflow/core/framework/numeric_types.h"
 #include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/platform.h"
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/tstring.h"

@@ -17,7 +17,7 @@ limitations under the License.
 #include "tensorflow/core/framework/register_types.h"
 #include "tensorflow/core/framework/summary.pb.h"
 #include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/histogram/histogram.h"
 #include "tensorflow/core/lib/io/path.h"
 #include "tensorflow/core/lib/png/png_io.h"

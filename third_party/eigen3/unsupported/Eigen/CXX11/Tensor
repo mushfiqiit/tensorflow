@@ -1,1 +1,249 @@
-#include "unsupported/Eigen/CXX11/Tensor"
+#ifndef EIGEN_CXX11_TENSOR_STUB_H_
+#define EIGEN_CXX11_TENSOR_STUB_H_
+
+#include <cstddef>
+#include <cstdint>
+#include <array>
+#include "half_stub.h"
+#include <cstring>
+#include <type_traits>
+#if __has_include(<bit>)
+  #include <bit>  // C++20 std::bit_cast, if available
+#endif
+
+namespace Eigen {
+
+// ===== Alignment / layout flags expected by TF =====
+enum { Unaligned = 0, Aligned = 1 };
+enum { RowMajor = 0, ColMajor = 1 };
+
+// ===== Common index type =====
+using DenseIndex = std::ptrdiff_t;
+
+// ===== Dummy device tag used in template specializations =====
+struct GpuDevice {};
+
+// ===== Variadic size list for fixed-size tensors =====
+template <std::ptrdiff_t... Dims>
+struct Sizes {
+  static constexpr int count = sizeof...(Dims);
+};
+
+// ===== Fixed-size index pack for tensor dimensions =====
+// Minimal container: only operator[] and a trivial default ctor are needed
+template <typename Index, int NumDims>
+struct DSizes {
+  using IndexType = Index;
+  static constexpr int count = NumDims;
+
+  Index data[count] = {};  // value-initialized
+
+  Index& operator[](int i) { return data[i]; }
+  const Index& operator[](int i) const { return data[i]; }
+};
+
+// ===== Alias Eigen::array to std::array (Eigen does this) =====
+template <typename T, std::size_t N>
+using array = std::array<T, N>;
+
+// ===== Core Tensor type (minimal surface) =====
+template <typename Scalar_, int NumDims_, int Layout_ = RowMajor,
+          typename Index_ = DenseIndex>
+struct Tensor {
+  using Scalar = Scalar_;
+  using Index = Index_;
+  static constexpr int NumDimensions = NumDims_;
+  static constexpr int NumIndices    = NumDims_;  // TF expects this name
+  static constexpr int Layout        = Layout_;
+};
+
+// ===== Fixed-size Tensor (rank is derived from Sizes<...>) =====
+// Only the rank-0 case (Sizes<>) is referenced by TF’s tensor_types.h for Scalar.
+template <typename Scalar_, typename SizeList, int Layout_ = RowMajor,
+          typename Index_ = DenseIndex>
+struct TensorFixedSize;  // primary template
+
+// Rank-0 specialization: TensorFixedSize<T, Sizes<>, ...>
+template <typename Scalar_, int Layout_, typename Index_>
+struct TensorFixedSize<Scalar_, Sizes<>, Layout_, Index_> {
+  using Scalar = Scalar_;
+  using Index  = Index_;
+  static constexpr int NumIndices = 0;
+  static constexpr int Layout     = Layout_;
+};
+
+// ===== TensorMap (view) =====
+// Options_ is a bitmask (Aligned/Unaligned), StrideType is unused in TF code paths we see.
+// ----- TensorMap stub (drop-in) -----
+template <typename PlainTensorType, int Options_ = 0, typename StrideType = void>
+struct TensorMap {
+  using PlainObjectType = PlainTensorType;
+  using Scalar          = typename PlainObjectType::Scalar;
+  using Index           = typename PlainObjectType::Index;
+
+  static constexpr int Options     = Options_;
+  static constexpr int NumIndices  = PlainObjectType::NumIndices;
+  static constexpr int Layout      = PlainObjectType::Layout; // Eigen::RowMajor / ColMajor
+
+  using Ref       = typename std::add_lvalue_reference<Scalar>::type;        // e.g. T& or const T&
+  using ConstRef  = typename std::add_lvalue_reference<const Scalar>::type;  // const T&
+
+  // Store dims as DSizes<Index, NumIndices>
+  using DimsType = DSizes<Index, (NumIndices > 0 ? NumIndices : 1)>;
+
+  // ---- constructors ----
+  // Single pointer ctor: if Scalar is const, this becomes pointer-to-const automatically.
+  TensorMap(Scalar* data, const DSizes<Index, NumIndices>& dims)
+      : data_(data), size_(1) {
+    if constexpr (NumIndices == 0) {
+      // scalar
+      size_ = 1;
+    } else {
+      for (int i = 0; i < NumIndices; ++i) {
+        dims_.data[i] = dims[i];
+        size_ = (i == 0) ? dims[i] : size_ * dims[i];
+      }
+    }
+  }
+
+  // Accept std::array via Eigen::array alias in your stub
+  TensorMap(Scalar* data, const array<Index, NumIndices>& dims)
+      : data_(data), size_(1) {
+    if constexpr (NumIndices == 0) {
+      size_ = 1;
+    } else {
+      for (int i = 0; i < NumIndices; ++i) {
+        dims_.data[i] = dims[i];
+        size_ = (i == 0) ? dims[i] : size_ * dims[i];
+      }
+    }
+  }
+
+  // ---- basic accessors ----
+  Scalar* data() const { return data_; }
+
+  std::size_t size() const {
+    return static_cast<std::size_t>(size_);
+  }
+
+  Index rank() const { return static_cast<Index>(NumIndices); }
+
+  Index dimension(Index i) const {
+    if constexpr (NumIndices == 0) {
+      return Index(1);
+    } else {
+      return dims_.data[static_cast<int>(i)];
+    }
+  }
+
+  DSizes<Index, NumIndices> dimensions() const {
+    if constexpr (NumIndices == 0) {
+      // return an empty (rank-0) DSizes
+      return DSizes<Index, 0>{};
+    } else {
+      DSizes<Index, NumIndices> d;
+      for (int i = 0; i < NumIndices; ++i) d[i] = dims_.data[i];
+      return d;
+    }
+  }
+
+  // ---- element access ----
+
+  // Rank-0 (scalar): ()
+  template <int M = NumIndices, typename std::enable_if<M == 0, int>::type = 0>
+  Ref operator()() {
+    return *data_;
+  }
+  template <int M = NumIndices, typename std::enable_if<M == 0, int>::type = 0>
+  ConstRef operator()() const {
+    return *data_;
+  }
+
+  // Rank-1 (vector): (i)
+  template <int M = NumIndices, typename std::enable_if<M == 1, int>::type = 0>
+  Ref operator()(Index i) {
+    return data_[i];
+  }
+  template <int M = NumIndices, typename std::enable_if<M == 1, int>::type = 0>
+  ConstRef operator()(Index i) const {
+    return data_[i];
+  }
+
+  // Generic N-D via array of indices
+  template <int M = NumIndices, typename std::enable_if<(M >= 1), int>::type = 0>
+  Ref operator()(const array<Index, NumIndices>& idx) {
+    return data_[linear_index(idx)];
+  }
+  template <int M = NumIndices, typename std::enable_if<(M >= 1), int>::type = 0>
+  ConstRef operator()(const array<Index, NumIndices>& idx) const {
+    return data_[linear_index(idx)];
+  }
+
+  // Variadic N-D: (i0, i1, ..., i{N-1})
+  template <typename... I,
+            typename = typename std::enable_if<
+                (sizeof...(I) == static_cast<std::size_t>(NumIndices) && NumIndices >= 1)>::type>
+  Ref operator()(I... ii) {
+    array<Index, NumIndices> a{static_cast<Index>(ii)...};
+    return data_[linear_index(a)];
+  }
+  template <typename... I,
+            typename = typename std::enable_if<
+                (sizeof...(I) == static_cast<std::size_t>(NumIndices) && NumIndices >= 1)>::type>
+  ConstRef operator()(I... ii) const {
+    array<Index, NumIndices> a{static_cast<Index>(ii)...};
+    return data_[linear_index(a)];
+  }
+
+private:
+  // RowMajor / ColMajor linearization
+  Index linear_index(const array<Index, NumIndices>& idx) const {
+    if constexpr (NumIndices == 1) {
+      return idx[0];
+    } else if constexpr (Layout == RowMajor) {
+      Index lin = idx[0];
+      for (int k = 1; k < NumIndices; ++k) {
+        lin = lin * dims_.data[k] + idx[k];
+      }
+      return lin;
+    } else { // ColMajor
+      Index lin = idx[NumIndices - 1];
+      for (int k = NumIndices - 2; k >= 0; --k) {
+        lin = lin * dims_.data[k] + idx[k];
+      }
+      return lin;
+    }
+  }
+
+  Scalar* data_;
+  // store dims even for NumIndices==0 to keep layout simple
+  DimsType dims_{};
+  Index    size_{1};
+};
+
+template <typename Dest, typename Source>
+#if defined(__cpp_lib_bit_cast) && (__cpp_lib_bit_cast >= 201806L)
+constexpr
+#endif
+inline Dest bit_cast(const Source& source) noexcept {
+  static_assert(sizeof(Dest) == sizeof(Source),
+                "numext::bit_cast requires source and dest to be same size");
+  static_assert(std::is_trivially_copyable<Source>::value,
+                "numext::bit_cast Source must be trivially copyable");
+  static_assert(std::is_trivially_copyable<Dest>::value,
+                "numext::bit_cast Dest must be trivially copyable");
+
+#if defined(__cpp_lib_bit_cast) && (__cpp_lib_bit_cast >= 201806L)
+  return std::bit_cast<Dest>(source);
+#else
+  Dest dest;
+  std::memcpy(&dest, &source, sizeof(Dest));
+  return dest;
+#endif
+}
+
+
+
+}  // namespace Eigen
+
+#endif  // EIGEN_CXX11_TENSOR_STUB_H_

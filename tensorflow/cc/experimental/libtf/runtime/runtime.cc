@@ -31,7 +31,7 @@ limitations under the License.
 #include "tensorflow/cc/experimental/libtf/object.h"
 #include "tensorflow/cc/experimental/libtf/value.h"
 #include "tensorflow/core/framework/function.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/protobuf/saved_object_graph.pb.h"
 #include "tensorflow/core/protobuf/struct.pb.h"
 #include "tensorflow/core/protobuf/trackable_object_graph.pb.h"

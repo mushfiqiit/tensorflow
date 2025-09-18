@@ -23,6 +23,7 @@ limitations under the License.
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 //#include "absl/strings/string_view.h"
 //#include "absl/types/optional.h"
@@ -32,6 +33,7 @@ limitations under the License.
 #include "tensorflow/core/platform/types.h"
 //#include "tensorflow/core/protobuf/error_codes.pb.h"
 #include "error_codes_stub.h"
+#include "inlined_vector_stub.h"
 
 namespace tensorflow {
 
@@ -81,8 +83,8 @@ class Status {
 
   /// \brief Create a status with the specified error code and msg as a
   /// human-readable string containing more detailed information.
-  Status(tensorflow::error::Code code, absl::string_view msg,
-         SourceLocation loc = SourceLocation::current());
+  /* Status(tensorflow::error::Code code, absl::string_view msg,
+         SourceLocation loc = SourceLocation::current()); */
 
   /// Copy the specified status.
   Status(const Status& s);
@@ -199,7 +201,7 @@ class Status {
   void SetStackTrace(std::vector<StackFrame>);
   std::vector<StackFrame> GetStackTrace() const;
 
-  absl::Span<const SourceLocation> GetSourceLocations() const;
+  //absl::Span<const SourceLocation> GetSourceLocations() const;
 
  private:
   void MaybeAddSourceLocation(SourceLocation loc);
@@ -224,10 +226,10 @@ class Status {
 //
 // Returns an OK status, equivalent to a default constructed instance. Prefer
 // usage of `OkStatus()` when constructing such an OK status.
-/* Status OkStatus();
+Status OkStatus();
 
 // TODO(b/197552541) Move this namespace to errors.h.
-namespace errors {
+/* namespace errors {
 
 void SetStackTrace(::tensorflow::Status& status,
                    std::vector<StackFrame> stack_trace);
@@ -304,7 +306,7 @@ inline Status& Status::operator=(const Status& s) {
   return *this;
 } */
 
-#ifndef SWIG
+/* #ifndef SWIG
 inline Status::Status(Status&& s, SourceLocation loc) noexcept
     : state_(std::move(s.state_)) {
   MaybeAddSourceLocation(loc);
@@ -316,7 +318,7 @@ inline Status& Status::operator=(Status&& s) noexcept {
   }
   return *this;
 }
-#endif  // SWIG
+#endif  // SWIG */
 
 inline bool Status::operator==(const Status& x) const {
   return (this->state_ == x.state_) || (ToString() == x.ToString());
@@ -326,10 +328,10 @@ inline bool Status::operator!=(const Status& x) const { return !(*this == x); }
 
 /// @ingroup core
 std::ostream& operator<<(std::ostream& os, const Status& x);
+ 
+typedef std::function<void(const Status&)> StatusCallback;
 
-/* typedef std::function<void(const Status&)> StatusCallback;
-
-extern tensorflow::string* TfCheckOpHelperOutOfLine(
+/* extern tensorflow::string* TfCheckOpHelperOutOfLine(
     const ::tensorflow::Status& v, const char* msg);
 
 std::string error_name(error::Code code);
@@ -340,7 +342,7 @@ inline tensorflow::string* TfCheckOpHelper(::tensorflow::Status v,
   return TfCheckOpHelperOutOfLine(v, msg);
 } */
 
-#define TF_DO_CHECK_OK(val, level)                                \
+/* #define TF_DO_CHECK_OK(val, level)                                \
   while (auto _result = ::tensorflow::TfCheckOpHelper(val, #val)) \
   LOG(level) << *(_result)
 
@@ -354,7 +356,7 @@ inline tensorflow::string* TfCheckOpHelper(::tensorflow::Status v,
 #else
 #define TF_DCHECK_OK(val) \
   while (false && (::tensorflow::OkStatus() == (val))) LOG(FATAL)
-#endif
+#endif */
 
 }  // namespace tensorflow
 

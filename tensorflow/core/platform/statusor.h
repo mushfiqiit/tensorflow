@@ -68,7 +68,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_PLATFORM_STATUSOR_H_
 #define TENSORFLOW_CORE_PLATFORM_STATUSOR_H_
 
-#include "absl/base/attributes.h"
+//#include "absl/base/attributes.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/statusor_internals.h"
@@ -129,8 +129,8 @@ class StatusOr : private internal_statusor::StatusOrData<T>,
 
   // Constructs the inner value `T` in-place using the provided args, using the
   // `T(args...)` constructor.
-  template <typename... Args>
-  explicit StatusOr(absl::in_place_t, Args&&... args);
+  /* template <typename... Args>
+  explicit StatusOr(absl::in_place_t, Args&&... args); */
 
   // Constructs a new StatusOr with the given value. After calling this
   // constructor, calls to ValueOrDie() will succeed, and calls to status() will
@@ -233,9 +233,9 @@ class StatusOr : private internal_statusor::StatusOrData<T>,
   T* operator->();
 
   // DEPRECATED: Prefer value().
-  T ABSL_DEPRECATED("Use `value()` instead.") ConsumeValueOrDie() {
+  /* T ABSL_DEPRECATED("Use `value()` instead.") ConsumeValueOrDie() {
     return std::move(ValueOrDie());
-  }
+  } */
 
   // Ignores any errors. This method does nothing except potentially suppress
   // complaints from any tools that are checking that errors are not dropped on
@@ -246,8 +246,8 @@ class StatusOr : private internal_statusor::StatusOrData<T>,
 ////////////////////////////////////////////////////////////////////////////////
 // Implementation details for StatusOr<T>
 
-template <typename T>
-StatusOr<T>::StatusOr() : Base(Status(tensorflow::error::UNKNOWN, "")) {}
+/* template <typename T>
+StatusOr<T>::StatusOr() : Base(Status(tensorflow::error::UNKNOWN, "")) {} */
 
 template <typename T>
 StatusOr<T>::StatusOr(const T& value) : Base(value) {}
@@ -264,10 +264,10 @@ StatusOr<T>& StatusOr<T>::operator=(const Status& status) {
 template <typename T>
 StatusOr<T>::StatusOr(T&& value) : Base(std::move(value)) {}
 
-template <typename T>
+/* template <typename T>
 template <typename... Args>
 StatusOr<T>::StatusOr(absl::in_place_t, Args&&... args)
-    : Base(absl::in_place, std::forward<Args>(args)...) {}
+    : Base(absl::in_place, std::forward<Args>(args)...) {} */
 
 template <typename T>
 StatusOr<T>::StatusOr(Status&& status) : Base(std::move(status)) {}
@@ -408,10 +408,10 @@ T&& StatusOr<T>::operator*() && {
   return std::move(this->data_);
 }
 
-template <typename T>
+/* template <typename T>
 void StatusOr<T>::IgnoreError() const {
   // no-op
-}
+} */
 
 #define TF_ASSERT_OK_AND_ASSIGN(lhs, rexpr)                             \
   TF_ASSERT_OK_AND_ASSIGN_IMPL(                                         \

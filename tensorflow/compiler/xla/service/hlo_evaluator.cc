@@ -31,7 +31,7 @@ limitations under the License.
 #include "absl/algorithm/container.h"
 #include "absl/base/internal/endian.h"
 #include "absl/cleanup/cleanup.h"
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/strings/match.h"
 #include "absl/strings/string_view.h"
 #include "absl/types/span.h"

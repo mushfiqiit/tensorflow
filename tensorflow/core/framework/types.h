@@ -20,22 +20,25 @@ limitations under the License.
 #include <set>
 #include <string>
 
-#include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
+#include "third_party/eigen3/unsupported/Eigen/CXX11/ThreadPoolDevice"
 // Disable clang-format to prevent 'FixedPoint' header from being included
 // before 'Tensor' header on which it depends.
 // clang-format off
 #include "third_party/eigen3/unsupported/Eigen/CXX11/FixedPoint"
 // clang-format on
 #include "tensorflow/core/framework/bfloat16.h"
-#include "tensorflow/core/framework/full_type.pb.h"
+//#include "tensorflow/core/framework/full_type.pb.h"
 #include "tensorflow/core/framework/numeric_types.h"
-#include "tensorflow/core/framework/resource_handle.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/resource_handle.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/stringpiece.h"
-#include "tensorflow/core/lib/gtl/array_slice.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/array_slice.h"
+////#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/types.h"
+#include "tensorflow/core/platform/inlined_vector_stub.h"
+#include "tensorflow/core/framework/datatype_stub.h"
+
 
 namespace tensorflow {
 
@@ -96,10 +99,10 @@ struct DeviceName<Eigen::GpuDevice> {
 
 
 typedef gtl::InlinedVector<MemoryType, 4> MemoryTypeVector;
-typedef gtl::ArraySlice<MemoryType> MemoryTypeSlice;
+//typedef gtl::ArraySlice<MemoryType> MemoryTypeSlice;
 
 typedef gtl::InlinedVector<DataType, 4> DataTypeVector;
-typedef gtl::ArraySlice<DataType> DataTypeSlice;
+//typedef gtl::ArraySlice<DataType> DataTypeSlice;
 
 typedef gtl::InlinedVector<DeviceType, 4> DeviceTypeVector;
 typedef gtl::InlinedVector<std::pair<DeviceType, int32>, 4>
@@ -108,10 +111,10 @@ typedef gtl::InlinedVector<std::pair<DeviceType, int32>, 4>
 // Convert the enums to strings for errors:
 std::string DataTypeString(DataType dtype);
 std::string DeviceTypeString(const DeviceType& device_type);
-std::string DataTypeSliceString(const DataTypeSlice dtypes);
-inline std::string DataTypeVectorString(const DataTypeVector& dtypes) {
+//std::string DataTypeSliceString(const DataTypeSlice dtypes);
+/* inline std::string DataTypeVectorString(const DataTypeVector& dtypes) {
   return DataTypeSliceString(dtypes);
-}
+} */
 
 // DataTypeSet represents a set of DataType values as a simple and efficient
 // bit mask.  Note that DataTypeSet cannot represent all DataType values; it
@@ -397,8 +400,8 @@ MATCH_TYPE_AND_ENUM(qint16, DT_QINT16);
 MATCH_TYPE_AND_ENUM(quint16, DT_QUINT16);
 MATCH_TYPE_AND_ENUM(qint32, DT_QINT32);
 MATCH_TYPE_AND_ENUM(bfloat16, DT_BFLOAT16);
-MATCH_TYPE_AND_ENUM(Eigen::half, DT_HALF);
-MATCH_TYPE_AND_ENUM(ResourceHandle, DT_RESOURCE);
+//MATCH_TYPE_AND_ENUM(Eigen::half, DT_HALF);
+//MATCH_TYPE_AND_ENUM(ResourceHandle, DT_RESOURCE);
 MATCH_TYPE_AND_ENUM(Variant, DT_VARIANT);
 
 template <>
@@ -542,7 +545,7 @@ bool DataTypeAlwaysOnHost(DataType dt);
 // Reference container for a type definition. These values are usually interned.
 // These containers admit a notion of ordering for efficient access. The
 // ordering has no semantic otherwise.
-struct TypeRef {
+/* struct TypeRef {
   std::shared_ptr<FullTypeDef> full_type;
 
   bool operator==(const TypeRef& other) const {
@@ -560,10 +563,10 @@ struct TypeHasher {
   std::size_t operator()(const TypeRef& k) const {
     return std::hash<std::string>()(k.full_type->SerializeAsString());
   }
-};
+}; */
 
 // Maps a legacy DType proto enum to an equivalent FullType ID.
-void map_dtype_to_tensor(const DataType& dtype, FullTypeDef& t);
+/* void map_dtype_to_tensor(const DataType& dtype, FullTypeDef& t); */
 
 }  // namespace tensorflow
 

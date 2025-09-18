@@ -16,7 +16,7 @@ limitations under the License.
 #include <vector>
 
 #include "tensorflow/core/framework/function.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/errors.h"
 #include "tensorflow/core/lib/gtl/array_slice.h"
 

@@ -28,7 +28,7 @@ limitations under the License.
 #include "absl/strings/string_view.h"
 #include "tensorflow/c/eager/c_api.h"
 #include "tensorflow/core/common_runtime/eager/tensor_handle.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 
 namespace tensorflow {
 

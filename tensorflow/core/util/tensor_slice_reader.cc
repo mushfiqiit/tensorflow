@@ -18,7 +18,7 @@ limitations under the License.
 #include <utility>
 #include <vector>
 
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/framework/versions.h"
 #include "tensorflow/core/lib/core/errors.h"
 #include "tensorflow/core/lib/io/iterator.h"

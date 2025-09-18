@@ -24,7 +24,7 @@ limitations under the License.
 #include "llvm/ADT/StringMap.h"
 #include "tensorflow/core/framework/tensor_shape.pb.h"
 #include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/status.h"
 
 namespace tensorflow {

@@ -32,7 +32,7 @@ limitations under the License.
 #include <string>
 #include <vector>
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/types/variant.h"
 #include "tensorflow/compiler/xla/pjrt/lru_cache.h"
 #include "tensorflow/compiler/xla/statusor.h"

@@ -18,7 +18,8 @@ limitations under the License.
 
 #include <string>
 #include "tensorflow/core/platform/types.h"
-#include "tensorflow/core/protobuf/config.pb.h"
+//#include "tensorflow/core/protobuf/config.pb.h"
+#include "config_stub.h"
 
 namespace tensorflow {
 

@@ -21,7 +21,7 @@ limitations under the License.
 #include "tensorflow/core/framework/resource_base.h"
 #include "tensorflow/core/framework/tensor_shape.h"
 #include "tensorflow/core/framework/type_index.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/casts.h"
 #include "tensorflow/core/platform/intrusive_ptr.h"
 #include "tensorflow/core/platform/statusor.h"

@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_CORE_GRAPPLER_GRAPH_TOPOLOGY_VIEW_H_
 
 #include "absl/container/flat_hash_map.h"
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
 #include "absl/types/span.h"

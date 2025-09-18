@@ -20,7 +20,7 @@ limitations under the License.
 #include <deque>
 
 #include "absl/base/thread_annotations.h"
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/synchronization/mutex.h"
 #include "absl/types/span.h"
 #include "pybind11/pybind11.h"

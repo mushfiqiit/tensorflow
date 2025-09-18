@@ -21,7 +21,7 @@ limitations under the License.
 #include "absl/strings/str_split.h"
 #include "tensorflow/core/lib/core/errors.h"
 #include "tensorflow/core/lib/core/status.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 
 namespace tensorflow {
 

@@ -40,7 +40,7 @@ limitations under the License.
 
 // clang-format on
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_cat.h"
 #include "absl/types/optional.h"
@@ -59,7 +59,7 @@ limitations under the License.
 #include "tensorflow/core/framework/logging.h"
 #include "tensorflow/core/framework/node_def_util.h"
 #include "tensorflow/core/framework/tensor_reference.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/errors.h"
 #include "tensorflow/core/platform/statusor.h"
 #include "tensorflow/core/profiler/lib/scoped_memory_debug_annotation.h"

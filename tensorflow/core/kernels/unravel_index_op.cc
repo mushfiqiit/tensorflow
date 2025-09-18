@@ -15,7 +15,7 @@ limitations under the License.
 
 #include <cstdint>
 
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/types.h"
 #define EIGEN_USE_THREADS
 

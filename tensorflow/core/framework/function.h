@@ -57,7 +57,7 @@ class GraphDef;
 class OpKernel;
 class ProcessFunctionLibraryRuntime;
 class ResourceMgr;
-class Rendezvous;
+//class Rendezvous;
 class ScopedStepContainer;
 class StepStatsCollectorInterface;
 class Node;
@@ -842,7 +842,7 @@ class FunctionLibraryRuntime {
     // tensors to the remote TensorHandles in the default device.
     absl::optional<int64_t> op_id = absl::nullopt;
 
-    RendezvousInterface* rendezvous = nullptr;
+    //RendezvousInterface* rendezvous = nullptr;
     CancellationManager* cancellation_manager = nullptr;
     CollectiveExecutor* collective_executor = nullptr;
     ScopedStepContainer* step_container = nullptr;

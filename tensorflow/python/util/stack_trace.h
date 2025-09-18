@@ -28,7 +28,7 @@ limitations under the License.
 #include "absl/base/optimization.h"
 #include "absl/container/flat_hash_map.h"
 #include "absl/container/flat_hash_set.h"
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/types/optional.h"
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/util/managed_stack_trace.h"

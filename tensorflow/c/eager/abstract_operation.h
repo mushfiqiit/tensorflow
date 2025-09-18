@@ -21,7 +21,7 @@ limitations under the License.
 #include "tensorflow/c/eager/abstract_tensor_handle.h"
 #include "tensorflow/c/tensor_interface.h"
 #include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
@@ -127,10 +127,10 @@ class AbstractOperation {
 
 // TODO(b/193656009): Defining these in a cc file causes linker errors with
 // fastbuild.
-inline Status AbstractOperation::SetAttrShape(const char* attr_name,
+/* inline Status AbstractOperation::SetAttrShape(const char* attr_name,
                                               const PartialTensorShape shape) {
   return SetAttrShape(attr_name, shape.dim_sizes().data(), shape.dims());
-}
+} */
 
 inline Status AbstractOperation::SetAttrStringList(
     const char* attr_name, absl::Span<string const> values) {

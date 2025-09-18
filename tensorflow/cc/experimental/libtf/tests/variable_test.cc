@@ -24,7 +24,7 @@ limitations under the License.
 #include "tensorflow/cc/experimental/libtf/value.h"
 #include "tensorflow/core/framework/function.h"
 #include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/status_test_util.h"
 #include "tensorflow/core/platform/errors.h"
 #include "tensorflow/core/platform/statusor.h"

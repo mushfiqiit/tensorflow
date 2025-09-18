@@ -19,10 +19,10 @@ limitations under the License.
 #include "tensorflow/core/platform/platform.h"
 
 // Include appropriate platform-dependent implementations
-#if defined(PLATFORM_GOOGLE)
+/* #if defined(PLATFORM_GOOGLE)
 #include "tensorflow/core/platform/google/cord.h"
 #else
 #include "tensorflow/core/platform/default/cord.h"
-#endif
+#endif */
 
 #endif  // TENSORFLOW_CORE_PLATFORM_CORD_H_

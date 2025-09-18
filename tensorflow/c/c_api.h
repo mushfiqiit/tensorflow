@@ -19,8 +19,8 @@ limitations under the License.
 //#include <stddef.h>
 //#include <stdint.h>
 
-#include "tensorflow/c/tf_attrtype.h"
-#include "tensorflow/c/tf_datatype.h"
+//#include "tensorflow/c/tf_attrtype.h"
+//#include "tensorflow/c/tf_datatype.h"
 #include "tensorflow/c/tf_status.h"
 #include "tensorflow/c/tf_tensor.h"
 //#include "tensorflow/c/tf_tstring.h"
@@ -115,8 +115,8 @@ typedef struct TF_Buffer {
 
 // Makes a copy of the input and sets an appropriate deallocator.  Useful for
 // passing in read-only, input protobufs.
-TF_CAPI_EXPORT extern TF_Buffer* TF_NewBufferFromString(const void* proto,
-                                                        size_t proto_len);
+/* TF_CAPI_EXPORT extern TF_Buffer* TF_NewBufferFromString(const void* proto,
+                                                        size_t proto_len); */
 
 // Useful for passing *out* a protobuf.
 TF_CAPI_EXPORT extern TF_Buffer* TF_NewBuffer(void);
@@ -126,8 +126,8 @@ TF_CAPI_EXPORT extern void TF_DeleteBuffer(TF_Buffer*);
 TF_CAPI_EXPORT extern TF_Buffer TF_GetBuffer(TF_Buffer* buffer);
 
 // Parsing a serialized TensorProto into a TF_Tensor.
-TF_CAPI_EXPORT extern void TF_TensorFromProto(const TF_Buffer* from,
-                                              TF_Tensor* to, TF_Status* status);
+/* TF_CAPI_EXPORT extern void TF_TensorFromProto(const TF_Buffer* from,
+                                              TF_Tensor* to, TF_Status* status); */
 
 // --------------------------------------------------------------------------
 // Used to return strings across the C API. The caller does not take ownership
@@ -300,18 +300,18 @@ TF_CAPI_EXPORT extern void TF_SetDevice(TF_OperationDescription* desc,
 //   TF_AddInputList(desc, values_inputs, 5);
 
 // For inputs that take a single tensor.
-TF_CAPI_EXPORT extern void TF_AddInput(TF_OperationDescription* desc,
-                                       TF_Output input);
+/* TF_CAPI_EXPORT extern void TF_AddInput(TF_OperationDescription* desc,
+                                       TF_Output input); */
 
 // For inputs that take a list of tensors.
 // inputs must point to TF_Output[num_inputs].
-TF_CAPI_EXPORT extern void TF_AddInputList(TF_OperationDescription* desc,
+/* TF_CAPI_EXPORT extern void TF_AddInputList(TF_OperationDescription* desc,
                                            const TF_Output* inputs,
-                                           int num_inputs);
+                                           int num_inputs); */
 
 // Call once per control input to `desc`.
-TF_CAPI_EXPORT extern void TF_AddControlInput(TF_OperationDescription* desc,
-                                              TF_Operation* input);
+/* TF_CAPI_EXPORT extern void TF_AddControlInput(TF_OperationDescription* desc,
+                                              TF_Operation* input); */
 
 // Request that `desc` be co-located on the device where `op`
 // is placed.
@@ -518,7 +518,7 @@ TF_CAPI_EXPORT extern int TF_OperationGetControlOutputs(
     int max_control_outputs);
 
 // TF_AttrMetadata describes the value of an attribute on an operation.
-typedef struct TF_AttrMetadata {
+/* typedef struct TF_AttrMetadata {
   // A boolean: 1 if the attribute value is a list, 0 otherwise.
   unsigned char is_list;
 
@@ -546,11 +546,11 @@ typedef struct TF_AttrMetadata {
   //     of dimensions of all shapes in the list.
   // (5) Otherwise, total_size is undefined.
   int64_t total_size;
-} TF_AttrMetadata;
+} TF_AttrMetadata; */
 
 // Returns metadata about the value of the attribute `attr_name` of `oper`.
-TF_CAPI_EXPORT extern TF_AttrMetadata TF_OperationGetAttrMetadata(
-    TF_Operation* oper, const char* attr_name, TF_Status* status);
+/* TF_CAPI_EXPORT extern TF_AttrMetadata TF_OperationGetAttrMetadata(
+    TF_Operation* oper, const char* attr_name, TF_Status* status); */
 
 // Fills in `value` with the value of the attribute `attr_name`.  `value` must
 // point to an array of length at least `max_length` (ideally set to

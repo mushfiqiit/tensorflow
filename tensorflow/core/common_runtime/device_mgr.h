@@ -22,12 +22,12 @@ limitations under the License.
 #include <unordered_set>
 #include <vector>
 
-#include "absl/container/flat_hash_set.h"
+//#include "absl/container/flat_hash_set.h"
 #include "tensorflow/core/common_runtime/device.h"
-#include "tensorflow/core/lib/core/arena.h"
+//#include "tensorflow/core/lib/core/arena.h"
 #include "tensorflow/core/lib/core/status.h"
-#include "tensorflow/core/lib/core/stringpiece.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/core/stringpiece.h"
+////#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/platform/macros.h"
 
 namespace tensorflow {
@@ -64,7 +64,7 @@ class DeviceMgr {
 
   // Clears given containers of all devices if 'container' is
   // non-empty. Otherwise, clears default containers of all devices.
-  virtual void ClearContainers(gtl::ArraySlice<string> containers) const = 0;
+  /* virtual void ClearContainers(gtl::ArraySlice<string> containers) const = 0; */
 
   virtual int NumDeviceType(const string& type) const = 0;
 
@@ -93,7 +93,7 @@ class StaticDeviceMgr : public DeviceMgr {
   string DeviceMappingString() const override;
   Status LookupDevice(StringPiece name, Device** device) const override;
   bool ContainsDevice(int64_t device_incarnation) const override;
-  void ClearContainers(gtl::ArraySlice<string> containers) const override;
+  /* void ClearContainers(gtl::ArraySlice<string> containers) const override; */
   int NumDeviceType(const string& type) const override;
   Device* HostCPU() const override;
 
@@ -102,9 +102,9 @@ class StaticDeviceMgr : public DeviceMgr {
 
   StringPiece CopyToBackingStore(StringPiece s);
 
-  absl::flat_hash_set<int64_t> device_incarnation_set_;
-  std::unordered_map<StringPiece, Device*, StringPieceHasher> device_map_;
-  core::Arena name_backing_store_;  // Storage for keys in device_map_
+  /* absl::flat_hash_set<int64_t> device_incarnation_set_; */
+  /* std::unordered_map<StringPiece, Device*, StringPieceHasher> device_map_; */
+  /* core::Arena name_backing_store_;  */ // Storage for keys in device_map_
   std::unordered_map<string, int> device_type_counts_;
   Device* cpu_device_;
 
@@ -133,7 +133,7 @@ class DynamicDeviceMgr : public DeviceMgr {
   string DeviceMappingString() const override;
   Status LookupDevice(StringPiece name, Device** device) const override;
   bool ContainsDevice(int64_t device_incarnation) const override;
-  void ClearContainers(gtl::ArraySlice<string> containers) const override;
+  /* void ClearContainers(gtl::ArraySlice<string> containers) const override; */
   int NumDeviceType(const string& type) const override;
   Device* HostCPU() const override;
 
@@ -156,8 +156,8 @@ class DynamicDeviceMgr : public DeviceMgr {
   std::vector<std::unique_ptr<Device>> dynamic_devices_
       TF_GUARDED_BY(devices_mu_);
 
-  absl::flat_hash_set<int64_t> device_incarnation_set_
-      TF_GUARDED_BY(devices_mu_);
+  /* absl::flat_hash_set<int64_t> device_incarnation_set_
+      TF_GUARDED_BY(devices_mu_); */
   std::unordered_map<string, Device*> device_map_ TF_GUARDED_BY(devices_mu_);
 
   std::unordered_map<string, int> device_type_counts_

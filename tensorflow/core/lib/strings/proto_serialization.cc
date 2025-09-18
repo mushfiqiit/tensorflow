@@ -18,7 +18,7 @@ limitations under the License.
 
 #include "absl/memory/memory.h"
 #include "absl/strings/string_view.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/lib/hash/hash.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"

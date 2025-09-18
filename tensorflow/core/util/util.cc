@@ -20,7 +20,7 @@ limitations under the License.
 
 #include "absl/base/call_once.h"
 #include "tensorflow/core/framework/device_factory.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/lib/strings/strcat.h"
 #include "tensorflow/core/platform/cpu_info.h"
 #include "tensorflow/core/platform/logging.h"

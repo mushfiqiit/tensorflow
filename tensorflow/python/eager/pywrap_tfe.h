@@ -24,9 +24,9 @@ limitations under the License.
 #include <Python.h>
 
 #include "tensorflow/c/eager/c_api.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/status.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/python/lib/core/safe_pyobject_ptr.h"
 
 typedef tensorflow::gtl::InlinedVector<TFE_TensorHandle*, 4>

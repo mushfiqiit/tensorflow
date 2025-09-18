@@ -498,7 +498,7 @@ class CollectiveRegistration {
  public:
   CollectiveRegistration(const string& collective_name,
                          CollectiveRegistry::Factory factory) {
-    TF_CHECK_OK(CollectiveRegistry::Register(collective_name, factory));
+    //TF_CHECK_OK(CollectiveRegistry::Register(collective_name, factory));
   }
 };
 

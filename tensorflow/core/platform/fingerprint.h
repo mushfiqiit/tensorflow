@@ -24,7 +24,7 @@ limitations under the License.
 #define USE_OSS_FARMHASH
 
 #ifdef USE_OSS_FARMHASH
-#include <farmhash.h>
+//#include <farmhash.h>
 #else
 #include "util/hash/farmhash_fingerprint.h"
 #endif
@@ -77,7 +77,7 @@ inline uint64 FingerprintCat64(const uint64 fp1, const uint64 fp2) {
 
 // This is a portable fingerprint interface for strings that will never change.
 // However, it is not suitable for cryptography.
-inline uint64 Fingerprint64(const StringPiece s) {
+/* inline uint64 Fingerprint64(const StringPiece s) {
 #ifdef USE_OSS_FARMHASH
   return ::util::Fingerprint64(s.data(), s.size());
 #else
@@ -88,19 +88,19 @@ inline uint64 Fingerprint64(const StringPiece s) {
   return farmhash::Fingerprint64(s.data(), s.size());
   // LINT.ThenChange(//third_party/tensorflow/core/kernels/fingerprint_op.cc)
 #endif
-}
+} */
 
 // 32-bit variant of Fingerprint64 above (same properties and caveats apply).
-inline uint32 Fingerprint32(const StringPiece s) {
+/* inline uint32 Fingerprint32(const StringPiece s) {
 #ifdef USE_OSS_FARMHASH
   return ::util::Fingerprint32(s.data(), s.size());
 #else
   return farmhash::Fingerprint32(s.data(), s.size());
 #endif
-}
+} */
 
 // 128-bit variant of Fingerprint64 above (same properties and caveats apply).
-inline Fprint128 Fingerprint128(const StringPiece s) {
+/* inline Fprint128 Fingerprint128(const StringPiece s) {
 #ifdef USE_OSS_FARMHASH
   const auto fingerprint = ::util::Fingerprint128(s.data(), s.size());
   return {::util::Uint128Low64(fingerprint),
@@ -109,7 +109,7 @@ inline Fprint128 Fingerprint128(const StringPiece s) {
   const auto fingerprint = farmhash::Fingerprint128(s.data(), s.size());
   return {absl::Uint128Low64(fingerprint), absl::Uint128High64(fingerprint)};
 #endif
-}
+} */
 
 }  // namespace tensorflow
 

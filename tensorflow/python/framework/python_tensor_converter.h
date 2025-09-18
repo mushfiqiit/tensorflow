@@ -18,7 +18,7 @@ limitations under the License.
 #include <Python.h>
 
 #include "tensorflow/c/eager/c_api.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/python/lib/core/safe_pyobject_ptr.h"
 
 namespace tensorflow {

@@ -49,7 +49,7 @@ class DeviceMgr;
 class RendezvousInterface {
  public:
   struct Args {
-    DeviceContext* device_context = nullptr;
+    //DeviceContext* device_context = nullptr;
     AllocatorAttributes alloc_attrs;
     CancellationManager* cancellation_manager = nullptr;  // not owned.
   };

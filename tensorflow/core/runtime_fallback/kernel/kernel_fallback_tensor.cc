@@ -28,7 +28,7 @@ limitations under the License.
 #include "tensorflow/c/tf_tensor_internal.h"
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/runtime_fallback/util/tensor_util.h"
 #include "tensorflow/core/runtime_fallback/util/type_util.h"

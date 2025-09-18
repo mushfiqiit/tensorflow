@@ -25,7 +25,7 @@ limitations under the License.
 #include "absl/strings/str_format.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/kernels/gpu_utils.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/lib/hash/hash.h"
 #include "tensorflow/core/util/autotune_maps/conv_parameters.h"
 #include "tensorflow/core/util/tensor_format.h"

@@ -18,7 +18,7 @@ limitations under the License.
 #include "tensorflow/c/experimental/saved_model/core/saved_model_utils.h"
 #include "tensorflow/c/experimental/saved_model/core/tf_concrete_function_test_protos.h"
 #include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/status_test_util.h"
 #include "tensorflow/core/platform/test.h"
 #include "tensorflow/core/protobuf/struct.pb.h"

@@ -29,7 +29,7 @@ limitations under the License.
 #include "tensorflow/core/framework/node_properties.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/tensor_testutil.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/kernels/batching_util/batch_resource_base.h"
 #include "tensorflow/core/kernels/batching_util/input_split_metadata.h"
 #include "tensorflow/core/lib/core/status_test_util.h"

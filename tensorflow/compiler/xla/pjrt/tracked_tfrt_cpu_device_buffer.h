@@ -20,7 +20,7 @@ limitations under the License.
 #include <memory>
 #include <utility>
 
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/synchronization/mutex.h"
 #include "absl/types/span.h"
 #include "tensorflow/compiler/xla/cpu_function_runtime.h"

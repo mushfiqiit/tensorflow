@@ -18,7 +18,7 @@ limitations under the License.
 
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 
 // Creates a case statement for the switch() clause given the dtype
 #define CASE_FOR_DTYPE_GIVEN_CPP_DTYPE(TF_DTYPE, CPP_DTYPE) \

@@ -74,6 +74,9 @@ HARNESS_BC="$OUTDIR/$(basename "$SRC" .cc).bc"   # e.g., tensor_harness.bc
 STATUS_CC="$ROOT/tensorflow/c/tf_status.cc"
 STATUS_BC="$OUTDIR/tf_status.bc"
 
+CAPI_CC="$ROOT/tensorflow/c/eager/c_api.cc"
+CAPI_BC="$OUTDIR/tfe_c_api.bc"
+
 # You can add extra TF sources if a future error needs them:
 # EXTRA_SRCS=( "$ROOT/path/to/another.cc" )
 # They will be compiled automatically if you put files into EXTRA_SRCS.
@@ -108,6 +111,14 @@ compile_all() {
     set -e; return 1
   fi
 
+  echo "🛠️  Compiling eager c_api.cc -> $CAPI_BC"
+  if [[ ! -f "$CAPI_CC" ]]; then
+    echo "❌ Not found: $CAPI_CC"; return 1
+  fi
+  "$CLANG" -emit-llvm -c "${CXXFLAGS[@]}" "${INCLUDES[@]}" "$CAPI_CC" -o "$CAPI_BC" 2>> clang.err
+  [[ -f "$CAPI_BC" ]] || { echo "❌ Expected $CAPI_BC but it was not created"; return 1; }
+
+
   EXTRA_BCS=()
   if (( ${#EXTRA_SRCS[@]} > 0 )); then
     for f in "${EXTRA_SRCS[@]}"; do
@@ -121,7 +132,7 @@ compile_all() {
 
 link_all() {
   echo "🔗 Linking bitcode → $OUT"
-  "$LLVMLINK" "$HARNESS_BC" "$STATUS_BC" "${EXTRA_BCS[@]}" -o "$OUT"
+  "$LLVMLINK" "$HARNESS_BC" "$STATUS_BC" "$CAPI_BC" "${EXTRA_BCS[@]}" -o "$OUT"
 }
 
 # === Main compile loop with incremental include discovery ===
@@ -133,12 +144,12 @@ while (( round <= MAX_ROUNDS )); do
     link_all
     echo "🎉 Done. Bitcode ready at: $OUT"
     rm -f clang.err
-    return 0
+    exit 0
   fi
 
   echo -e "\n❌ Compilation failed."
-  echo "------ clang.err (last 20 lines) ------"
-  tail -n 20 clang.err || true
+  echo "------ clang.err (last 30 lines) ------"
+  tail -n 30 clang.err || true
   echo "---------------------------------------"
 
   # Detect the first missing header
@@ -152,17 +163,17 @@ while (( round <= MAX_ROUNDS )); do
   echo "📦 Missing header detected: $missing"
   echo "🔍 Searching for header path..."
 
-  # Prefer repo paths; avoid external/protobuf to dodge runtime mismatches.
-  full_path=$(find "$ROOT" -type f -path "*/$missing" | head -n1)
-  if [[ -z "$full_path" ]]; then
-    # Bazel cache search (exclude external/protobuf)
-    CACHE_ROOT="$HOME/.cache/bazel/_bazel_$(whoami)"
-    full_path=$(find "$CACHE_ROOT" -type f -path "*/$missing" ! -path "*/external/protobuf/*" | head -n1)
-  fi
-  if [[ -z "$full_path" ]]; then
-    # Sometimes bazel-bin/external hosts headers
-    full_path=$(find "$ROOT/bazel-bin" -type f -path "*/$missing" | head -n1)
-  fi
+#  # Prefer repo paths; avoid external/protobuf to dodge runtime mismatches.
+#  full_path=$(find "$ROOT" -type f -path "*/$missing" | head -n1)
+#  if [[ -z "$full_path" ]]; then
+#    # Bazel cache search (exclude external/protobuf)
+#    CACHE_ROOT="$HOME/.cache/bazel/_bazel_$(whoami)"
+#    full_path=$(find "$CACHE_ROOT" -type f -path "*/$missing" ! -path "*/external/protobuf/*" | head -n1)
+#  fi
+#  if [[ -z "$full_path" ]]; then
+#    # Sometimes bazel-bin/external hosts headers
+#    full_path=$(find "$ROOT/bazel-bin" -type f -path "*/$missing" | head -n1)
+#  fi
 
   if [[ -z "$full_path" ]]; then
     echo "❌ Could not locate header: $missing"

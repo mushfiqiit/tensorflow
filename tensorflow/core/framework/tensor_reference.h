@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_FRAMEWORK_TENSOR_REFERENCE_H_
 
 #include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 
 namespace tensorflow {
 

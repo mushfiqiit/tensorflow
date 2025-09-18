@@ -21,7 +21,7 @@ limitations under the License.
 #include <functional>
 
 #include "tensorflow/c/c_api.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/status.h"
 
 namespace tensorflow {

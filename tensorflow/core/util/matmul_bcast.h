@@ -19,7 +19,7 @@ limitations under the License.
 #include <vector>
 
 #include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/util/bcast.h"
 
 namespace tensorflow {

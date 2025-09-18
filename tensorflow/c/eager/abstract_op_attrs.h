@@ -15,9 +15,9 @@ limitations under the License.
 #ifndef TENSORFLOW_C_EAGER_ABSTRACT_OP_ATTRS_H_
 #define TENSORFLOW_C_EAGER_ABSTRACT_OP_ATTRS_H_
 
-#include "absl/container/inlined_vector.h"
+////#include "absl/container/inlined_vector.h"
 #include "tensorflow/core/framework/attr_value.pb.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {

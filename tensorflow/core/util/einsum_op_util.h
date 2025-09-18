@@ -16,7 +16,7 @@ limitations under the License.
 #define TENSORFLOW_CORE_UTIL_EINSUM_OP_UTIL_H_
 
 #include "tensorflow/core/lib/core/status.h"
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+//#include "tensorflow/core/lib/gtl/inlined_vector.h"
 
 namespace tensorflow {
 

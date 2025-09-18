@@ -16,10 +16,11 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_LIB_GTL_ARRAY_SLICE_H_
 #define TENSORFLOW_CORE_LIB_GTL_ARRAY_SLICE_H_
 
-#include "absl/types/span.h"
+//#include "absl/types/span.h"
 // TODO(timshen): This is kept only because lots of targets transitively depend
 // on it. Remove all targets' dependencies.
-#include "tensorflow/core/lib/gtl/inlined_vector.h"
+////#include "tensorflow/core/lib/gtl/inlined_vector.h"
+#include "span_stub.h"
 
 namespace tensorflow {
 namespace gtl {

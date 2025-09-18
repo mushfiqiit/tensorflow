@@ -25,7 +25,7 @@ limitations under the License.
 #include <vector>
 
 #include "absl/algorithm/container.h"
-#include "absl/container/inlined_vector.h"
+//#include "absl/container/inlined_vector.h"
 #include "absl/hash/hash.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/numbers.h"

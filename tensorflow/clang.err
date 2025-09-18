@@ -1,5 +1,29 @@
-In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tf_status.cc:18:
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tf_status_internal.h:25:3: error: use of undeclared identifier 'tensorflow'
-  tensorflow::Status status;
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:121:13: error: no member named 'session_options' in 'TFE_ContextOptions'
+      opts->session_options.options, "/job:localhost/replica:0/task:0",
+      ~~~~  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:127:15: error: no type named 'Rendezvous' in namespace 'tensorflow'
+  tensorflow::Rendezvous* r =
+  ~~~~~~~~~~~~^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:128:23: error: no type named 'IntraProcessRendezvous' in namespace 'tensorflow'
+      new tensorflow::IntraProcessRendezvous(device_mgr.get());
+          ~~~~~~~~~~~~^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:130:13: error: no member named 'session_options' in 'TFE_ContextOptions'
+      opts->session_options.options,
+      ~~~~  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:131:19: error: no type named 'ContextDevicePlacementPolicy' in namespace 'tensorflow'; did you mean 'TFE_ContextDevicePlacementPolicy'?
+      static_cast<tensorflow::ContextDevicePlacementPolicy>(
+                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                  TFE_ContextDevicePlacementPolicy
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.h:76:3: note: 'TFE_ContextDevicePlacementPolicy' declared here
+} TFE_ContextDevicePlacementPolicy;
   ^
-1 error generated.
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:140:16: error: member access into incomplete type 'tensorflow::EagerContext'
+  eager_context->SetDistributedManager(
+               ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/common_runtime/eager/context_distributed_manager.h:32:7: note: forward declaration of 'tensorflow::EagerContext'
+class EagerContext;
+      ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:144:22: error: no member named 'wrap' in namespace 'tensorflow'
+  return tensorflow::wrap(eager_context);
+         ~~~~~~~~~~~~^
+7 errors generated.

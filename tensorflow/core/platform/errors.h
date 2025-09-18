@@ -25,9 +25,10 @@ limitations under the License.
 //#include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/status.h"
-#include "tensorflow/core/platform/str_util.h"
+//#include "tensorflow/core/platform/str_util.h"
 #include "tensorflow/core/platform/strcat.h"
 #include "error_codes_stub.h"
+#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 namespace errors {
@@ -103,10 +104,10 @@ inline ::tensorflow::Status Create(
 }
 
 // Returns a new Status, replacing its message with the given.
-inline ::tensorflow::Status CreateWithUpdatedMessage(
+/* inline ::tensorflow::Status CreateWithUpdatedMessage(
     const ::tensorflow::Status& status, ::tensorflow::StringPiece message) {
   return Create(status.code(), message, GetPayloads(status));
-}
+} */
 
 // Append some context to an error message.  Each time we append
 // context put it on a new line, since it is possible for there

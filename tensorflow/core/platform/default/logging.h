@@ -31,10 +31,12 @@ limitations under the License.
 #include <sstream>
 #include <vector>
 
-#include "absl/base/log_severity.h"
-#include "absl/strings/string_view.h"
+//#include "absl/base/log_severity.h"
+#include "log_severity_stub.h"
+//#include "absl/strings/string_view.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/types.h"
+//#include "tensorflow/core/platform/string_view_stub.h"
 
 // TODO(mrry): Prevent this Windows.h #define from leaking out of our headers.
 #undef ERROR

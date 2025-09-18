@@ -18,7 +18,7 @@ limitations under the License.
 #include <iosfwd>
 
 #include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 
 namespace tf {
 namespace libtf {

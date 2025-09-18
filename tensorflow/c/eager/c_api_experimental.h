@@ -18,7 +18,7 @@ limitations under the License.
 #include "tensorflow/c/c_api.h"
 #include "tensorflow/c/eager/c_api.h"
 
-#ifdef __cplusplus
+/* #ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -708,7 +708,7 @@ TF_CAPI_EXPORT extern void TFE_ReportErrorToCluster(TFE_Context* ctx,
                                                     TF_Status* status);
 
 #ifdef __cplusplus
-} /* end extern "C" */
-#endif
+} // end extern "C" 
+#endif */
 
 #endif  // TENSORFLOW_C_EAGER_C_API_EXPERIMENTAL_H_

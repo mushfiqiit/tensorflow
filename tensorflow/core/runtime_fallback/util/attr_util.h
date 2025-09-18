@@ -20,7 +20,7 @@ limitations under the License.
 #include "tensorflow/core/framework/node_def_util.h"
 #include "tensorflow/core/framework/op_def.pb.h"
 #include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/framework/types.pb.h"
+//#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/status.h"
 #include "tfrt/bef/bef_encoding.h"  // from @tf_runtime
 #include "tfrt/core_runtime/op_attr_type.h"  // from @tf_runtime
