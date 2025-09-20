@@ -21,7 +21,7 @@ limitations under the License.
 #include "tensorflow/core/data/service/worker_impl.h"
 #include "tensorflow/core/framework/dataset.h"
 #include "tensorflow/core/lib/core/status_test_util.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/status_matchers.h"
 #include "tensorflow/core/platform/test.h"
 #include "tensorflow/core/protobuf/data_service.pb.h"

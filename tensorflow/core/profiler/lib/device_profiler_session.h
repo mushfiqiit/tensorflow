@@ -18,7 +18,7 @@ limitations under the License.
 #include "tensorflow/core/framework/step_stats.pb.h"
 #include "tensorflow/core/platform/errors.h"
 #include "tensorflow/core/platform/platform.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 #if !defined(IS_MOBILE_PLATFORM)
 #include "tensorflow/core/profiler/convert/xplane_to_step_stats.h"

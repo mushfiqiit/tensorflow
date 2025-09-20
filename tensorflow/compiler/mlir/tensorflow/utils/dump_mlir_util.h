@@ -22,7 +22,7 @@ limitations under the License.
 #include "llvm/ADT/StringRef.h"
 #include "mlir/IR/Operation.h"  // from @llvm-project
 #include "mlir/Pass/PassManager.h"  // from @llvm-project
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 

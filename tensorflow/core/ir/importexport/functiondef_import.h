@@ -19,7 +19,7 @@ limitations under the License.
 #include "mlir/IR/Builders.h"  // from @llvm-project
 #include "tensorflow/core/framework/function.pb.h"
 #include "tensorflow/core/ir/ops.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace mlir {
 namespace tfg {

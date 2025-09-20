@@ -18,7 +18,7 @@ limitations under the License.
 
 #include "tensorflow/core/framework/node_def.pb.h"
 #include "tensorflow/core/graph/graph.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 

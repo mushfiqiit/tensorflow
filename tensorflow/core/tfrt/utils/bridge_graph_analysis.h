@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_TFRT_UTILS_BRIDGE_GRAPH_ANALYSIS_H_
 #define TENSORFLOW_CORE_TFRT_UTILS_BRIDGE_GRAPH_ANALYSIS_H_
 
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tfrt {
 

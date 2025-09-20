@@ -18,7 +18,7 @@ limitations under the License.
 
 #include "absl/strings/str_format.h"
 #include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/statusor.h"
 #include "tensorflow/core/protobuf/error_codes.pb.h"
 #include "tensorflow/lite/kernels/internal/tensor_ctypes.h"

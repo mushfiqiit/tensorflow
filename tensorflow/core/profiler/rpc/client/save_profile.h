@@ -19,7 +19,7 @@ limitations under the License.
 #include <ostream>
 #include <string>
 
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/profiler/profiler_service.pb.h"
 

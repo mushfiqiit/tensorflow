@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_TFRT_EAGER_CORE_RUNTIME_PLACER_H_
 #define TENSORFLOW_CORE_TFRT_EAGER_CORE_RUNTIME_PLACER_H_
 
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tfrt/support/forward_decls.h"  // from @tf_runtime
 
 namespace tensorflow {

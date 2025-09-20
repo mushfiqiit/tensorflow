@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_COMMON_RUNTIME_DEVICE_DEVICE_UTILS_H_
 #define TENSORFLOW_CORE_COMMON_RUNTIME_DEVICE_DEVICE_UTILS_H_
 
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/stringpiece.h"
 
 namespace tensorflow {

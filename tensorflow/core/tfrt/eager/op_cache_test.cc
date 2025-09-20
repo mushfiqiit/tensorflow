@@ -24,7 +24,7 @@ limitations under the License.
 #include "tensorflow/c/tf_status_helper.h"
 //#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/test.h"
 #include "tensorflow/core/tfrt/eager/c_api_tfrt.h"
 #include "tfrt/cpu/core_runtime/null_op_handler.h"  // from @tf_runtime

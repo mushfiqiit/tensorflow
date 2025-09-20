@@ -15,7 +15,7 @@ limitations under the License.
 #include "tensorflow/core/data/service/client/data_service_client.h"
 
 #include "tensorflow/core/data/service/client/common.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/status_matchers.h"
 #include "tensorflow/core/platform/statusor.h"
 #include "tensorflow/core/platform/test.h"

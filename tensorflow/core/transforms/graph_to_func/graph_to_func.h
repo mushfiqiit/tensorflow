@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_CORE_TRANSFORMS_GRAPH_TO_FUNC_H_
 
 #include "tensorflow/core/ir/ops.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace mlir {
 namespace tfg {

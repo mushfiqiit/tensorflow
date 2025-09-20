@@ -17,7 +17,7 @@ limitations under the License.
 #include <cstdlib>
 
 #include "tensorflow/core/platform/base64.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/stringpiece.h"
 
 // This is a fuzzer for tensorflow::Base64Encode and tensorflow::Base64Decode.

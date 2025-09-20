@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_C_C_API_MACROS_INTERNAL_H_
 
 #ifdef __cplusplus
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 // Macro to verify that the field `struct_size` of STRUCT_OBJ is initialized.
 // `struct_size` is used for struct member compatibility check between core TF

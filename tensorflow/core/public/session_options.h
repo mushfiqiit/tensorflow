@@ -26,7 +26,7 @@ namespace tensorflow {
 class Env;
 
 /// Configuration information for a Session.
-struct SessionOptions {
+/* struct SessionOptions {
   /// The environment to use.
   Env* env;
 
@@ -59,7 +59,7 @@ struct SessionOptions {
   ConfigProto config;
 
   SessionOptions();
-};
+}; */
 
 }  // end namespace tensorflow
 

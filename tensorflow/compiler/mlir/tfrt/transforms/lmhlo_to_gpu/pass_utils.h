@@ -16,7 +16,7 @@
 #define TENSORFLOW_COMPILER_MLIR_TFRT_TRANSFORMS_LMHLO_TO_GPU_PASS_UTILS_H_
 
 #include "mlir/IR/BuiltinOps.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 

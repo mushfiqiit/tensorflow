@@ -18,7 +18,7 @@ limitations under the License.
 #include <string>
 
 #include "tensorflow/core/platform/cpu_info.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/threadpool_interface.h"
 #include "tensorflow/core/tfrt/runtime/work_queue_interface.h"
 #include "tfrt/host_context/async_value.h"  // from @tf_runtime

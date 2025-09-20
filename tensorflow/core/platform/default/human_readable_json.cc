@@ -16,7 +16,7 @@ limitations under the License.
 #include "tensorflow/core/platform/human_readable_json.h"
 
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/strcat.h"
 
 namespace tensorflow {

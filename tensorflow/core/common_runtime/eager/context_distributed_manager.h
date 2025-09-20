@@ -21,7 +21,7 @@ limitations under the License.
 //#include "tensorflow/c/eager/immediate_execution_context.h"
 #include "tensorflow/c/eager/immediate_execution_distributed_manager.h"
 //#include "tensorflow/core/common_runtime/eager/context.h"
-//#include "tensorflow/core/platform/status.h"
+////#include "tensorflow/core/platform/status.h"
 
 /* #if !defined(IS_MOBILE_PLATFORM)
 #include "tensorflow/core/distributed_runtime/coordination/coordination_service_agent.h"

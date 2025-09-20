@@ -17,7 +17,7 @@ limitations under the License.
 #include <cstdint>
 #include <cstdlib>
 
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 // This is a fuzzer for `tensorflow::Status`. Since `Status` is used almost
 // everywhere, we need to ensure that the common functionality is safe. We don't

@@ -36,7 +36,7 @@ limitations under the License.
 #include "tensorflow/c/tf_tensor_internal.h"
 #include "tensorflow/core/common_runtime/copy_tensor.h"
 #include "tensorflow/core/common_runtime/device.h" */
-#include "tensorflow/core/common_runtime/device_factory.h"
+//#include "tensorflow/core/common_runtime/device_factory.h"
 /* #include "tensorflow/core/common_runtime/device_mgr.h"
 #include "tensorflow/core/common_runtime/eager/attr_builder.h"
 #include "tensorflow/core/common_runtime/eager/context.h"
@@ -56,12 +56,13 @@ limitations under the License.
 #include "tensorflow/core/platform/casts.h"
 #include "tensorflow/core/platform/errors.h"
 #include "tensorflow/core/platform/platform.h" */
-//#include "tensorflow/core/platform/status.h"
+////#include "tensorflow/core/platform/status.h"
 /* #include "tensorflow/core/profiler/lib/traceme.h"
 #include "tensorflow/core/protobuf/error_codes.pb.h"
 #include "tensorflow/core/public/version.h" */
 #include "tensorflow/c/tf_status_internal.h"
-#include "tensorflow/core/common_runtime/device_mgr.h"
+//#include "tensorflow/core/common_runtime/device_mgr.h"
+#include "eager_context_stub.h"
 
 
 // "tensorflow/core/platform/platform.h" must be included first before using
@@ -71,11 +72,11 @@ limitations under the License.
 #include "tensorflow/core/tfrt/eager/c_api_tfrt_distributed_impl.h"
 #endif  // PLATFORM_GOOGLE && !LIBTPU_ON_GCE */
 
-#if !defined(IS_MOBILE_PLATFORM)
+/* #if !defined(IS_MOBILE_PLATFORM)
 #include "tensorflow/core/common_runtime/eager/context_distributed_manager.h"
-#endif  // !IS_MOBILE_PLATFORM
+#endif  // !IS_MOBILE_PLATFORM */
 
-using tensorflow::string;
+//using tensorflow::string;
 
 namespace {
 
@@ -116,7 +117,34 @@ void TFE_ContextOptionsSetDevicePlacementPolicy(
 void TFE_DeleteContextOptions(TFE_ContextOptions* options) { delete options; }
 
 TFE_Context* TFE_NewContext(const TFE_ContextOptions* opts, TF_Status* status) {
-  std::vector<std::unique_ptr<tensorflow::Device>> devices;
+
+  (void)opts;
+
+  // Create a trivial local CPU device manager.
+  std::vector<std::unique_ptr<tensorflow::Device>> devs;
+  devs.emplace_back(new tensorflow::Device("/device:CPU:0", "CPU"));
+  auto* dev_mgr = new tensorflow::DeviceMgr(std::move(devs));  // owned by ctx
+
+  // No rendezvous in the stub. Use defaults for flags.
+  auto* ctx = new tensorflow::EagerContext(
+      tensorflow::SessionOptions{},
+      tensorflow::ContextDevicePlacementPolicy::kSilent,
+      /*async=*/false,
+      /*device_mgr=*/dev_mgr,
+      /*device_mgr_owned=*/true,
+      /*rendezvous=*/nullptr,
+      /*cluster_flr*/nullptr, /*collective*/nullptr,
+      /*run_eager_op_as_function=*/false,
+      /*jit_compile_rewrite=*/false);
+
+  if (!ctx) {
+    TF_SetStatus(status, TF_RESOURCE_EXHAUSTED, "allocation failed");
+    return nullptr;
+  }
+  TF_SetStatus(status, TF_OK, "");
+  return reinterpret_cast<TFE_Context*>(ctx);
+
+  /* std::vector<std::unique_ptr<tensorflow::Device>> devices;
   status->status = tensorflow::DeviceFactory::AddDevices(
       opts->session_options.options, "/job:localhost/replica:0/task:0",
       &devices);
@@ -141,7 +169,7 @@ TFE_Context* TFE_NewContext(const TFE_ContextOptions* opts, TF_Status* status) {
       std::make_unique<tensorflow::EagerContextDistributedManager>(
           eager_context));
 #endif  // !IS_MOBILE_PLATFORM
-  return tensorflow::wrap(eager_context);
+  return tensorflow::wrap(eager_context); */
 }
 
 void TFE_DeleteContext(TFE_Context* ctx) {

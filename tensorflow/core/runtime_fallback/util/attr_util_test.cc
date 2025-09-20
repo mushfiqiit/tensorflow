@@ -20,7 +20,7 @@ limitations under the License.
 #include "tensorflow/core/framework/tensor.h"
 //#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/test.h"
 #include "tfrt/bef/bef_encoding.h"  // from @tf_runtime
 #include "tfrt/bef_converter/bef_attr_encoder.h"  // from @tf_runtime

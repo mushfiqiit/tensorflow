@@ -32,7 +32,7 @@ limitations under the License.
 #include "tensorflow/core/ir/importexport/convert_types.h"
 #include "tensorflow/core/ir/ops.h"
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/statusor.h"
 
 using tensorflow::AttrValue;

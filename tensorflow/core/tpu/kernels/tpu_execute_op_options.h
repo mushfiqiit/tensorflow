@@ -16,7 +16,7 @@ limitations under the License.
 #define TENSORFLOW_CORE_TPU_KERNELS_TPU_EXECUTE_OP_OPTIONS_H_
 
 #include "absl/strings/string_view.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 namespace internal {

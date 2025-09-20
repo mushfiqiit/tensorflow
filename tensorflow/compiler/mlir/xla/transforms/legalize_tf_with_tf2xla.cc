@@ -69,7 +69,7 @@ limitations under the License.
 #include "tensorflow/core/framework/types.h"
 //#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/env.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/protobuf/config.pb.h"
 #include "tensorflow/core/public/session_options.h"
 #include "tensorflow/stream_executor/lib/statusor.h"

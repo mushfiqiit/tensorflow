@@ -16,7 +16,8 @@ limitations under the License.
 #ifndef TENSORFLOW_C_TF_STATUS_INTERNAL_H_
 #define TENSORFLOW_C_TF_STATUS_INTERNAL_H_
 
-#include "tensorflow/core/platform/status.h"
+////#include "tensorflow/core/platform/status.h"
+#include "status_stub.h"
 
 // Internal structures used by the status C API. These are likely to change
 // and should not be depended on.

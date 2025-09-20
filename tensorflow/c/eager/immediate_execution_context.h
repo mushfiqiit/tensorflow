@@ -31,7 +31,7 @@ limitations under the License.
 #include "tensorflow/core/framework/tensor.h"
 //#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/platform.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/tstring.h"
 #include "tensorflow/core/protobuf/config.pb.h"
 #include "tensorflow/core/util/device_name_utils.h"

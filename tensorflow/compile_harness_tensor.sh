@@ -77,6 +77,9 @@ STATUS_BC="$OUTDIR/tf_status.bc"
 CAPI_CC="$ROOT/tensorflow/c/eager/c_api.cc"
 CAPI_BC="$OUTDIR/tfe_c_api.bc"
 
+TFTENSOR_CC="$ROOT/tensorflow/c/tf_tensor.cc"
+TFTENSOR_BC="$OUTDIR/tf_tensor.bc"
+
 # You can add extra TF sources if a future error needs them:
 # EXTRA_SRCS=( "$ROOT/path/to/another.cc" )
 # They will be compiled automatically if you put files into EXTRA_SRCS.
@@ -118,6 +121,15 @@ compile_all() {
   "$CLANG" -emit-llvm -c "${CXXFLAGS[@]}" "${INCLUDES[@]}" "$CAPI_CC" -o "$CAPI_BC" 2>> clang.err
   [[ -f "$CAPI_BC" ]] || { echo "❌ Expected $CAPI_BC but it was not created"; return 1; }
 
+  echo "🛠️  Compiling tf_tensor.cc -> $TFTENSOR_BC"
+  if [[ ! -f "$TFTENSOR_CC" ]]; then
+    echo "❌ Not found: $TFTENSOR_CC"; return 1
+  fi
+  "$CLANG" -emit-llvm -c "${CXXFLAGS[@]}" "${INCLUDES[@]}" "$TFTENSOR_CC" -o "$TFTENSOR_BC" 2>> clang.err
+  if [[ ! -f "$TFTENSOR_BC" ]]; then
+    echo "❌ Expected $TFTENSOR_BC but it was not created"
+    set -e; return 1
+  fi
 
   EXTRA_BCS=()
   if (( ${#EXTRA_SRCS[@]} > 0 )); then

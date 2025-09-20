@@ -20,7 +20,7 @@ limitations under the License.
 #include "third_party/gpus/cuda/extras/CUPTI/include/cupti.h"
 #include "third_party/gpus/cuda/include/nvtx3/nvToolsExt.h"
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/profiler/backends/gpu/cupti_collector.h"
 #include "tensorflow/core/profiler/backends/gpu/cupti_interface.h"

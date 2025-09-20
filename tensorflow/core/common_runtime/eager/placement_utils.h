@@ -18,7 +18,7 @@ limitations under the License.
 
 #include "tensorflow/c/eager/immediate_execution_operation.h"
 #include "tensorflow/core/common_runtime/eager/context.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/stringpiece.h"
 
 namespace tensorflow {

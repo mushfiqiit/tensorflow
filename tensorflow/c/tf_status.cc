@@ -17,7 +17,8 @@ limitations under the License.
 
 #include "tensorflow/c/tf_status_internal.h"
 //#include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+////#include "tensorflow/core/platform/status.h"
+#include "status_stub.h"
 
 using ::tensorflow::Status;
 using ::tensorflow::error::Code;
@@ -27,13 +28,13 @@ TF_Status* TF_NewStatus() { return new TF_Status; }
 
 void TF_DeleteStatus(TF_Status* s) { delete s; }
 
-/* void TF_SetStatus(TF_Status* s, TF_Code code, const char* msg) {
+void TF_SetStatus(TF_Status* s, TF_Code code, const char* msg) {
   if (code == TF_OK) {
     s->status = ::tensorflow::OkStatus();
     return;
   }
-  s->status = Status(static_cast<Code>(code), tensorflow::StringPiece(msg));
-} */
+  s->status = ::tensorflow::Status();
+}
 
 /* void TF_SetPayload(TF_Status* s, const char* key, const char* value) {
   s->status.SetPayload(key, value);
@@ -45,10 +46,10 @@ void TF_DeleteStatus(TF_Status* s) { delete s; }
   s->status = IOError(context, error_code);
 } */
 
-/* TF_Code TF_GetCode(const TF_Status* s) {
+TF_Code TF_GetCode(const TF_Status* s) {
   return static_cast<TF_Code>(s->status.code());
 }
 
 const char* TF_Message(const TF_Status* s) {
   return s->status.error_message().c_str();
-} */
+} 

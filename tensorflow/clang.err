@@ -1,29 +1,815 @@
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:121:13: error: no member named 'session_options' in 'TFE_ContextOptions'
-      opts->session_options.options, "/job:localhost/replica:0/task:0",
-      ~~~~  ^
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:127:15: error: no type named 'Rendezvous' in namespace 'tensorflow'
-  tensorflow::Rendezvous* r =
-  ~~~~~~~~~~~~^
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:128:23: error: no type named 'IntraProcessRendezvous' in namespace 'tensorflow'
-      new tensorflow::IntraProcessRendezvous(device_mgr.get());
-          ~~~~~~~~~~~~^
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:130:13: error: no member named 'session_options' in 'TFE_ContextOptions'
-      opts->session_options.options,
-      ~~~~  ^
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:131:19: error: no type named 'ContextDevicePlacementPolicy' in namespace 'tensorflow'; did you mean 'TFE_ContextDevicePlacementPolicy'?
-      static_cast<tensorflow::ContextDevicePlacementPolicy>(
-                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                  TFE_ContextDevicePlacementPolicy
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.h:76:3: note: 'TFE_ContextDevicePlacementPolicy' declared here
-} TFE_ContextDevicePlacementPolicy;
-  ^
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:140:16: error: member access into incomplete type 'tensorflow::EagerContext'
-  eager_context->SetDistributedManager(
-               ^
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/common_runtime/eager/context_distributed_manager.h:32:7: note: forward declaration of 'tensorflow::EagerContext'
-class EagerContext;
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tf_tensor.cc:23:
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tf_tensor_internal.h:23:
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:36:12: error: definition of type 'AllocatorMemoryType' conflicts with type alias of the same name
+enum class AllocatorMemoryType { kUnknown = 0, kCPU = 1 };
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_buffer_stub.h:55:7: note: 'AllocatorMemoryType' declared here
+using AllocatorMemoryType = core::AllocatorMemoryType;
       ^
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/eager/c_api.cc:144:22: error: no member named 'wrap' in namespace 'tensorflow'
-  return tensorflow::wrap(eager_context);
-         ~~~~~~~~~~~~^
-7 errors generated.
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tf_tensor.cc:23:
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tf_tensor_internal.h:23:
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:110:7: error: redefinition of 'TensorBuffer'
+class TensorBuffer : public core::RefCounted {
+      ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_buffer_stub.h:59:7: note: previous definition is here
+class TensorBuffer : public core::RefCounted {
+      ^
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tf_tensor.cc:23:
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tf_tensor_internal.h:23:
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:169:50: error: no type named 'Tensor' in 'TTypes<type-parameter-0-0, 1>'
+  using Flat             = typename TTypes<T,1>::Tensor;
+                           ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:170:50: error: no type named 'UnalignedTensor' in 'TTypes<type-parameter-0-0, 1>'
+  using UnalignedFlat    = typename TTypes<T,1>::UnalignedTensor;
+                           ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:171:50: error: no type named 'Tensor' in 'TTypes<type-parameter-0-0, 1>'
+  using Vec              = typename TTypes<T,1>::Tensor;
+                           ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:172:50: error: no type named 'Tensor' in 'TTypes<type-parameter-0-0, 1>'
+  using ConstFlat        = typename TTypes<T,1>::Tensor;
+                           ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:173:52: error: no type named 'UnalignedTensor' in 'TTypes<type-parameter-0-0, 1>'
+  using UnalignedConstFlat = typename TTypes<T,1>::UnalignedTensor;
+                             ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:174:50: error: no type named 'Tensor' in 'TTypes<type-parameter-0-0, 1>'
+  using ConstVec         = typename TTypes<T,1>::Tensor;
+                           ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:177:50: error: no type named 'Tensor' in 'TTypes<type-parameter-0-0, 1>'
+  using Scalar           = typename TTypes<T,1>::Tensor;
+                           ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:178:50: error: no type named 'Tensor' in 'TTypes<type-parameter-0-0, 1>'
+  using ConstScalar      = typename TTypes<T,1>::Tensor;
+                           ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:231:29: error: no member named 'Scalar' in 'tensorflow::TensorShape'
+      : shape_(TensorShape::Scalar()), buf_(nullptr) {
+               ~~~~~~~~~~~~~^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:237:35: error: no matching constructor for initialization of 'tensorflow::Tensor'
+  explicit Tensor(float v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_FLOAT); }
+                                  ^      ~~~~~~~~~~~~~~~~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:190:3: note: candidate constructor not viable: no known conversion from 'float' to 'tensorflow::DataType' for 1st argument
+  Tensor(DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:215:12: note: candidate constructor not viable: requires single argument 'type', but 2 arguments were provided
+  explicit Tensor(DataType type)
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:237:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(float v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_FLOAT); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:238:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(double v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_DOUBLE); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:239:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int32_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:240:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint32_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:241:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint16_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:242:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint8_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:243:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int16_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:244:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int8_t v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:245:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(tstring v)    : Tensor(std::move(v), host_scalar_tag{}) { shape_.set_data_type(DT_STRING); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:246:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex64 v)  : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:247:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex128 v) : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX128); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:248:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int64_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:249:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint64_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:250:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bool v)       : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BOOL); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:251:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint8 v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:252:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint8 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:253:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint16 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:254:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint16 v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:255:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint32 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:256:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bfloat16 v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BFLOAT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:257:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(Eigen::half v): Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_HALF); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:258:12: note: candidate constructor not viable: requires single argument 's', but 2 arguments were provided
+  explicit Tensor(const char* s): Tensor(tstring(s)) {}
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:261:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(const Tensor& other) : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:264:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(Tensor&& other) noexcept : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:195:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:203:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:210:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, TensorShape shape, core::RefCountPtr<TensorBuffer> buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:185:3: note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+  Tensor() : shape_(TensorShape::Empty1D()), buf_(nullptr) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:198:3: note: candidate constructor not viable: requires 4 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape,
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:238:35: error: no matching constructor for initialization of 'tensorflow::Tensor'
+  explicit Tensor(double v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_DOUBLE); }
+                                  ^      ~~~~~~~~~~~~~~~~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:190:3: note: candidate constructor not viable: no known conversion from 'double' to 'tensorflow::DataType' for 1st argument
+  Tensor(DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:215:12: note: candidate constructor not viable: requires single argument 'type', but 2 arguments were provided
+  explicit Tensor(DataType type)
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:237:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(float v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_FLOAT); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:238:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(double v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_DOUBLE); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:239:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int32_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:240:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint32_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:241:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint16_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:242:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint8_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:243:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int16_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:244:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int8_t v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:245:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(tstring v)    : Tensor(std::move(v), host_scalar_tag{}) { shape_.set_data_type(DT_STRING); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:246:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex64 v)  : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:247:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex128 v) : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX128); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:248:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int64_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:249:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint64_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:250:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bool v)       : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BOOL); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:251:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint8 v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:252:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint8 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:253:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint16 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:254:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint16 v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:255:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint32 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:256:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bfloat16 v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BFLOAT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:257:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(Eigen::half v): Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_HALF); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:258:12: note: candidate constructor not viable: requires single argument 's', but 2 arguments were provided
+  explicit Tensor(const char* s): Tensor(tstring(s)) {}
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:261:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(const Tensor& other) : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:264:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(Tensor&& other) noexcept : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:195:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:203:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:210:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, TensorShape shape, core::RefCountPtr<TensorBuffer> buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:185:3: note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+  Tensor() : shape_(TensorShape::Empty1D()), buf_(nullptr) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:198:3: note: candidate constructor not viable: requires 4 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape,
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:239:35: error: no matching constructor for initialization of 'tensorflow::Tensor'
+  explicit Tensor(int32_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT32); }
+                                  ^      ~~~~~~~~~~~~~~~~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:190:3: note: candidate constructor not viable: no known conversion from 'int32_t' (aka 'int') to 'tensorflow::DataType' for 1st argument
+  Tensor(DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:215:12: note: candidate constructor not viable: requires single argument 'type', but 2 arguments were provided
+  explicit Tensor(DataType type)
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:237:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(float v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_FLOAT); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:238:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(double v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_DOUBLE); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:239:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int32_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:240:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint32_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:241:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint16_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:242:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint8_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:243:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int16_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:244:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int8_t v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:245:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(tstring v)    : Tensor(std::move(v), host_scalar_tag{}) { shape_.set_data_type(DT_STRING); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:246:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex64 v)  : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:247:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex128 v) : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX128); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:248:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int64_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:249:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint64_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:250:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bool v)       : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BOOL); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:251:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint8 v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:252:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint8 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:253:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint16 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:254:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint16 v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:255:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint32 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:256:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bfloat16 v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BFLOAT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:257:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(Eigen::half v): Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_HALF); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:258:12: note: candidate constructor not viable: requires single argument 's', but 2 arguments were provided
+  explicit Tensor(const char* s): Tensor(tstring(s)) {}
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:261:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(const Tensor& other) : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:264:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(Tensor&& other) noexcept : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:195:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:203:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:210:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, TensorShape shape, core::RefCountPtr<TensorBuffer> buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:185:3: note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+  Tensor() : shape_(TensorShape::Empty1D()), buf_(nullptr) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:198:3: note: candidate constructor not viable: requires 4 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape,
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:240:35: error: no matching constructor for initialization of 'tensorflow::Tensor'
+  explicit Tensor(uint32_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT32); }
+                                  ^      ~~~~~~~~~~~~~~~~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:190:3: note: candidate constructor not viable: no known conversion from 'uint32_t' (aka 'unsigned int') to 'tensorflow::DataType' for 1st argument
+  Tensor(DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:215:12: note: candidate constructor not viable: requires single argument 'type', but 2 arguments were provided
+  explicit Tensor(DataType type)
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:237:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(float v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_FLOAT); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:238:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(double v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_DOUBLE); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:239:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int32_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:240:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint32_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:241:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint16_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:242:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint8_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:243:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int16_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:244:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int8_t v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:245:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(tstring v)    : Tensor(std::move(v), host_scalar_tag{}) { shape_.set_data_type(DT_STRING); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:246:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex64 v)  : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:247:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex128 v) : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX128); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:248:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int64_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:249:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint64_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:250:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bool v)       : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BOOL); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:251:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint8 v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:252:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint8 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:253:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint16 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:254:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint16 v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:255:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint32 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:256:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bfloat16 v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BFLOAT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:257:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(Eigen::half v): Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_HALF); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:258:12: note: candidate constructor not viable: requires single argument 's', but 2 arguments were provided
+  explicit Tensor(const char* s): Tensor(tstring(s)) {}
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:261:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(const Tensor& other) : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:264:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(Tensor&& other) noexcept : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:195:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:203:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:210:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, TensorShape shape, core::RefCountPtr<TensorBuffer> buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:185:3: note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+  Tensor() : shape_(TensorShape::Empty1D()), buf_(nullptr) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:198:3: note: candidate constructor not viable: requires 4 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape,
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:241:35: error: no matching constructor for initialization of 'tensorflow::Tensor'
+  explicit Tensor(uint16_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT16); }
+                                  ^      ~~~~~~~~~~~~~~~~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:190:3: note: candidate constructor not viable: no known conversion from 'uint16_t' (aka 'unsigned short') to 'tensorflow::DataType' for 1st argument
+  Tensor(DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:215:12: note: candidate constructor not viable: requires single argument 'type', but 2 arguments were provided
+  explicit Tensor(DataType type)
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:237:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(float v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_FLOAT); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:238:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(double v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_DOUBLE); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:239:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int32_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:240:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint32_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:241:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint16_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:242:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint8_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:243:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int16_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:244:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int8_t v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:245:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(tstring v)    : Tensor(std::move(v), host_scalar_tag{}) { shape_.set_data_type(DT_STRING); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:246:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex64 v)  : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:247:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex128 v) : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX128); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:248:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int64_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:249:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint64_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:250:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bool v)       : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BOOL); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:251:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint8 v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:252:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint8 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:253:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint16 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:254:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint16 v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:255:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint32 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:256:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bfloat16 v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BFLOAT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:257:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(Eigen::half v): Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_HALF); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:258:12: note: candidate constructor not viable: requires single argument 's', but 2 arguments were provided
+  explicit Tensor(const char* s): Tensor(tstring(s)) {}
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:261:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(const Tensor& other) : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:264:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(Tensor&& other) noexcept : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:195:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:203:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:210:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, TensorShape shape, core::RefCountPtr<TensorBuffer> buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:185:3: note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+  Tensor() : shape_(TensorShape::Empty1D()), buf_(nullptr) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:198:3: note: candidate constructor not viable: requires 4 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape,
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:242:35: error: no matching constructor for initialization of 'tensorflow::Tensor'
+  explicit Tensor(uint8_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT8); }
+                                  ^      ~~~~~~~~~~~~~~~~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:190:3: note: candidate constructor not viable: no known conversion from 'uint8_t' (aka 'unsigned char') to 'tensorflow::DataType' for 1st argument
+  Tensor(DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:215:12: note: candidate constructor not viable: requires single argument 'type', but 2 arguments were provided
+  explicit Tensor(DataType type)
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:237:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(float v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_FLOAT); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:238:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(double v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_DOUBLE); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:239:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int32_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:240:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint32_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:241:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint16_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:242:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint8_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:243:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int16_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:244:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int8_t v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:245:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(tstring v)    : Tensor(std::move(v), host_scalar_tag{}) { shape_.set_data_type(DT_STRING); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:246:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex64 v)  : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:247:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex128 v) : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX128); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:248:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int64_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:249:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint64_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:250:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bool v)       : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BOOL); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:251:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint8 v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:252:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint8 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:253:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint16 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:254:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint16 v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:255:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint32 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:256:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bfloat16 v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BFLOAT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:257:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(Eigen::half v): Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_HALF); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:258:12: note: candidate constructor not viable: requires single argument 's', but 2 arguments were provided
+  explicit Tensor(const char* s): Tensor(tstring(s)) {}
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:261:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(const Tensor& other) : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:264:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(Tensor&& other) noexcept : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:195:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:203:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:210:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, TensorShape shape, core::RefCountPtr<TensorBuffer> buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:185:3: note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+  Tensor() : shape_(TensorShape::Empty1D()), buf_(nullptr) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:198:3: note: candidate constructor not viable: requires 4 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape,
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:243:35: error: no matching constructor for initialization of 'tensorflow::Tensor'
+  explicit Tensor(int16_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT16); }
+                                  ^      ~~~~~~~~~~~~~~~~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:190:3: note: candidate constructor not viable: no known conversion from 'int16_t' (aka 'short') to 'tensorflow::DataType' for 1st argument
+  Tensor(DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:215:12: note: candidate constructor not viable: requires single argument 'type', but 2 arguments were provided
+  explicit Tensor(DataType type)
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:237:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(float v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_FLOAT); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:238:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(double v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_DOUBLE); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:239:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int32_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:240:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint32_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:241:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint16_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:242:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint8_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:243:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int16_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:244:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int8_t v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:245:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(tstring v)    : Tensor(std::move(v), host_scalar_tag{}) { shape_.set_data_type(DT_STRING); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:246:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex64 v)  : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:247:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex128 v) : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX128); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:248:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int64_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:249:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint64_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:250:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bool v)       : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BOOL); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:251:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint8 v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:252:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint8 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:253:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint16 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:254:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint16 v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:255:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint32 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:256:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bfloat16 v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BFLOAT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:257:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(Eigen::half v): Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_HALF); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:258:12: note: candidate constructor not viable: requires single argument 's', but 2 arguments were provided
+  explicit Tensor(const char* s): Tensor(tstring(s)) {}
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:261:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(const Tensor& other) : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:264:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(Tensor&& other) noexcept : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:195:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:203:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:210:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, TensorShape shape, core::RefCountPtr<TensorBuffer> buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:185:3: note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+  Tensor() : shape_(TensorShape::Empty1D()), buf_(nullptr) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:198:3: note: candidate constructor not viable: requires 4 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape,
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:244:35: error: no matching constructor for initialization of 'tensorflow::Tensor'
+  explicit Tensor(int8_t v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT8); }
+                                  ^      ~~~~~~~~~~~~~~~~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:190:3: note: candidate constructor not viable: no known conversion from 'int8_t' (aka 'signed char') to 'tensorflow::DataType' for 1st argument
+  Tensor(DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:215:12: note: candidate constructor not viable: requires single argument 'type', but 2 arguments were provided
+  explicit Tensor(DataType type)
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:237:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(float v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_FLOAT); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:238:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(double v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_DOUBLE); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:239:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int32_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:240:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint32_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:241:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint16_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:242:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint8_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:243:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int16_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:244:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int8_t v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:245:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(tstring v)    : Tensor(std::move(v), host_scalar_tag{}) { shape_.set_data_type(DT_STRING); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:246:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex64 v)  : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:247:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(complex128 v) : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_COMPLEX128); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:248:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(int64_t v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_INT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:249:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(uint64_t v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_UINT64); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:250:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bool v)       : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BOOL); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:251:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint8 v)      : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:252:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint8 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT8); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:253:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint16 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:254:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(quint16 v)    : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QUINT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:255:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(qint32 v)     : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_QINT32); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:256:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(bfloat16 v)   : Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_BFLOAT16); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:257:12: note: candidate constructor not viable: requires single argument 'v', but 2 arguments were provided
+  explicit Tensor(Eigen::half v): Tensor(v, host_scalar_tag{}) { shape_.set_data_type(DT_HALF); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:258:12: note: candidate constructor not viable: requires single argument 's', but 2 arguments were provided
+  explicit Tensor(const char* s): Tensor(tstring(s)) {}
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:261:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(const Tensor& other) : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:264:3: note: candidate constructor not viable: requires single argument 'other', but 2 arguments were provided
+  Tensor(Tensor&& other) noexcept : shape_(other.shape_), buf_(other.buf_) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:195:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:203:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:210:3: note: candidate constructor not viable: requires 3 arguments, but 2 were provided
+  Tensor(DataType type, TensorShape shape, core::RefCountPtr<TensorBuffer> buf)
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:185:3: note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+  Tensor() : shape_(TensorShape::Empty1D()), buf_(nullptr) {
+  ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/c/tensor_stub.h:198:3: note: candidate constructor not viable: requires 4 arguments, but 2 were provided
+  Tensor(Allocator* /*a*/, DataType type, const TensorShape& shape,
+  ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.

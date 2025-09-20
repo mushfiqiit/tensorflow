@@ -20,7 +20,7 @@ limitations under the License.
 #include <string>
 
 #include "grpcpp/grpcpp.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 namespace data {

@@ -15,7 +15,7 @@ limitations under the License.
 #include "tensorflow/core/common_runtime/device/device_utils.h"
 
 #include "tensorflow/core/platform/regexp.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/strcat.h"
 #include "tensorflow/core/platform/stringpiece.h"
 

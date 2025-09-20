@@ -17,7 +17,7 @@ limitations under the License.
 
 #include "mlir/Pass/Pass.h"  // from @llvm-project
 #include "tensorflow/core/framework/graph.pb.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tfrt/bef/bef_buffer.h"  // from @tf_runtime
 
 namespace tensorflow {

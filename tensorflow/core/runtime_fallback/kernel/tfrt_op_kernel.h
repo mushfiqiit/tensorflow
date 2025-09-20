@@ -37,7 +37,7 @@ limitations under the License.
 #include "llvm/Support/ManagedStatic.h"
 #include "tensorflow/core/framework/types.h"
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/stringpiece.h"
 #include "tensorflow/core/runtime_fallback/kernel/attr_util.h"
 #include "tensorflow/core/runtime_fallback/util/attr_util.h"

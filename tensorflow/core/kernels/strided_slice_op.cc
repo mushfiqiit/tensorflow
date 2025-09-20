@@ -41,7 +41,7 @@ limitations under the License.
 #include "tensorflow/core/lib/gtl/array_slice.h"
 #include "tensorflow/core/platform/errors.h"
 #include "tensorflow/core/platform/prefetch.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/util/strided_slice_op.h"
 
 namespace tensorflow {

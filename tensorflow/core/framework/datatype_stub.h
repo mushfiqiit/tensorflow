@@ -82,4 +82,32 @@ enum DataType : int {
       std::numeric_limits<::int32_t>::max(),
 };
 
+inline int DataTypeSize(DataType dt) {
+  switch (dt) {
+    case DT_FLOAT:   return 4;
+    case DT_DOUBLE:  return 8;
+    case DT_INT8:    return 1;
+    case DT_UINT8:   return 1;
+    case DT_INT16:   return 2;
+    case DT_UINT16:  return 2;
+    case DT_INT32:   return 4;
+    case DT_UINT32:  return 4;
+    case DT_INT64:   return 8;
+    case DT_UINT64:  return 8;
+    case DT_BOOL:    return 1;
+    //case DT_COMPLEX64:  return sizeof(std::complex<float>);
+    //case DT_COMPLEX128: return sizeof(std::complex<double>);
+    case DT_BFLOAT16:   return 2;
+    case DT_HALF:       return 2;
+    case DT_QINT8:      return 1;
+    case DT_QUINT8:     return 1;
+    case DT_QINT16:     return 2;
+    case DT_QUINT16:    return 2;
+    case DT_QINT32:     return 4;
+    // Strings are variable-sized; treat as 0 for allocation math here.
+    case DT_STRING:     return 0;
+    default:            return 0;
+  }
+}
+
 }  // namespace tensorflow

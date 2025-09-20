@@ -16,7 +16,7 @@ limitations under the License.
 #define TENSORFLOW_CORE_DATA_SERVICE_CLIENT_VALIDATE_UTILS_H_
 
 #include "tensorflow/core/data/service/client/common.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 namespace data {

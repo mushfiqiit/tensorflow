@@ -18,7 +18,7 @@ limitations under the License.
 
 #include "llvm/ADT/None.h"
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/threadpool.h"
 #include "tensorflow/core/platform/threadpool_interface.h"
 #include "tensorflow/core/tfrt/utils/thread_pool.h"

@@ -19,7 +19,7 @@ limitations under the License.
 #include <string>
 
 #include "tensorflow/core/platform/refcount.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/tpu/kernels/tpu_program_group_interface.h"
 
 namespace tensorflow {

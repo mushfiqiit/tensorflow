@@ -3,10 +3,41 @@
 #include <tensorflow/c/eager/c_api.h>
 #include "tensorflow/c/tf_status.h"
 
+// No-op deallocator for small stack/static buffers
+static void no_op_deallocator(void* data, size_t len, void* arg) {
+  (void)data; (void)len; (void)arg;
+}
+
 int main() {
   TF_Status* status = TF_NewStatus();
   TFE_ContextOptions* opts = TFE_NewContextOptions();
   TFE_Context* ctx = TFE_NewContext(opts, status);
+
+  if (TF_GetCode(status) != TF_OK) {
+    std::fprintf(stderr, "TFE_NewContext failed: %s\n", TF_Message(status));
+    return 1;
+  }
+
+
+  int32_t input_vals[4] = {1,1,1,1};
+  int64_t input_dims[1] = {4};
+
+  /* TF_Tensor* input_t = TF_NewTensor(TF_INT32, input_dims, 1,
+                                    input_vals, sizeof(input_vals),
+                                    &no_op_deallocator, nullptr);
+
+  TFE_TensorHandle* input_h = TFE_NewTensorHandle(input_t, status);
+  if (TF_GetCode(status) != TF_OK) {
+    std::fprintf(stderr, "NewTensorHandle(input) failed: %s\n", TF_Message(status));
+    return 1;
+  } */
+
+  // data = [[False,False,False,False], [False], [False,False,False]]
+  uint8_t d0_vals[4] = {0,0,0,0};
+  uint8_t d1_vals[1] = {0};
+  uint8_t d2_vals[3] = {0,0,0};
+  int64_t d0_dims[1] = {4}, d1_dims[1] = {1}, d2_dims[1] = {3};
+
   return 0;
 }
 

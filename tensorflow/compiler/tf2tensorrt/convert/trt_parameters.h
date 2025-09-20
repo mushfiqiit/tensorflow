@@ -18,7 +18,7 @@ limitations under the License.
 
 #if GOOGLE_CUDA && GOOGLE_TENSORRT
 
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 namespace tensorrt {

@@ -18,7 +18,7 @@ limitations under the License.
 
 #include <array>
 
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/util/padding.h"
 
 namespace tensorflow {

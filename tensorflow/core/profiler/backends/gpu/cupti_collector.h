@@ -23,7 +23,7 @@ limitations under the License.
 #include "absl/container/node_hash_set.h"
 #include "absl/strings/string_view.h"
 #include "tensorflow/core/platform/macros.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/profiler/protobuf/xplane.pb.h"
 

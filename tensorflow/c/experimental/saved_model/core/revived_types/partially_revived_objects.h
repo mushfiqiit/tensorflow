@@ -27,7 +27,7 @@ limitations under the License.
 #include "tensorflow/c/experimental/saved_model/core/revived_types/tf_signature_def_function_revival_state.h"
 #include "tensorflow/c/experimental/saved_model/core/revived_types/variable.h"
 #include "tensorflow/core/lib/gtl/flatmap.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/protobuf/saved_object_graph.pb.h"
 
 namespace tensorflow {

@@ -19,24 +19,24 @@ limitations under the License.
 #include <vector>
 
 #include "tensorflow/c/tf_status.h"
-#include "tensorflow/c/tf_status_helper.h"
+//#include "tensorflow/c/tf_status_helper.h"
 #include "tensorflow/c/tf_tensor_internal.h"
-#include "tensorflow/core/framework/allocation_description.pb.h"
-#include "tensorflow/core/framework/log_memory.h"
-#include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/framework/tensor_shape.pb.h"
+//#include "tensorflow/core/framework/allocation_description.pb.h"
+//#include "tensorflow/core/framework/log_memory.h"
+//#include "tensorflow/core/framework/tensor.h"
+//#include "tensorflow/core/framework/tensor_shape.pb.h"
 //#include "tensorflow/core/framework/types.pb.h"
-#include "tensorflow/core/lib/core/coding.h"
-#include "tensorflow/core/platform/casts.h"
+//#include "tensorflow/core/lib/core/coding.h"
+//#include "tensorflow/core/platform/casts.h" 
 
-using tensorflow::Status;
+//using tensorflow::Status;
 using tensorflow::Tensor;
 using tensorflow::TensorBuffer;
-using tensorflow::errors::FailedPrecondition;
-using tensorflow::errors::InvalidArgument;
+//using tensorflow::errors::FailedPrecondition;
+//using tensorflow::errors::InvalidArgument;
 
 namespace tensorflow {
-void* allocate_tensor(const char* operation, size_t len, Allocator* allocator) {
+/* void* allocate_tensor(const char* operation, size_t len, Allocator* allocator) {
   void* data = allocator->AllocateRaw(EIGEN_MAX_ALIGN_BYTES, len);
   if (LogMemory::IsEnabled() && data != nullptr) {
     LogMemory::RecordRawAllocation(
@@ -63,7 +63,7 @@ void deallocate_buffer(void* data, size_t len, void* arg) {
         allocator, false);
   }
   allocator->DeallocateRaw(data);
-}
+} */
 }  // namespace tensorflow
 
 namespace {
@@ -87,15 +87,15 @@ TF_Tensor* CreateTensor(TF_ManagedBuffer* buf, TF_DataType dtype,
 }
 }  // namespace
 
-TF_Tensor* TF_AllocateTensor(TF_DataType dtype, const int64_t* dims,
+/* TF_Tensor* TF_AllocateTensor(TF_DataType dtype, const int64_t* dims,
                              int num_dims, size_t len) {
   void* data = tensorflow::allocate_tensor("TF_AllocateTensor", len,
                                            tensorflow::cpu_allocator());
   TF_ManagedBuffer* buf =
       new TF_ManagedBuffer(data, len, tensorflow::deallocate_buffer,
-                           tensorflow::cpu_allocator(), /*owns_memory=*/true);
+                           tensorflow::cpu_allocator(), true);
   return CreateTensor(buf, dtype, dims, num_dims, len);
-}
+} */
 
 TF_Tensor* TF_NewTensor(TF_DataType dtype, const int64_t* dims, int num_dims,
                         void* data, size_t len,
@@ -116,19 +116,19 @@ TF_Tensor* TF_NewTensor(TF_DataType dtype, const int64_t* dims, int num_dims,
     // do so.
     buf = new TF_ManagedBuffer(tensorflow::allocate_tensor("TF_NewTensor", len),
                                len, tensorflow::deallocate_buffer, nullptr,
-                               /*owns_memory=*/true);
+                               true);
     std::memcpy(buf->data(), data, len);
     // Free the original buffer.
     deallocator(data, len, deallocator_arg);
   } else {
     buf = new TF_ManagedBuffer(data, len, deallocator, deallocator_arg,
-                               /*owns_memory=*/false);
+                               false);
   }
 
   return CreateTensor(buf, dtype, dims, num_dims, len);
 }
 
-TF_Tensor* TF_TensorMaybeMove(TF_Tensor* t) {
+/* TF_Tensor* TF_TensorMaybeMove(TF_Tensor* t) {
   return t->tensor->CanMove() ? t : nullptr;
 }
 
@@ -179,10 +179,10 @@ void TF_TensorBitcastFrom(const TF_Tensor* from, TF_DataType type,
               static_cast<tensorflow::DataType>(type), new_dims, num_new_dims));
   Set_TF_Status_from_Status(status, cc_status);
 }
-
+ */
 namespace tensorflow {
 
-void TensorInterface::Release() {
+/* void TensorInterface::Release() {
   if (Type() == DT_STRING && NumElements() > 0) {
     TF_TString* data = static_cast<TF_TString*>(Data());
     if (CanMove() && data != nullptr) {
@@ -207,7 +207,7 @@ bool TensorInterface::CanMove() const {
 }
 
 std::string TensorInterface::SummarizeValue() const {
-  return tensor_.SummarizeValue(/*max_entries=*/3, /*print_v2=*/true);
+  return tensor_.SummarizeValue(3, true);
 }
 
 DataType TensorInterface::Type() const { return tensor_.dtype(); }
@@ -243,13 +243,13 @@ Status TensorInterface::FromProto(const tensorflow::TensorProto& from) {
   bool success = tensor_.FromProto(from);
   if (success) return OkStatus();
   return errors::InvalidArgument("Unparseable tensor proto");
-}
+} */
 
 }  // namespace tensorflow
 
 // --------------------------------------------------------------------------
 
-static void DeleteArray(void* data, size_t size, void* arg) {
+/* static void DeleteArray(void* data, size_t size, void* arg) {
   DCHECK_EQ(data, arg);
   delete[] reinterpret_cast<char*>(arg);
 }
@@ -271,11 +271,11 @@ static TF_Tensor* EmptyTensor(TF_DataType dtype,
   return TF_NewTensor(
       dtype, reinterpret_cast<const int64_t*>(dims.data()), shape.dims(),
       reinterpret_cast<void*>(&empty), 0, [](void*, size_t, void*) {}, nullptr);
-}
+} */
 
 namespace tensorflow {
 
-// Non-static for testing.
+/* // Non-static for testing.
 TF_Tensor* TF_TensorFromTensor(const tensorflow::Tensor& src, Status* status) {
   *status = OkStatus();
   if (!src.IsInitialized()) {
@@ -304,7 +304,7 @@ Status TensorInterface::ToTensor(tensorflow::Tensor* dst) const {
   return OkStatus();
 }
 
-bool TensorInterface::IsAligned() const { return tensor_.IsAligned(); }
+bool TensorInterface::IsAligned() const { return tensor_.IsAligned(); } */
 
 }  // namespace tensorflow
 

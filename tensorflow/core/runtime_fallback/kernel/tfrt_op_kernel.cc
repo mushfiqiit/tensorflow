@@ -20,7 +20,7 @@ limitations under the License.
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/framework/tensor_shape.h"
 #include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/runtime_fallback/kernel/attr_util.h"
 #include "tensorflow/core/tfrt/utils/error_util.h"
 #include "tfrt/host_context/async_value.h"  // from @tf_runtime

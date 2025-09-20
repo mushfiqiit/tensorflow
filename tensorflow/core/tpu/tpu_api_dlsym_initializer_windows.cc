@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/tpu/tpu_api_dlsym_initializer.h"
 
 // Reminder: Update tpu_api_dlsym_initializer_windows.cc if you are adding new

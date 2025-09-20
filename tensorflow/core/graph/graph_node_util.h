@@ -17,7 +17,7 @@ limitations under the License.
 
 #include "tensorflow/core/framework/node_def_util.h"
 #include "tensorflow/core/lib/core/stringpiece.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 class Node;

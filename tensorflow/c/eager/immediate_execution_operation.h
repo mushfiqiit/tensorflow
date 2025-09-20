@@ -26,7 +26,7 @@ limitations under the License.
 #include "tensorflow/core/framework/op_def.pb.h"
 //#include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/platform/casts.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/util/managed_stack_trace.h"
 
 struct TFE_Op;

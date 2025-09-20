@@ -38,7 +38,7 @@ std::tuple<int, int, int> GetLoadedTensorRTVersion();
 
 #include "tensorflow/core/platform/errors.h"
 #include "tensorflow/core/platform/logging.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "third_party/tensorrt/NvInfer.h"
 
 #define TFTRT_INTERNAL_ERROR_AT_NODE(node)                           \

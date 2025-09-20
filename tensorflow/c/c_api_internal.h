@@ -41,10 +41,10 @@ limitations under the License.
 #include "tensorflow/core/common_runtime/graph_constructor.h"
 #include "tensorflow/core/graph/node_builder.h"
 #include "tensorflow/core/platform/mutex.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/public/session.h" */
-#include "tensorflow/core/public/session_options.h"
+//#include "tensorflow/core/public/session_options.h"
 
 namespace tensorflow {
 class Device;
@@ -55,9 +55,9 @@ class DeviceMgr;
 // Internal structures used by the C API. These are likely to change and should
 // not be depended on.
 
-struct TF_SessionOptions {
+/* struct TF_SessionOptions {
   tensorflow::SessionOptions options;
-};
+}; */
 
 /*struct TF_DeprecatedSession {
   tensorflow::Session* session;

@@ -19,11 +19,14 @@ limitations under the License.
 #include <memory>
 
 #include "tensorflow/c/tensor_interface.h"
-#include "tensorflow/c/tf_datatype.h"
-#include "tensorflow/core/framework/allocation_description.pb.h"
-#include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/platform/casts.h"
+#include "tensor_buffer_stub.h"
+#include "tensor_stub.h"
+
+//#include "tensorflow/c/tf_datatype.h"
+//#include "tensorflow/core/framework/allocation_description.pb.h"
+//#include "tensorflow/core/framework/tensor.h"
+//#include "tensorflow/core/framework/tensor_shape.h"
+//#include "tensorflow/core/platform/casts.h"
 
 // Internal structures used by the C API. These are likely to change and should
 // not be depended on.
@@ -55,8 +58,8 @@ class TF_ManagedBuffer : public tensorflow::TensorBuffer {
   void FillAllocationDescription(
       tensorflow::AllocationDescription* proto) const override {
     int64_t rb = size();
-    proto->set_requested_bytes(rb);
-    proto->set_allocator_name(tensorflow::cpu_allocator()->Name());
+    //proto->set_requested_bytes(rb);
+    //proto->set_allocator_name(tensorflow::cpu_allocator()->Name());
   }
 
   bool OwnsMemory() const override { return owns_memory_; }
@@ -70,23 +73,23 @@ class TF_ManagedBuffer : public tensorflow::TensorBuffer {
 
 namespace tensorflow {
 
-class TensorCApi {
+/* class TensorCApi {
  public:
   static TensorBuffer* Buffer(const Tensor& tensor) { return tensor.buf_; }
   static Tensor MakeTensor(TF_DataType type, const TensorShape& shape,
                            TensorBuffer* buf) {
     return Tensor(static_cast<DataType>(type), shape, buf);
   }
-};
+}; */
 
 // Allocates tensor data buffer using specified allocator.
 // `operation` is a name for this operation.
-void* allocate_tensor(const char* operation, size_t len, Allocator* allocator);
+//void* allocate_tensor(const char* operation, size_t len, Allocator* allocator);
 
 // Deallocates tensor data buffer.
 // Defaults to deallocating using CPU allocator. You can pass pointer to
 // a different Allocator as `arg`.
-void deallocate_buffer(void* data, size_t len, void* arg);
+//void deallocate_buffer(void* data, size_t len, void* arg);
 
 class TensorInterface : public AbstractTensorInterface {
  public:
@@ -109,7 +112,7 @@ class TensorInterface : public AbstractTensorInterface {
   Status ToTensor(tensorflow::Tensor* dst) const;
   Status BitcastFrom(const TensorInterface& from, DataType type,
                      const int64_t* new_dims, int num_new_dims);
-  Status FromProto(const tensorflow::TensorProto& from);
+  //Status FromProto(const tensorflow::TensorProto& from);
 
   tensorflow::Tensor& Tensor() { return tensor_; }
 

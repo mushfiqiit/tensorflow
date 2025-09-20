@@ -22,7 +22,7 @@ limitations under the License.
 #include "tensorflow/c/tensor_interface.h"
 #include "tensorflow/core/framework/tensor_shape.h"
 //#include "tensorflow/core/framework/types.pb.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 

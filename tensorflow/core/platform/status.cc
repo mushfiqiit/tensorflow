@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 /* #include <stdio.h>
 
@@ -40,7 +40,7 @@ namespace {
 
 // Log sink is used to collect recent warning and error log messages to be
 // attached to the error status.
-class StatusLogSink : public TFLogSink {
+/* class StatusLogSink : public TFLogSink {
  public:
   static StatusLogSink* GetInstance() {
     static StatusLogSink* sink = new StatusLogSink();
@@ -91,12 +91,12 @@ class StatusLogSink : public TFLogSink {
   absl::once_flag flag_;
   int num_messages_ = 0;
   std::deque<std::string> messages_ TF_GUARDED_BY(mu_);
-};
+}; */
 
 }  // namespace
 
 // TODO(b/197552541) Move this namespace to errors.h after absl migration.
-namespace errors {
+/* namespace errors {
 static constexpr const char kStackTraceProtoUrl[] =
     "type.googleapis.com/tensorflow.StackTracePayload";
 
@@ -109,9 +109,9 @@ std::vector<StackFrame> GetStackTrace(const ::tensorflow::Status& status) {
   return status.GetStackTrace();
 }
 
-}  // namespace errors
+} */  // namespace errors
 
-void Status::SetStackTrace(std::vector<StackFrame> stack_trace) {
+/* void Status::SetStackTrace(std::vector<StackFrame> stack_trace) {
   stack_trace_ = stack_trace;
 }
 
@@ -136,7 +136,7 @@ void Status::MaybeAddSourceLocation(SourceLocation loc) {
     return;
   }
   state_->source_locations.push_back(loc);
-}
+} */
 
 Status::Status(tensorflow::error::Code code, absl::string_view msg,
                SourceLocation loc) {

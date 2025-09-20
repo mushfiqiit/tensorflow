@@ -19,6 +19,6 @@ limitations under the License.
 
 namespace tensorflow {
 
-SessionOptions::SessionOptions() : env(Env::Default()) {}
+//SessionOptions::SessionOptions() : env(Env::Default()) {}
 
 }  // namespace tensorflow

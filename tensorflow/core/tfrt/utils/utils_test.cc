@@ -19,7 +19,7 @@ limitations under the License.
 #include "tensorflow/core/common_runtime/eager/context.h"
 #include "tensorflow/core/framework/device.h"
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/statusor.h"
 #include "tfrt/cpp_tests/test_util.h""  // from @tf_runtime
 #include "tfrt/host_context/host_context.h"  // from @tf_runtime

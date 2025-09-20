@@ -20,7 +20,7 @@ limitations under the License.
 #include "tensorflow/core/data/service/worker_impl.h"
 #include "tensorflow/core/framework/dataset.h"
 #include "tensorflow/core/platform/errors.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/protobuf/data_service.pb.h"
 
 namespace tensorflow {

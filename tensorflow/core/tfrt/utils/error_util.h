@@ -15,7 +15,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_TFRT_UTILS_ERROR_UTIL_H_
 #define TENSORFLOW_CORE_TFRT_UTILS_ERROR_UTIL_H_
 
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tfrt/support/error_util.h"  // from @tf_runtime
 
 namespace tfrt {

@@ -17,7 +17,8 @@ limitations under the License.
 #define TENSORFLOW_C_TENSOR_INTERFACE_H_
 
 //#include "tensorflow/core/framework/types.pb.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
+#include "tensorflow/core/framework/datatype_stub.h"
 
 namespace tensorflow {
 

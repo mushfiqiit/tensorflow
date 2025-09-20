@@ -20,7 +20,7 @@ limitations under the License.
 #include <vector>
 
 //#include "absl/base/attributes.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/types.h"
 
 namespace tensorflow {

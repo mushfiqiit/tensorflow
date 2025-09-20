@@ -33,7 +33,7 @@ limitations under the License.
 #include "tensorflow/c/experimental/saved_model/core/saved_model_api.h"
 #include "tensorflow/c/experimental/saved_model/core/signature_def_function.h"
 #include "tensorflow/cc/saved_model/bundle_v2.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 

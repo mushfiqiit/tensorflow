@@ -18,7 +18,7 @@ limitations under the License.
 ////#include "absl/container/inlined_vector.h"
 #include "tensorflow/core/framework/attr_value.pb.h"
 //#include "tensorflow/core/framework/types.pb.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
 

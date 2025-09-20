@@ -45,7 +45,7 @@ limitations under the License.
 //#include "tensorflow/core/graph/types.h"
 //#include "tensorflow/core/platform/errors.h"
 //#include "tensorflow/core/platform/macros.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/util/device_name_utils.h"
 

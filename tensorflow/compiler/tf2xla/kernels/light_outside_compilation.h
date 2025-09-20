@@ -19,7 +19,7 @@ limitations under the License.
 #include <functional>
 
 #include "tensorflow/compiler/tf2xla/xla_op_kernel.h"
-#include "tensorflow/core/platform/status.h"
+//#include "tensorflow/core/platform/status.h"
 namespace tensorflow {
 
 // Using std::map as the maps are presumed to be tiny, and we want a
