@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_OP_KERNEL_H_
 #define TENSORFLOW_CORE_FRAMEWORK_OP_KERNEL_H_
 
-#include <functional>
+/*#include <functional>
 #include <unordered_set>
 #include <utility>
 #include <vector>
@@ -63,9 +63,9 @@ namespace Eigen {
 struct ThreadPoolDevice;
 struct GpuDevice;
 }  // end namespace Eigen
-
+*/
 namespace tensorflow {
-
+/*
 namespace checkpoint {
 class TensorSliceReaderCacheWrapper;
 }  // namespace checkpoint
@@ -89,9 +89,10 @@ class CoordinationServiceAgent;
 // disabled if needed.
 extern const char* kJitKernelLabel;
 extern const char* kDisableJitKernelsEnvVar;
-
+*/
 class OpKernel {
  public:
+ /*
   // OpKernel won't be instantiated by the scheduler, so you may perform
   // expensive initialization in the descendant's constructor.
   explicit OpKernel(OpKernelConstruction* context);
@@ -209,8 +210,9 @@ class OpKernel {
   bool expensive_;
 
   TF_DISALLOW_COPY_AND_ASSIGN(OpKernel);
+*/
 };
-
+/*
 class AsyncOpKernel : public OpKernel {
  public:
   using OpKernel::OpKernel;  // Lift OpKernel constructors.
@@ -548,9 +550,10 @@ struct GraphCollector {
     return dirty;
   }
 };
-
+*/
 class OpKernelContext {
  public:
+ /*
   // The first element of a WrappedAllocator is a "base" Allocator and
   // the second element is that Allocator wrapped by a
   // TrackingAllocator
@@ -709,7 +712,9 @@ class OpKernelContext {
   // Input/output signature.
 
   int num_inputs() const { return params_->inputs.size(); }
+  */
   DataType input_dtype(int index) const;
+  /*
   Status input_dtype(StringPiece name, DataType* dtype) const;
   MemoryType input_memory_type(int index) const;
 
@@ -1296,8 +1301,9 @@ class OpKernelContext {
                                      const char* correct_macro_name);
 
   TF_DISALLOW_COPY_AND_ASSIGN(OpKernelContext);
+  */
 };
-
+/*
 template <>
 const Eigen::ThreadPoolDevice& OpKernelContext::eigen_device() const;
 
@@ -1709,7 +1715,7 @@ inline void CheckNotInComputeAsync(XlaOpKernelContext*, const char*) {}
 inline void CheckNotInComputeAsync(OpKernelConstruction*, const char*) {}
 void CheckNotInComputeAsync(OpKernelContext* ctx,
                             const char* correct_macro_name);
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_OP_KERNEL_H_

@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_PLATFORM_STATUS_H_
 #define TENSORFLOW_CORE_PLATFORM_STATUS_H_
 
-#include <functional>
+/* #include <functional>
 #include <iosfwd>
 #include <memory>
 #include <set>
@@ -30,11 +30,11 @@ limitations under the License.
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/stack_frame.h"
 #include "tensorflow/core/platform/types.h"
-#include "tensorflow/core/protobuf/error_codes.pb.h"
+#include "tensorflow/core/protobuf/error_codes.pb.h" */
 
 namespace tensorflow {
 
-#if defined(__clang__)
+/*#if defined(__clang__)
 // Only clang supports warn_unused_result as a type annotation.
 class TF_MUST_USE_RESULT Status;
 #endif
@@ -73,11 +73,12 @@ typedef ::tensorflow::error::Code Code;
 }  // namespace errors
 /// @ingroup core
 /// Denotes success or failure of a call in Tensorflow.
+*/
 class Status {
  public:
   /// Create a success status.
   Status() {}
-
+/*
   /// \brief Create a status with the specified error code and msg as a
   /// human-readable string containing more detailed information.
   Status(tensorflow::error::Code code, absl::string_view msg,
@@ -217,6 +218,7 @@ class Status {
   std::unique_ptr<State> state_;
 
   void SlowCopyFrom(const State* src);
+*/
 };
 
 // OkStatus()
@@ -224,7 +226,7 @@ class Status {
 // Returns an OK status, equivalent to a default constructed instance. Prefer
 // usage of `OkStatus()` when constructing such an OK status.
 Status OkStatus();
-
+/*
 // TODO(b/197552541) Move this namespace to errors.h.
 namespace errors {
 
@@ -354,7 +356,7 @@ inline tensorflow::string* TfCheckOpHelper(::tensorflow::Status v,
 #define TF_DCHECK_OK(val) \
   while (false && (::tensorflow::OkStatus() == (val))) LOG(FATAL)
 #endif
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_PLATFORM_STATUS_H_

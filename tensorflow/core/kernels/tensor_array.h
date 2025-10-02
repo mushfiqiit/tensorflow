@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_KERNELS_TENSOR_ARRAY_H_
 #define TENSORFLOW_CORE_KERNELS_TENSOR_ARRAY_H_
 
-#include <limits.h>
+/*#include <limits.h>
 #include <vector>
 
 #include "tensorflow/core/framework/op_kernel.h"
@@ -31,10 +31,11 @@ limitations under the License.
 #include "tensorflow/core/lib/core/errors.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/types.h"
-
+*/
+#include "tensorflow/core/framework/resource_base.h"
 namespace tensorflow {
 
-typedef Eigen::ThreadPoolDevice CPUDevice;
+/*typedef Eigen::ThreadPoolDevice CPUDevice;
 typedef Eigen::GpuDevice GPUDevice;
 
 namespace tensor_array {
@@ -127,8 +128,10 @@ TF_CALL_COMPLEX_TYPES(TENSOR_ARRAY_SET_ZERO_GPU);
 //     the same index are partial gradients corresponding to the
 //     multiple reads of that index in the forward phase.
 //
+*/
 class TensorArray : public ResourceBase {
  public:
+ /*
   static std::atomic<int64_t> tensor_array_counter;
 
   // Construct a TensorArray for holding Tensors of type 'dtype' with
@@ -434,8 +437,9 @@ class TensorArray : public ResourceBase {
   };
   // The list of underlying Tensors and states.
   std::vector<TensorAndState> tensors_ TF_GUARDED_BY(mu_);
+  */
 };
-
+/*
 template <typename Device, typename T>
 Status TensorArray::LockedWriteOrAggregate(OpKernelContext* ctx,
                                            const int32_t index,
@@ -620,7 +624,7 @@ Status TensorArray::LockedRead(OpKernelContext* ctx, const int32_t index,
   t.read = true;
   return OkStatus();
 }
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_KERNELS_TENSOR_ARRAY_H_

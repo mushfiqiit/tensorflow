@@ -16,12 +16,13 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_RESOURCE_BASE_H_
 #define TENSORFLOW_CORE_FRAMEWORK_RESOURCE_BASE_H_
 
-#include "tensorflow/core/lib/core/refcount.h"
+/* #include "tensorflow/core/lib/core/refcount.h"
 #include "tensorflow/core/lib/core/status.h"
-#include "tensorflow/core/platform/errors.h"
+#include "tensorflow/core/platform/errors.h" */
 
 namespace tensorflow {
 
+  /*
 // Forward declaration to avoid introducing a dependency on headers in
 // "tensorflow/core/graph/...".
 class GraphDefBuilder;
@@ -30,8 +31,10 @@ class Node;
 // This is the base class of all resource classes. Each resource must be
 // represented as a sub-class of ResourceBase (which is reference counted) to be
 // able to work with resource facilities such ResourceHandle and ResourceMgr.
-class ResourceBase : public core::WeakRefCounted {
+*/
+class ResourceBase /*: public core::WeakRefCounted */ {
  public:
+ /*
   // Returns a debug string for *this.
   virtual std::string DebugString() const = 0;
 
@@ -44,6 +47,7 @@ class ResourceBase : public core::WeakRefCounted {
     return errors::Unimplemented("AsGraphDef not implemented for resource ",
                                  DebugString());
   }
+*/
 };
 }  //  end namespace tensorflow
 
