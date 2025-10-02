@@ -21,7 +21,7 @@ int main() {
   klee_make_symbolic(&data_ptr, sizeof(data_ptr), "data_ptr");
 
   //4) Constrain pointer to { nullptr, &storage[0] }
-  klee_assume(data_ptr == nullptr || data_ptr == &storage[0]);
+  //klee_assume(data_ptr == nullptr || data_ptr == &storage[0]);
 
   const bool print_v2 = true;
   volatile auto s = tensorflow::SummarizeArray<bool>(
