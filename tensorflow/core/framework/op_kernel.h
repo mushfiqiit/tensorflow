@@ -476,22 +476,25 @@ class OpOutputList {
 
 // Holds a tensor or tensor reference. For tensor references, we need
 // a mutex to prevent concurrent access to the tensor.
+*/
 struct TensorValue {
+  /*
   TensorValue() : mutex_if_ref(nullptr), tensor(nullptr) {}
   explicit TensorValue(Tensor* t) : mutex_if_ref(nullptr), tensor(t) {}
   TensorValue(mutex* mu, Tensor* t) : mutex_if_ref(mu), tensor(t) {}
   Tensor* operator->() const { return tensor; }
   bool is_ref() const { return mutex_if_ref != nullptr; }
-
+*/
   // Return the dtype of the Tensor. For references, return the underlying type.
   DataType dtype() const {
-    if (is_ref()) {
+    /* if (is_ref()) {
       return MakeRefType(tensor->dtype());
     } else {
       return tensor->dtype();
-    }
+    } */
+   return DT_INT32;
   }
-
+/*
   // Return the dtype of the Tensor. For references, return the underlying type.
   // This variation on the dtype() acquires the lock for references.
   //
@@ -507,8 +510,9 @@ struct TensorValue {
 
   mutex* mutex_if_ref;  // nullptr if not a ref, != nullptr if a ref
   Tensor* tensor;
+  */
 };
-
+/*
 // Used to store partitioned graphs from function-calling ops.
 struct GraphCollector {
   mutex mu;
@@ -562,7 +566,9 @@ class OpKernelContext {
   // TODO(zhifengc): Do some cleanup of Params.
   // The Params struct is passed in to initialize an OpKernelContext,
   // and must outlive the OpKernelContext.
+*/
   struct Params {
+  /*
     ~Params() { delete eigen_gpu_device; }
 
     // The step being executed.
@@ -685,8 +691,9 @@ class OpKernelContext {
 
     // For access to distributed coordination service.
     CoordinationServiceAgent* coordination_service_agent = nullptr;
+  */
   };
-
+/*
   // params must outlive the OpKernelContext.
   explicit OpKernelContext(Params* params);
   OpKernelContext(Params* params, int num_outputs);
@@ -1271,7 +1278,9 @@ class OpKernelContext {
 
   Status status_;
   friend class CollectiveExecutor;  // for access to params_
+  */
   Params* params_;                  // not owned
+  /*
   gtl::InlinedVector<TensorValue, 4> outputs_;
 
   // Keep track of calls to ScopedAllocator.
@@ -1545,14 +1554,14 @@ template <class T>
 Status OpKernelConstruction::GetAttr(StringPiece attr_name, T* value) const {
   return GetNodeAttr(def(), attr_name, value);
 }
-
+*/
 inline DataType OpKernelContext::input_dtype(int index) const {
-  DCHECK_GE(index, 0);
-  DCHECK_LT(index, num_inputs());
+  //DCHECK_GE(index, 0);
+  //DCHECK_LT(index, num_inputs());
   const TensorValue& value(params_->inputs[index]);
   return value.dtype();
 }
-
+/*
 inline MemoryType OpKernelContext::input_memory_type(int index) const {
   DCHECK_GE(index, 0);
   DCHECK_LT(index, num_inputs());
