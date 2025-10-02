@@ -16,12 +16,16 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_TENSOR_H_
 #define TENSORFLOW_CORE_FRAMEWORK_TENSOR_H_
 
-#include <cstdint>
+#include <memory>
+#include "string_stub.h"
+/* #include <cstdint>
 #include <type_traits>
 
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/framework/allocator.h"
+*/
 #include "tensorflow/core/framework/tensor_shape.h"
+/*
 #include "tensorflow/core/framework/tensor_types.h"
 #include "tensorflow/core/framework/types.h"
 #include "tensorflow/core/framework/types.pb.h"
@@ -32,11 +36,19 @@ limitations under the License.
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/mem.h"
-#include "tensorflow/core/platform/types.h"
+#include "tensorflow/core/platform/types.h" */
 
 namespace tensorflow {
 
-// Forward declarations.  In particular, we forward declare protos so that their
+class TensorShape;  // forward declare if needed
+
+template <typename T>
+string SummarizeArray(int64_t limit, int64_t num_elts,
+                           const TensorShape& tensor_shape,
+                           const char* data,
+                           bool print_v2);
+
+/* // Forward declarations.  In particular, we forward declare protos so that their
 // symbols can be removed from .so exports.
 class AllocationDescription;
 class Allocator;
@@ -1016,7 +1028,6 @@ struct Tensor::ValueAndTensorBuffer {
   HostScalarTensorBuffer tensor_buffer;
 };
 
-/* static */
 template <typename T>
 void Tensor::ValueAndTensorBuffer<T>::HostScalarTensorBuffer::operator delete(
     void* ptr) {
@@ -1060,7 +1071,7 @@ inline Tensor& Tensor::operator=(Tensor&& other) {
     other.buf_ = nullptr;
   }
   return *this;
-}
+} */
 
 // END_SKIP_DOXYGEN
 

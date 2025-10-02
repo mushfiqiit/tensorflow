@@ -15,17 +15,18 @@ limitations under the License.
 
 #include "tensorflow/core/framework/tensor_shape.h"
 
-#include "tensorflow/core/framework/bounds_check.h"
+/* #include "tensorflow/core/framework/bounds_check.h"
 #include "tensorflow/core/framework/tensor_shape.pb.h"
 #include "tensorflow/core/lib/strings/str_util.h"
 #include "tensorflow/core/lib/strings/strcat.h"
 #include "tensorflow/core/platform/errors.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
-#include "tensorflow/core/util/overflow.h"
+#include "tensorflow/core/util/overflow.h" */
 
 namespace tensorflow {
 
+  /*
 // TensorShape and PartialTensorShape should have no fields beyond
 // TensorShapeRep.  In particular, their sizes should be the same.
 static_assert(sizeof(TensorShapeRep) == sizeof(TensorShape),
@@ -1026,5 +1027,5 @@ Status TensorShapeUtils::NumElements(gtl::ArraySlice<int64_t> shape,
 
 template class TensorShapeBase<TensorShape>;
 template class TensorShapeBase<PartialTensorShape>;
-
+*/
 }  // namespace tensorflow

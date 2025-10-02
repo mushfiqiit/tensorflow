@@ -28,10 +28,14 @@ limitations under the License.
 //   an decoding T[] into/from a Cord, etc.
 
 #include "tensorflow/core/framework/tensor.h"
+#include "tensorflow/core/framework/tensor_shape.h"
+#include "string_stub.h"
+
 
 #include <memory>
 #include <utility>
 
+/*
 #include "absl/strings/escaping.h"
 #include "tensorflow/core/framework/allocation_description.pb.h"
 #include "tensorflow/core/framework/log_memory.h"
@@ -58,7 +62,7 @@ limitations under the License.
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/protobuf.h"
 #include "tensorflow/core/platform/tensor_coding.h"
-#include "tensorflow/core/platform/types.h"
+#include "tensorflow/core/platform/types.h" */
 
 namespace tensorflow {
 
@@ -69,7 +73,7 @@ namespace tensorflow {
 // NOTE(mrry): The corresponding "copy function" registrations can be found in
 // ../common_runtime/copy_tensor.cc (due to dependencies on other common_runtime
 // code).
-REGISTER_UNARY_VARIANT_DECODE_FUNCTION(Tensor, "tensorflow::Tensor");
+/* REGISTER_UNARY_VARIANT_DECODE_FUNCTION(Tensor, "tensorflow::Tensor");
 
 bool TensorBuffer::GetAllocatedBytes(size_t* out_bytes) const {
   AllocationDescription allocation_description;
@@ -1058,8 +1062,11 @@ bool Tensor::CanUseDMA() const {
 #undef CASES
 #undef CASE
 
-namespace {
+*/
 
+//namespace {
+
+/*
 // StrCat and StrAppend don't support Eigen::half directly at the moment, and
 // we would like to keep them compatible with their absl counterparts, for ease
 // of migration. We could rely on errors::internal::PrepareForStrCat() but the
@@ -1183,7 +1190,9 @@ void PrintOneDimV2(int dim_index, const gtl::InlinedVector<int64, 4>& shape,
   strings::StrAppend(result, "]");
 }
 
-template <typename T>
+*/
+
+/* template <typename T>
 string SummarizeArrayInternal(int64_t limit, int64_t num_elts,
                               const TensorShape& tensor_shape, const T* array,
                               const bool print_v2) {
@@ -1209,31 +1218,42 @@ string SummarizeArrayInternal(int64_t limit, int64_t num_elts,
   }
 
   return ret;
-}
+} */
+
+
 
 template <typename T>
 string SummarizeArray(int64_t limit, int64_t num_elts,
                       const TensorShape& tensor_shape, const char* data,
                       const bool print_v2) {
   const T* array = reinterpret_cast<const T*>(data);
-  return SummarizeArrayInternal<T>(limit, num_elts, tensor_shape, array,
-                                   print_v2);
+  /* return SummarizeArrayInternal<T>(limit, num_elts, tensor_shape, array,
+                                   print_v2); */
+  return string();
 }
+
+
 
 template <>
 string SummarizeArray<bool>(int64_t limit, int64_t num_elts,
                             const TensorShape& tensor_shape, const char* data,
                             const bool print_v2) {
+  /* if (data == nullptr) {
+    return string();  // we already print type and shape
+  }  */
   // We first convert all chars to be 0/1 to not get InvalidEnumValue sanitizer
   // error
   auto mutable_data = std::unique_ptr<char[]>(new char[num_elts]);
   for (int64_t i = 0; i < num_elts; ++i)
     mutable_data.get()[i] = data[i] ? 1 : 0;
   bool* array = reinterpret_cast<bool*>(mutable_data.get());
-  return SummarizeArrayInternal<bool>(limit, num_elts, tensor_shape, array,
-                                      print_v2);
+  /* return SummarizeArrayInternal<bool>(limit, num_elts, tensor_shape, array,
+                                      print_v2); */
+  return string();
 }
-}  // namespace
+//}  // namespace
+
+/*
 
 string Tensor::SummarizeValue(int64_t max_entries, bool print_v2) const {
   const int64_t num_elts = NumElements();
@@ -1389,6 +1409,6 @@ gtl::InlinedVector<int64_t, 4> Tensor::ComputeFlatOuterDims(
     out_dims[num_out_dims - 1] *= orig[in_dim];
   }
   return out_dims;
-}
+} */
 
 }  // namespace tensorflow
