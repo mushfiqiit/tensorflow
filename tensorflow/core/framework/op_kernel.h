@@ -16,6 +16,8 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_OP_KERNEL_H_
 #define TENSORFLOW_CORE_FRAMEWORK_OP_KERNEL_H_
 
+#include "tensorflow/core/framework/span_stub.h"
+
 /*#include <functional>
 #include <unordered_set>
 #include <utility>
@@ -649,8 +651,10 @@ class OpKernelContext {
     // for its cancellation.
     CancellationManager* cancellation_manager = nullptr;
 
+    */
     // Inputs to this op kernel.
     absl::Span<const TensorValue> inputs;
+    /*
     bool is_input_dead = false;
 
     absl::Span<const AllocatorAttributes> input_alloc_attrs;

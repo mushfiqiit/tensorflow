@@ -1,6 +1,0 @@
-In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/tensorflow_harness.cc:1:
-In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/kernels/tensor_array_ops.h:6:
-/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/op_kernel.h:1561:37: error: no member named 'inputs' in 'tensorflow::OpKernelContext::Params'
-  const TensorValue& value(params_->inputs[index]);
-                           ~~~~~~~  ^
-1 error generated.
