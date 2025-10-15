@@ -94,7 +94,7 @@ Status GetTensorArray(OpKernelContext* ctx, TensorArray** tensor_array) {
     //if (rm == nullptr) return Status(); //errors::Internal("No resource manager.");
     /*TF_RETURN_IF_ERROR(*/
     ScopedStepContainer* sc = ctx->step_container();
-    /* if (sc == nullptr) return Status(); */
+    if (sc == nullptr) return Status();
         ctx->step_container()->Lookup(rm, container + ta_handle, tensor_array);
       /*)*/ 
    
