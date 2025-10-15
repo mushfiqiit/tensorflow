@@ -33,7 +33,9 @@ limitations under the License.
 #include "tensorflow/core/framework/op_kernel.h"
 /*
 #include "tensorflow/core/framework/register_types.h"
+*/
 #include "tensorflow/core/framework/resource_mgr.h"
+/*
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/framework/tensor_shape.h"
 #include "tensorflow/core/framework/tensor_util.h"
@@ -42,8 +44,8 @@ limitations under the License.
 #include "tensorflow/core/kernels/split_lib.h"
 */
 #include "tensorflow/core/kernels/tensor_array.h"
-/*
 #include "tensorflow/core/lib/core/errors.h"
+/*
 #include "tensorflow/core/lib/core/refcount.h"
 #include "tensorflow/core/lib/strings/strcat.h"
 #include "tensorflow/core/platform/dynamic_annotations.h"
@@ -83,20 +85,24 @@ namespace tensorflow {
 }
 */
 Status GetTensorArray(OpKernelContext* ctx, TensorArray** tensor_array) {
-  string container;
-  string ta_handle;
+  std::string container;
+  std::string ta_handle;
   
-  if (ctx->input_dtype(0) != DT_RESOURCE) {
-    /* TF_RETURN_IF_ERROR(GetHandle(ctx, &container, &ta_handle));
+ /*  if (ctx->input_dtype(0) != DT_RESOURCE) { */
+     //TF_RETURN_IF_ERROR(GetHandle(ctx, &container, &ta_handle));
     ResourceMgr* rm = ctx->resource_manager();
-    if (rm == nullptr) return errors::Internal("No resource manager.");
-    TF_RETURN_IF_ERROR(
-        ctx->step_container()->Lookup(rm, container + ta_handle, tensor_array));
-    return OkStatus(); */
-  } else {
-    /* return LookupResource(ctx, HandleFromInput(ctx, 0), tensor_array); */
-  }
-  return Status();
+    //if (rm == nullptr) return Status(); //errors::Internal("No resource manager.");
+    /*TF_RETURN_IF_ERROR(*/
+    ScopedStepContainer* sc = ctx->step_container();
+    /* if (sc == nullptr) return Status(); */
+        ctx->step_container()->Lookup(rm, container + ta_handle, tensor_array);
+      /*)*/ 
+   
+    return OkStatus(); 
+  /* } else {
+     return LookupResource(ctx, HandleFromInput(ctx, 0), tensor_array); 
+  } */
+  //return Status();
 }
 
 /*

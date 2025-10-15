@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_FRAMEWORK_RESOURCE_HANDLE_H_
 
 #include <string>
-
+/*
 #include "tensorflow/core/framework/resource_base.h"
 #include "tensorflow/core/framework/tensor_shape.h"
 #include "tensorflow/core/framework/type_index.h"
@@ -28,9 +28,9 @@ limitations under the License.
 #include "tensorflow/core/platform/tensor_coding.h"
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/util/managed_stack_trace.h"
-
+*/
 namespace tensorflow {
-
+/*
 class ResourceHandleProto;
 
 // Class representing a handle to a tensorflow resource. Handles are
@@ -40,9 +40,11 @@ class ResourceHandleProto;
 //
 // This is the native C++ class equivalent of ResourceHandleProto.  They are
 // separate so that kernels do not need to depend on protos.
+*/
 class ResourceHandle {
  public:
   ResourceHandle();
+/*
   ResourceHandle(const ResourceHandleProto& proto);
   ~ResourceHandle();
 
@@ -187,8 +189,9 @@ class ResourceHandle {
   // weak reference).
   core::IntrusivePtr<ResourceBase> resource_;
   static std::atomic<int64_t> current_id_;
+  */
 };
-
+/*
 // For backwards compatibility for when this was a proto
 std::string ProtoDebugString(const ResourceHandle& handle);
 
@@ -199,7 +202,7 @@ void EncodeResourceHandleList(const ResourceHandle* p, int64_t n,
 // Decodes a list of ResourceHandle protos from the given StringListDecoder.
 bool DecodeResourceHandleList(std::unique_ptr<port::StringListDecoder> d,
                               ResourceHandle* ps, int64_t n);
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_FRAMEWORK_RESOURCE_HANDLE_H_

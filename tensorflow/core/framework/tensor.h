@@ -16,6 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_TENSOR_H_
 #define TENSORFLOW_CORE_FRAMEWORK_TENSOR_H_
 
+/*
 #include <cstdint>
 #include <type_traits>
 
@@ -33,9 +34,9 @@ limitations under the License.
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/mem.h"
 #include "tensorflow/core/platform/types.h"
-
+*/
 namespace tensorflow {
-
+/*
 // Forward declarations.  In particular, we forward declare protos so that their
 // symbols can be removed from .so exports.
 class AllocationDescription;
@@ -103,7 +104,7 @@ class TensorBuffer : public core::RefCounted {
  private:
   void* const data_;
 };
-
+*/
 /// Represents an n-dimensional array of values.
 class Tensor {
  public:
@@ -122,7 +123,7 @@ class Tensor {
   ///
   /// ```
   Tensor();
-
+/*
   /// \brief Creates a Tensor of the given `type` and `shape`.  If
   /// LogMemory::IsEnabled() the allocation is logged as coming from
   /// an unknown kernel and step. Calling the Tensor constructor
@@ -747,8 +748,10 @@ class Tensor {
   void FillDimsAndValidateCompatibleShape(
       gtl::ArraySlice<int64_t> new_sizes,
       Eigen::array<Eigen::DenseIndex, NDIMS>* dims) const;
+*/
 };
 
+/*
 // Implementation details
 
 // START_SKIP_DOXYGEN
@@ -1016,7 +1019,6 @@ struct Tensor::ValueAndTensorBuffer {
   HostScalarTensorBuffer tensor_buffer;
 };
 
-/* static */
 template <typename T>
 void Tensor::ValueAndTensorBuffer<T>::HostScalarTensorBuffer::operator delete(
     void* ptr) {
@@ -1063,7 +1065,7 @@ inline Tensor& Tensor::operator=(Tensor&& other) {
 }
 
 // END_SKIP_DOXYGEN
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_TENSOR_H_

@@ -20,6 +20,7 @@ limitations under the License.
 #include <string>
 #include <utility>
 
+/*
 #include "absl/base/attributes.h"
 #include "absl/strings/str_join.h"
 #include "tensorflow/core/platform/logging.h"
@@ -27,10 +28,10 @@ limitations under the License.
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/str_util.h"
 #include "tensorflow/core/platform/strcat.h"
-
+*/
 namespace tensorflow {
 namespace errors {
-
+/*
 namespace internal {
 
 // The DECLARE_ERROR macro below only supports types that can be converted
@@ -119,13 +120,15 @@ void AppendToMessage(::tensorflow::Status* status, Args... args) {
   *status = std::move(new_status);
 }
 
+*/
 // For propagating errors when calling a function.
 #define TF_RETURN_IF_ERROR(...)                          \
   do {                                                   \
-    ::tensorflow::Status _status = (__VA_ARGS__);        \
+    ::tensorflow::Status _status = (__VA_ARGS__) /* Status() */;        \
     if (TF_PREDICT_FALSE(!_status.ok())) return _status; \
   } while (0)
 
+/*
 #define TF_RETURN_WITH_CONTEXT_IF_ERROR(expr, ...)                  \
   do {                                                              \
     ::tensorflow::Status _status = (expr);                          \
@@ -467,7 +470,7 @@ std::string FormatOriginalNodeLocationForError(const T& node_names,
 
 // The CanonicalCode() for non-errors.
 using ::tensorflow::error::OK;
-
+*/
 }  // namespace errors
 }  // namespace tensorflow
 

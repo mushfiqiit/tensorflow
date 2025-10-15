@@ -21,7 +21,7 @@ limitations under the License.
 #include <condition_variable>  // NOLINT
 #include <mutex>               // NOLINT
 
-#include "tensorflow/core/platform/platform.h"
+/* #include "tensorflow/core/platform/platform.h"
 #include "tensorflow/core/platform/thread_annotations.h"
 #include "tensorflow/core/platform/types.h"
 
@@ -34,15 +34,15 @@ limitations under the License.
 #include "tensorflow/core/platform/default/mutex_data.h"
 #else
 #error Define the appropriate PLATFORM_<foo> macro for this platform
-#endif
+#endif */
 
 namespace tensorflow {
 
-enum ConditionResult { kCond_Timeout, kCond_MaybeNotified };
+/* enum ConditionResult { kCond_Timeout, kCond_MaybeNotified };
 enum LinkerInitialized { LINKER_INITIALIZED };
 
 class condition_variable;
-class Condition;
+class Condition; */
 
 // Mimic std::mutex + C++17's shared_mutex, adding a LinkerInitialized
 // constructor interface.  This type is as fast as mutex, but is also a shared

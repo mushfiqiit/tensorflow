@@ -21,7 +21,7 @@ limitations under the License.
 #include <functional>
 #include <memory>
 #include <string>
-
+/*
 #include "absl/base/call_once.h"
 #include "absl/strings/escaping.h"
 #include "absl/strings/match.h"
@@ -33,9 +33,9 @@ limitations under the License.
 #include "tensorflow/core/platform/stringprintf.h"
 #include "tensorflow/core/protobuf/error_codes.pb.h"
 #include "tensorflow/core/protobuf/status.pb.h"
-
+*/
 namespace tensorflow {
-
+/*
 namespace {
 
 // Log sink is used to collect recent warning and error log messages to be
@@ -285,9 +285,9 @@ std::ostream& operator<<(std::ostream& os, const Status& x) {
   os << x.ToString();
   return os;
 }
-
+*/
 Status OkStatus() { return Status(); }
-
+/*
 std::string* TfCheckOpHelperOutOfLine(const ::tensorflow::Status& v,
                                       const char* msg) {
   std::string r("Non-OK-status: ");
@@ -485,5 +485,5 @@ void StatusGroup::AttachLogMessages() {
   recent_logs_.clear();
   StatusLogSink::GetInstance()->GetMessages(&recent_logs_);
 }
-
+*/
 }  // namespace tensorflow

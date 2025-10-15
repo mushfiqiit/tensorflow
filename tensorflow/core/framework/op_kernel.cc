@@ -413,15 +413,15 @@ Status OpKernelContext::input(StringPiece name, const Tensor** tensor) {
   *tensor = params_->inputs[index].tensor;
   return OkStatus();
 }
-*/
+
 Status OpKernelContext::input_dtype(StringPiece name, DataType* dtype) const {
-/*  int index;
+  int index;
   TF_RETURN_IF_ERROR(get_input_index(name, &index));
   const TensorValue& value(params_->inputs[index]);
   *dtype = value.dtype();
-*/
+
   return OkStatus();
-}
+}*/
 /*
 Status OpKernelContext::input_ref_mutex(StringPiece name, mutex** out_mutex) {
   int index;

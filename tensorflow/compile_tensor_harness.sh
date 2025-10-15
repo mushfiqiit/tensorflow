@@ -60,6 +60,13 @@ HARNESS_BC="$OUTDIR/$(basename "$SRC" .cc).bc"
 
 TENSOR_ARRAY_OPS_CC="$ROOT/tensorflow/core/kernels/tensor_array_ops.cc"
 TENSOR_ARRAY_OPS_BC="$OUTDIR/tensor_array_ops.bc"
+
+OP_KERNEL_CC="$ROOT/tensorflow/core/framework/op_kernel.cc"
+OP_KERNEL_BC="$OUTDIR/op_kernel.bc"
+
+STATUS_CC="$ROOT/tensorflow/core/platform/status.cc"
+STATUS_BC="$OUTDIR/status.bc"
+
 EXTRA_SRCS=()
 EXTRA_BCS=()
 
@@ -93,6 +100,20 @@ compile_all() {
     set -e; return 1
   fi
 
+  echo "🛠️  Compiling op_kernel.cc -> $OP_KERNEL_BC"
+  "$CLANG" -emit-llvm -c "${CXXFLAGS[@]}" "${INCLUDES[@]}" "$OP_KERNEL_CC" -o "$OP_KERNEL_BC" 2>> clang.err
+  if [[ ! -f "$OP_KERNEL_BC" ]]; then
+    echo "❌ Expected $OP_KERNEL_BC but it was not created"
+    set -e; return 1
+  fi
+
+  echo "🛠️  Compiling status.cc -> $STATUS_BC"
+  "$CLANG" -emit-llvm -c "${CXXFLAGS[@]}" "${INCLUDES[@]}" "$STATUS_CC" -o "$STATUS_BC" 2>> clang.err
+  if [[ ! -f "$STATUS_BC" ]]; then
+    echo "❌ Expected $STATUS_BC but it was not created"
+    set -e; return 1
+  fi
+
 
   EXTRA_BCS=()
   if (( ${#EXTRA_SRCS[@]} > 0 )); then
@@ -107,7 +128,7 @@ compile_all() {
 
 link_all() {
   echo "🔗 Linking bitcode → $OUT"
-  "$LLVMLINK" "$HARNESS_BC" "$TENSOR_ARRAY_OPS_BC" "${EXTRA_BCS[@]}" -o "$OUT"
+  "$LLVMLINK" "$HARNESS_BC" "$TENSOR_ARRAY_OPS_BC" "$OP_KERNEL_BC" "$STATUS_BC" "${EXTRA_BCS[@]}" -o "$OUT"
 }
 
 # === Main compile loop with incremental include discovery ===

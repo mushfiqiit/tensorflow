@@ -17,7 +17,7 @@ limitations under the License.
 
 #include <atomic>
 
-#include "tensorflow/core/framework/device_attributes.pb.h"
+/* #include "tensorflow/core/framework/device_attributes.pb.h"
 #include "tensorflow/core/framework/node_def.pb.h"
 #include "tensorflow/core/framework/node_def_util.h"
 #include "tensorflow/core/lib/core/errors.h"
@@ -26,10 +26,11 @@ limitations under the License.
 #include "tensorflow/core/lib/strings/str_util.h"
 #include "tensorflow/core/lib/strings/stringprintf.h"
 #include "tensorflow/core/platform/demangle.h"
-#include "tensorflow/core/platform/stacktrace.h"
+#include "tensorflow/core/platform/stacktrace.h" */
+#include "tensorflow/core/platform/status.h"
 
 namespace tensorflow {
-
+/*
 ResourceHandle MakeResourceHandle(
     const string& container, const string& name, const DeviceBase& device,
     const TypeIndex& type_index,
@@ -227,7 +228,8 @@ Status ResourceMgr::Lookup(const ResourceHandle& handle,
                            ResourceBase** resource) const {
   tf_shared_lock l(mu_);
   return DoLookup(handle.container(), handle.hash_code(),
-                  /*type_name=*/"ResourceBase", handle.name(), resource);
+                  "ResourceBase", handle.name(), resource);
+  return Status();
 }
 
 Status ResourceMgr::DoLookup(const string& container, TypeIndex type,
@@ -410,5 +412,5 @@ Status DeleteResource(OpKernelContext* ctx, const ResourceHandle& p) {
   }
   return ctx->resource_manager()->Delete(p);
 }
-
+*/
 }  //  end namespace tensorflow

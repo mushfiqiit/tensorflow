@@ -17,12 +17,13 @@ limitations under the License.
 #define TENSORFLOW_CORE_FRAMEWORK_OP_KERNEL_H_
 
 #include "tensorflow/core/framework/span_stub.h"
-
-/*#include <functional>
+#include "tensorflow/core/kernels/datatype_stub.h"
+#include <functional>
 #include <unordered_set>
 #include <utility>
 #include <vector>
 
+/*
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include "absl/types/span.h"
@@ -60,7 +61,10 @@ limitations under the License.
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/protobuf/config.pb.h"
 #include "tensorflow/core/util/managed_stack_trace.h"
+*/
+#include "tensorflow/core/framework/resource_mgr.h"
 
+/*
 namespace Eigen {
 struct ThreadPoolDevice;
 struct GpuDevice;
@@ -79,8 +83,10 @@ class FunctionLibraryRuntime;
 class OpKernelConstruction;  // declared below
 class OpKernelContext;       // declared below,
 class OpRegistryInterface;
+*/
 class ResourceMgr;
 class ScopedStepContainer;
+/*
 class CollectiveExecutor;
 class StepStatsCollectorInterface;
 class CoordinationServiceAgent;
@@ -480,8 +486,9 @@ class OpOutputList {
 // a mutex to prevent concurrent access to the tensor.
 */
 struct TensorValue {
-  /*
-  TensorValue() : mutex_if_ref(nullptr), tensor(nullptr) {}
+
+  TensorValue() {} //: mutex_if_ref(nullptr), tensor(nullptr) {}
+/*
   explicit TensorValue(Tensor* t) : mutex_if_ref(nullptr), tensor(t) {}
   TensorValue(mutex* mu, Tensor* t) : mutex_if_ref(mu), tensor(t) {}
   Tensor* operator->() const { return tensor; }
@@ -509,10 +516,9 @@ struct TensorValue {
       return tensor->dtype();
     }
   }
-
-  mutex* mutex_if_ref;  // nullptr if not a ref, != nullptr if a ref
-  Tensor* tensor;
-  */
+*/
+  //mutex* mutex_if_ref;  // nullptr if not a ref, != nullptr if a ref
+  //Tensor* tensor;
 };
 /*
 // Used to store partitioned graphs from function-calling ops.
@@ -619,14 +625,14 @@ class OpKernelContext {
 
     // Array indexed by output number for this node
     const AllocatorAttributes* output_attr_array = nullptr;
-
+*/
     // Shared resources accessible by this op kernel invocation.
     ResourceMgr* resource_manager = nullptr;
 
     // Per-step resources accessible by this op kernel invocation should be
     // stored in this container..
     ScopedStepContainer* step_container = nullptr;
-
+/*
     // Mechanism used by this op kernel invocation to communicate with
     // computations running on other devices.
     RendezvousInterface* rendezvous = nullptr;
@@ -697,10 +703,14 @@ class OpKernelContext {
     CoordinationServiceAgent* coordination_service_agent = nullptr;
   */
   };
-/*
+
+  OpKernelContext(Params params) { params_=&params; }
+
   // params must outlive the OpKernelContext.
-  explicit OpKernelContext(Params* params);
+  /* explicit  OpKernelContext(Params* params);*/
+/*
   OpKernelContext(Params* params, int num_outputs);
+
   ~OpKernelContext();
 
   Env* env() const { return params_->device->env(); }
@@ -1115,10 +1125,10 @@ class OpKernelContext {
   StepStatsCollectorInterface* stats_collector() const {
     return params_->stats_collector;
   }
-
+*/
   // Shared resources accessible to this kernel.
   ResourceMgr* resource_manager() const { return params_->resource_manager; }
-
+/*
   checkpoint::TensorSliceReaderCacheWrapper* slice_reader_cache() const {
     return params_->slice_reader_cache;
   }
@@ -1167,12 +1177,12 @@ class OpKernelContext {
   // May be used, e.g., to get GPU handles, etc.
   // TODO(tucker): Add example usage.
   DeviceBase* device() const { return params_->device; }
-
+*/
   // Per-step container for use by white-listed internal ops.
   ScopedStepContainer* step_container() const {
     return params_->step_container;
   }
-
+/*
   // Access to distributed coordination service.
   CoordinationServiceAgent* coordination_service_agent() const {
     return params_->coordination_service_agent;
@@ -1562,8 +1572,9 @@ Status OpKernelConstruction::GetAttr(StringPiece attr_name, T* value) const {
 inline DataType OpKernelContext::input_dtype(int index) const {
   //DCHECK_GE(index, 0);
   //DCHECK_LT(index, num_inputs());
-  const TensorValue& value(params_->inputs[index]);
-  return value.dtype();
+  /* const TensorValue& value(params_->inputs[index]);
+  return value.dtype(); */
+  return DT_INT32;
 }
 /*
 inline MemoryType OpKernelContext::input_memory_type(int index) const {

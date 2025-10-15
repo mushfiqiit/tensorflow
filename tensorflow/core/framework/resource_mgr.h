@@ -16,6 +16,8 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_RESOURCE_MGR_H_
 #define TENSORFLOW_CORE_FRAMEWORK_RESOURCE_MGR_H_
 
+#define TF_MUST_USE_RESULT
+/*
 #include <memory>
 #include <string>
 #include <typeindex>
@@ -27,8 +29,10 @@ limitations under the License.
 #include "tensorflow/core/framework/common_shape_fns.h"
 #include "tensorflow/core/framework/device_attributes.pb.h"
 #include "tensorflow/core/framework/op_kernel.h"
+*/
 #include "tensorflow/core/framework/resource_base.h"
 #include "tensorflow/core/framework/resource_handle.h"
+/*
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/framework/tensor_shape.h"
 #include "tensorflow/core/framework/tensor_types.h"
@@ -40,9 +44,12 @@ limitations under the License.
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/mutex.h"
 #include "tensorflow/core/platform/thread_annotations.h"
-
+*/
+#include "tensorflow/core/platform/status.h"
 namespace tensorflow {
 
+class ResourceMgr;
+/*
 // A ResourceMgr instance keeps track of named and typed resources
 // grouped into containers.
 //
@@ -78,8 +85,11 @@ namespace tensorflow {
 //   ctx->SetStatus(s);
 
 // Container used for per-step resources.
+*/
 class ScopedStepContainer {
  public:
+  ScopedStepContainer() {}
+ /*
   // step_id: the unique ID of this step. Doesn't have to be sequential, just
   // has to be unique.
   // cleanup: callback to delete a container of this name.
@@ -128,9 +138,12 @@ class ScopedStepContainer {
   template <typename T>
   Status Delete(ResourceMgr* rm, const std::string& name) TF_MUST_USE_RESULT;
   // Pass through to ResourceMgr::Lookup with the container name
+  */
+
   template <typename T>
   Status Lookup(ResourceMgr* rm, const std::string& name,
-                T** resource) const TF_MUST_USE_RESULT;
+                T** resource) { return Status(); } /* const TF_MUST_USE_RESULT; */
+  /*
   // Pass through to ResourceMgr::LookupOrCreate with the container name
   template <typename T>
   Status LookupOrCreate(ResourceMgr* rm, const std::string& name, T** resource,
@@ -143,11 +156,12 @@ class ScopedStepContainer {
   const std::function<void(const string&)> cleanup_;
   mutex mu_;
   mutable std::atomic<bool> dirty_ TF_GUARDED_BY(mu_);
+  */
 };
 
 class ResourceMgr {
  public:
-  ResourceMgr();
+ /* ResourceMgr();
   explicit ResourceMgr(const std::string& default_container);
   ~ResourceMgr();
 
@@ -177,7 +191,7 @@ class ResourceMgr {
   template <typename T>
   Status CreateUnowned(const std::string& container, const std::string& name,
                        T* resource) TF_MUST_USE_RESULT;
-
+  */
   // If "container" has a resource "name", returns it in "*resource" and
   // the caller takes the ownership of one ref on "*resource".
   //
@@ -191,9 +205,10 @@ class ResourceMgr {
   // "*resource" and the caller takes the ownership of one ref on "*resource".
   //
   // REQUIRES: resource != nullptr
+  
   Status Lookup(const ResourceHandle& handle,
                 ResourceBase** resource) const TF_MUST_USE_RESULT;
-
+  /*
   // Similar to Lookup, but looks up multiple resources at once, with only a
   // single lock acquisition.  If containers_and_names[i] is uninitialized
   // then this function does not modify resources[i].
@@ -323,8 +338,10 @@ class ResourceMgr {
   std::unordered_map<uint64, string> debug_type_names_ TF_GUARDED_BY(mu_);
 
   TF_DISALLOW_COPY_AND_ASSIGN(ResourceMgr);
+*/
 };
 
+/*
 // Makes a resource handle with the specified type for a given container /
 // name.
 ResourceHandle MakeResourceHandle(
@@ -634,7 +651,7 @@ Status ResourceMgr::Create(const std::string& container,
   CHECK(resource != nullptr);
   mutex_lock l(mu_);
   return DoCreate(container, TypeIndex::Make<T>(), name, resource,
-                  /* owns_resource */ true);
+                   true);
 }
 
 template <typename T>
@@ -643,7 +660,7 @@ Status ResourceMgr::CreateUnowned(const std::string& container,
   CheckDeriveFromResourceBase<T>();
   mutex_lock l(mu_);
   return DoCreate(container, TypeIndex::Make<T>(), name, resource,
-                  /* owns_resource */ false);
+                   false);
 }
 
 template <typename T, bool use_dynamic_cast>
@@ -716,7 +733,7 @@ Status ResourceMgr::LookupOrCreate(const std::string& container,
   if (s.ok()) return s;
   TF_RETURN_IF_ERROR(creator(resource));
   s = DoCreate(container, TypeIndex::Make<T>(), name, *resource,
-               /* owns_resource */ true);
+                true);
   if (!s.ok()) {
     return errors::Internal("LookupOrCreate failed unexpectedly");
   }
@@ -914,7 +931,7 @@ void ResourceHandleOp<T>::Compute(OpKernelContext* ctx) {
     OP_REQUIRES_OK(
         ctx, ctx->allocate_temp(DT_RESOURCE, TensorShape({}), &handle, attr));
     handle.scalar<ResourceHandle>()() = MakeResourceHandle<T>(
-        ctx, container_, name_, /*dtypes_and_shapes=*/{}, ctx->stack_trace());
+        ctx, container_, name_, {}, ctx->stack_trace());
     ctx->set_output(0, handle);
   } else {
     if (!initialized_.load()) {
@@ -927,7 +944,7 @@ void ResourceHandleOp<T>::Compute(OpKernelContext* ctx) {
                                                &resource_, attr));
         resource_.scalar<ResourceHandle>()() =
             MakeResourceHandle<T>(ctx, container_, name_,
-                                  /*dtypes_and_shapes=*/{}, ctx->stack_trace());
+                                  {}, ctx->stack_trace());
         initialized_.store(true);
       }
     }
@@ -1012,7 +1029,7 @@ template <typename T>
 Status ScopedStepContainer::Delete(ResourceMgr* rm, const std::string& name) {
   return rm->Delete<T>(container_, name);
 }
-
+*/
 }  //  end namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_RESOURCE_MGR_H_
