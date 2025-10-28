@@ -19,7 +19,7 @@ limitations under the License.
 #include <sstream>
 #include <string>
 #include <utility>
-
+/*
 #include "absl/base/attributes.h"
 #include "absl/strings/str_join.h"
 #include "tensorflow/tsl/platform/logging.h"
@@ -27,9 +27,10 @@ limitations under the License.
 #include "tensorflow/tsl/platform/status.h"
 #include "tensorflow/tsl/platform/str_util.h"
 #include "tensorflow/tsl/platform/strcat.h"
-
+*/
 namespace tsl {
 namespace error {
+/*
 // NOLINTBEGIN(misc-unused-using-decls)
 // TODO(aminim): figure out the protobuf migration story.
 using tensorflow::error::ABORTED;
@@ -176,7 +177,7 @@ template <typename... Args>
     const std::unordered_map<std::string, std::string>& payloads) {
   return errors::Create(::tsl::error::Code::CANCELLED, message, payloads);
 }
-
+*/
 // InvalidArgument
 template <typename... Args>
 ::tsl::Status InvalidArgument(Args... args) {
@@ -184,6 +185,8 @@ template <typename... Args>
                        ::tsl::strings::StrCat(
                            ::tsl::errors::internal::PrepareForStrCat(args)...));
 }
+
+/*
 template <typename... Args>
 ::tsl::Status InvalidArgumentWithPayloads(
     const ::tsl::StringPiece& message,
@@ -471,7 +474,7 @@ std::string FormatOriginalNodeLocationForError(const T& node_names,
 
 // The CanonicalCode() for non-errors.
 using ::tsl::error::OK;  // NOLINT
-
+*/
 }  // namespace errors
 }  // namespace tsl
 

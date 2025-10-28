@@ -20,10 +20,13 @@ limitations under the License.
 #include <string>
 #include <type_traits>
 #include <utility>
-
+#include "datatype_stub.h"
+/*
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/framework/allocator.h"
+*/
 #include "tensorflow/core/framework/tensor_shape.h"
+/*
 #include "tensorflow/core/framework/tensor_types.h"
 #include "tensorflow/core/framework/types.h"
 #include "tensorflow/core/framework/types.pb.h"
@@ -33,9 +36,9 @@ limitations under the License.
 #include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/platform/mem.h"
 #include "tensorflow/core/platform/types.h"
-
+*/
 namespace tensorflow {
-
+/*
 // Forward declarations.  In particular, we forward declare protos so that their
 // symbols can be removed from .so exports.
 class AllocationDescription;
@@ -103,10 +106,11 @@ class TensorBuffer : public core::RefCounted {
  private:
   void* const data_;
 };
-
+*/
 /// Represents an n-dimensional array of values.
 class Tensor {
  public:
+/*
   /// \brief Creates a 1-dimensional, 0-element float tensor.
   ///
   /// The returned Tensor is not a scalar (shape {}), but is instead
@@ -121,8 +125,9 @@ class Tensor {
   ///     Tensor(DT_FLOAT, TensorShape({}))
   ///
   /// ```
-  Tensor();
-
+  */
+  Tensor() {}
+/*
   /// \brief Creates a Tensor of the given `type` and `shape`.  If
   /// LogMemory::IsEnabled() the allocation is logged as coming from
   /// an unknown kernel and step. Calling the Tensor constructor
@@ -131,8 +136,11 @@ class Tensor {
   /// allocate a new tensor, which record the kernel and step.
   ///
   /// The underlying buffer is allocated using a `CPUAllocator`.
-  Tensor(DataType type, const TensorShape& shape);
-
+*/
+  Tensor(DataType type, const TensorShape& shape) {
+    shape_=shape;
+  }
+/*
   /// \brief Creates a tensor with the input `type` and `shape`, using
   /// the allocator `a` to allocate the underlying buffer. If
   /// LogMemory::IsEnabled() the allocation is logged as coming from
@@ -272,22 +280,22 @@ class Tensor {
 
   /// Returns the data type.
   DataType dtype() const { return shape_.data_type(); }
-
+*/
   /// Returns the shape of the tensor.
   const TensorShape& shape() const { return shape_; }
-
+/*
   /// \brief Convenience accessor for the tensor shape.
   ///
   /// For all shape accessors, see comments for relevant methods of
   /// `TensorShape` in `tensor_shape.h`.
   int dims() const { return shape().dims(); }
-
+*/
   /// Convenience accessor for the tensor shape.
   int64_t dim_size(int d) const { return shape().dim_size(d); }
 
   /// Convenience accessor for the tensor shape.
   int64_t NumElements() const { return shape().num_elements(); }
-
+/*
   bool IsSameSize(const Tensor& b) const {
     return shape().IsSameSize(b.shape());
   }
@@ -470,6 +478,8 @@ class Tensor {
   ///     auto bad   = my_ten.flat<int32>();
   ///
   /// ```
+
+
   template <typename T>
   typename TTypes<T>::Flat flat();
 
@@ -678,8 +688,9 @@ class Tensor {
       gtl::ArraySlice<int64_t> orig, int64_t num_out_dims);
   static gtl::InlinedVector<int64_t, 4> ComputeFlatOuterDims(
       gtl::ArraySlice<int64_t> orig, int64_t num_out_dims);
-
+*/
   TensorShape shape_;
+/*
   TensorBuffer* buf_;
 
   friend class DMAHelper;             // For access to buf_.
@@ -1031,9 +1042,10 @@ struct Tensor::ValueAndTensorBuffer {
 
   T value;
   HostScalarTensorBuffer tensor_buffer;
+  */
 };
 
-/* static */
+/*
 template <typename T>
 void Tensor::ValueAndTensorBuffer<T>::HostScalarTensorBuffer::operator delete(
     void* ptr) {
@@ -1078,7 +1090,7 @@ inline Tensor& Tensor::operator=(Tensor&& other) {
   }
   return *this;
 }
-
+*/
 // END_SKIP_DOXYGEN
 
 }  // namespace tensorflow

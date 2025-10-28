@@ -16,16 +16,27 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_KERNELS_SEARCHSORTED_OP_H_
 #define TENSORFLOW_CORE_KERNELS_SEARCHSORTED_OP_H_
 
+/*
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
+*/
 #include "tensorflow/core/framework/op_kernel.h"
+/*
 #include "tensorflow/core/framework/tensor_types.h"
 #include "tensorflow/core/framework/types.h"
 #include "tensorflow/core/lib/core/errors.h"
-
+*/
 namespace tensorflow {
+
+/* template <typename Device, typename T, typename OutType> */
+class UpperBoundOp : public OpKernel {
+ public:
+  /* explicit UpperBoundOp(OpKernelConstruction* ctx = nullptr); */
+  void Compute(OpKernelContext* ctx) override;
+};
+
 namespace functor {
 
-template <typename Device, typename T, typename OutType>
+/* template <typename Device, typename T, typename OutType>
 struct UpperBoundFunctor {
   // Searches for values in sorted_inputs and returns the greatest possible
   // index where they maintain sorted order.
@@ -45,7 +56,7 @@ struct LowerBoundFunctor {
                         const typename TTypes<T, 1>::ConstTensor& values,
                         int batch_size, int num_inputs, int num_values,
                         typename TTypes<OutType, 1>::Tensor* output);
-};
+}; */
 }  // namespace functor
 
 }  // end namespace tensorflow

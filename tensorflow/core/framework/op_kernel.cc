@@ -22,7 +22,7 @@ limitations under the License.
 #include <unordered_map>
 #include <utility>
 #include <vector>
-
+/*
 #include "absl/base/call_once.h"
 #include "absl/container/flat_hash_set.h"
 #include "absl/strings/match.h"
@@ -58,9 +58,9 @@ limitations under the License.
 #include "tensorflow/core/profiler/lib/scoped_memory_debug_annotation.h"
 #include "tensorflow/core/profiler/lib/traceme.h"
 #include "tensorflow/core/util/ptr_util.h"
-
+*/
 namespace tensorflow {
-
+/*
 const char* kJitKernelLabel = "JITCompiledKernel";
 const char* kDisableJitKernelsEnvVar = "TF_DISABLE_JIT_KERNELS";
 
@@ -428,15 +428,15 @@ Status OpKernelContext::input_ref_mutex(StringPiece name, mutex** out_mutex) {
   *out_mutex = input_ref_mutex(index);
   return OkStatus();
 }
-
+*/
 const Tensor& OpKernelContext::input(int index) const {
-  CHECK_GE(index, 0);
-  CHECK_LT(index, num_inputs()) << " name: " << op_kernel().name();
-  CHECK(!input_is_ref(index));
-  const Tensor& tensor = *params_->inputs[index].tensor;
-  return tensor;
+  //CHECK_GE(index, 0);
+  //CHECK_LT(index, num_inputs()) << " name: " << op_kernel().name();
+  //CHECK(!input_is_ref(index));
+  //const Tensor& tensor = *params_->inputs[index].tensor;
+  return Tensor();
 }
-
+/*
 Tensor OpKernelContext::mutable_input(int index, bool lock_held) {
   CHECK_GE(index, 0);
   CHECK_LT(index, num_inputs());
@@ -582,7 +582,7 @@ Status OpKernelContext::forward_input_or_allocate_temp(
     Tensor* out_temp) {
   for (int input_index : candidate_input_indices) {
     std::unique_ptr<Tensor> new_tensor =
-        forward_input(input_index, Params::kNoReservation /*output_index*/,
+        forward_input(input_index, Params::kNoReservation ,
                       type, shape, DEVICE_MEMORY, allocator_attr);
     if (new_tensor != nullptr) {
       *out_temp = std::move(*new_tensor);
@@ -754,8 +754,8 @@ Status OpKernelContext::allocate_tensor(
   Tensor new_tensor(
       a, type, shape,
       AllocationAttributes(
-          /*retry_on_failure=*/allocation_attr.retry_on_failure,
-          /*allocation_will_be_logged=*/true, allocation_attr.freed_by_func));
+          allocation_attr.retry_on_failure,
+          true, allocation_attr.freed_by_func));
 
   if (!new_tensor.IsInitialized()) {
     return errors::ResourceExhausted(
@@ -1639,8 +1639,7 @@ string KernelsRegisteredForOp(StringPiece op_name) {
   return ret;
 }
 
-/* TODO(rmlarsen): This API is deprecated. Remove it if possible to avoid
- * copying the NodeDef. */
+
 std::unique_ptr<OpKernel> CreateOpKernel(
     DeviceType device_type, DeviceBase* device, Allocator* allocator,
     const NodeDef& node_def, int graph_def_version, Status* status) {
@@ -1663,7 +1662,7 @@ std::unique_ptr<OpKernel> CreateOpKernel(
     Status* status) {
   OpKernel* kernel = nullptr;
   *status = CreateOpKernel(std::move(device_type), device, allocator,
-                           /*flib=*/nullptr, props, graph_def_version, &kernel);
+                           nullptr, props, graph_def_version, &kernel);
   return std::unique_ptr<OpKernel>(kernel);
 }
 
@@ -1672,7 +1671,7 @@ Status CreateOpKernel(DeviceType device_type, DeviceBase* device,
                       const std::shared_ptr<const NodeProperties>& props,
                       int graph_def_version, OpKernel** kernel) {
   return CreateOpKernel(std::move(device_type), device, allocator, flib,
-                        /* resource_mgr= */ nullptr, props, graph_def_version,
+                         nullptr, props, graph_def_version,
                         kernel);
 }
 
@@ -1837,5 +1836,5 @@ void CheckNotInComputeAsync(OpKernelContext* ctx,
   CHECK_EQ(nullptr, ctx->params_->op_kernel->AsAsync())
       << "Use " << correct_macro_name << " in AsyncOpKernel implementations.";
 }
-
+*/
 }  // namespace tensorflow

@@ -1,0 +1,38 @@
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/tensorflow_harness.cc:1:
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/kernels/searchsorted_op.h:22:
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/op_kernel.h:45:
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/tensor.h:489:12: error: expected a qualified name after 'typename'
+  typename TTypes<T>::Flat flat() { return shape_.num_elements(); }
+           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/tensor.h:489:18: error: expected member name or ';' after declaration specifiers
+  typename TTypes<T>::Flat flat() { return shape_.num_elements(); }
+  ~~~~~~~~~~~~~~~^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/tensor.h:141:5: error: use of undeclared identifier 'shape_'; did you mean 'shape'?
+    shape_=shape;
+    ^~~~~~
+    shape
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/tensor.h:140:44: note: 'shape' declared here
+  Tensor(DataType type, const TensorShape& shape) {
+                                           ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/tensor.h:141:11: error: no viable overloaded '='
+    shape_=shape;
+    ~~~~~~^~~~~~
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/tensor_shape.h:367:7: note: candidate function (the implicit copy assignment operator) not viable: 'this' argument has type 'const tensorflow::TensorShape', but method is not marked const
+class TensorShape : public TensorShapeBase<TensorShape> {
+      ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/tensor_shape.h:367:7: note: candidate function (the implicit move assignment operator) not viable: 'this' argument has type 'const tensorflow::TensorShape', but method is not marked const
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/tensorflow_harness.cc:1:
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/kernels/searchsorted_op.h:22:
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/op_kernel.h:45:
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/tensor.h:285:45: error: use of undeclared identifier 'shape_'; did you mean 'shape'?
+  const TensorShape& shape() const { return shape_; }
+                                            ^~~~~~
+                                            shape
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/tensor.h:285:22: note: 'shape' declared here
+  const TensorShape& shape() const { return shape_; }
+                     ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/tensor.h:285:45: error: reference to non-static member function must be called; did you mean to call it with no arguments?
+  const TensorShape& shape() const { return shape_; }
+                                            ^~~~~~
+                                                  ()
+6 errors generated.

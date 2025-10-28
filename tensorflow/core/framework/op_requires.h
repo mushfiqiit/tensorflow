@@ -16,10 +16,11 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_OP_REQUIRES_H_
 #define TENSORFLOW_CORE_FRAMEWORK_OP_REQUIRES_H_
 
-#include "tensorflow/core/platform/macros.h"
+//#include "tensorflow/core/platform/macros.h"
+#define TF_PREDICT_TRUE(x) (x)
 
 namespace tensorflow {
-
+inline void CheckNotInComputeAsync(OpKernelContext*, const char*) {}
 // Convenience macros for asserting and handling exceptional conditions.
 // Analogous to the CHECK* macros provided by logging.h.
 //
@@ -38,14 +39,14 @@ namespace tensorflow {
 // header to reduce this header's dependencies. These macros may be used with
 // alternative implementations of OpKernelContext with fewer dependencies.
 
-#define OP_REQUIRES(CTX, EXP, STATUS)                     \
+/* #define OP_REQUIRES(CTX, EXP, STATUS)                     \
   do {                                                    \
     if (!TF_PREDICT_TRUE(EXP)) {                          \
       CheckNotInComputeAsync((CTX), "OP_REQUIRES_ASYNC"); \
       (CTX)->CtxFailure(__FILE__, __LINE__, (STATUS));    \
       return;                                             \
     }                                                     \
-  } while (0)
+  } while (0) */
 
 #define OP_REQUIRES_OK(CTX, ...)                             \
   do {                                                       \

@@ -15,8 +15,10 @@ limitations under the License.
 
 #define EIGEN_USE_THREADS
 
+#include <limits>
 #include "tensorflow/core/kernels/searchsorted_op.h"
-
+#include "tensorflow/core/framework/op_requires.h"
+/*
 #include "tensorflow/core/framework/bounds_check.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/register_types.h"
@@ -27,8 +29,12 @@ limitations under the License.
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/threadpool.h"
 #include "tensorflow/core/platform/types.h"
+*/
+#include "tensorflow/tsl/platform/status.h"
+//#include "error_stub.h"
 
 namespace tensorflow {
+/*
 typedef Eigen::ThreadPoolDevice CPUDevice;
 typedef Eigen::GpuDevice GPUDevice;
 
@@ -91,31 +97,63 @@ struct LowerBoundFunctor<CPUDevice, T, OutType> {
   }
 };
 }  // namespace functor
-
-template <typename Device, typename T, typename OutType>
-class UpperBoundOp : public OpKernel {
+*/
+/* template <typename Device, typename T, typename OutType> */
+/* class UpperBoundOp : public OpKernel {
  public:
-  explicit UpperBoundOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
+ UpperBoundOp() {} */
+  //explicit UpperBoundOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
 
-  void Compute(OpKernelContext* ctx) override {
+  void UpperBoundOp::Compute(OpKernelContext* ctx) {
     const Tensor& sorted_inputs_t = ctx->input(0);
     const Tensor& values_t = ctx->input(1);
 
     // inputs must be at least a matrix
-    OP_REQUIRES(
+    /* OP_REQUIRES(
         ctx, sorted_inputs_t.shape().dims() >= 2,
-        errors::InvalidArgument("sorted input argument must be a matrix"));
-    // must have same batch dim_size for both
-    OP_REQUIRES(ctx, sorted_inputs_t.dim_size(0) == values_t.dim_size(0),
-                Status(error::INVALID_ARGUMENT,
-                       "Leading dim_size of both tensors must match."));
+        errors::InvalidArgument("sorted input argument must be a matrix")
+      ); */
 
-    // this is required because we do indexing in int32 on the GPU
+    if (!(sorted_inputs_t.shape().dims() >= 2)) {
+  CheckNotInComputeAsync(ctx, "OP_REQUIRES_ASYNC");
+  ctx->CtxFailure(__FILE__, __LINE__,
+      Status());
+  return;
+}
+
+
+    // must have same batch dim_size for both
+    /* OP_REQUIRES(ctx, sorted_inputs_t.dim_size(0) == values_t.dim_size(0),
+                 Status(error::INVALID_ARGUMENT,
+                       "Leading dim_size of both tensors must match.") 
+                      Status()); */
+
+  if (!(sorted_inputs_t.dim_size(0) == values_t.dim_size(0))) {
+  CheckNotInComputeAsync(ctx, "OP_REQUIRES_ASYNC");
+  ctx->CtxFailure(__FILE__, __LINE__,
+      Status(/* error::INVALID_ARGUMENT,
+             "Leading dim_size of both tensors must match." */));
+  return;
+}
+
+
+/*     // this is required because we do indexing in int32 on the GPU
     OP_REQUIRES(ctx, values_t.NumElements() < std::numeric_limits<int>::max(),
-                Status(error::INVALID_ARGUMENT,
-                       "values tensor size must less than INT_MAX"));
+                 Status(error::INVALID_ARGUMENT,
+                       "values tensor size must less than INT_MAX") 
+                      Status()); */
+
+    if (!(values_t.NumElements() < std::numeric_limits<int>::max())) {
+  CheckNotInComputeAsync(ctx, "OP_REQUIRES_ASYNC");
+  ctx->CtxFailure(__FILE__, __LINE__,
+      Status(/* error::INVALID_ARGUMENT,
+             "values tensor size must less than INT_MAX" */));
+  return;
+}
+
 
     Tensor* output_t;
+/*
     OP_REQUIRES_OK(ctx, ctx->allocate_output(0, values_t.shape(), &output_t));
 
     if (output_t->dtype() == DT_INT32) {
@@ -126,11 +164,11 @@ class UpperBoundOp : public OpKernel {
                                           "INT_MAX for int32 output type, was ",
                                           sorted_inputs_t.dim_size(1)));
     }
-
+*/
     auto output = output_t->template flat<OutType>();
     const auto sorted_inputs = sorted_inputs_t.template flat<T>();
     const auto values = values_t.template flat<T>();
-
+/*
     // For empty inputs, all values will be placed at the zeroth position.
     if (sorted_inputs.size() == 0) {
       functor::SetZeroFunctor<Device, OutType> set_zero;
@@ -142,7 +180,9 @@ class UpperBoundOp : public OpKernel {
         ctx, functor::UpperBoundFunctor<Device, T, OutType>::Compute(
                  ctx, sorted_inputs, values, sorted_inputs_t.dim_size(0),
                  sorted_inputs_t.dim_size(1), values_t.dim_size(1), &output));
-  }
+   */              
+  } 
+/*
 };
 
 template <typename Device, typename T, typename OutType>
@@ -197,14 +237,14 @@ class LowerBoundOp : public OpKernel {
                  sorted_inputs_t.dim_size(1), values_t.dim_size(1), &output));
   }
 };
-
+*/
 #define REGISTER_KERNELS(type)                                    \
   REGISTER_KERNEL_BUILDER(Name("UpperBound")                      \
                               .Device(DEVICE_CPU)                 \
                               .TypeConstraint<type>("T")          \
                               .TypeConstraint<int32>("out_type"), \
                           UpperBoundOp<CPUDevice, type, int32>);
-
+/*
 TF_CALL_REAL_NUMBER_TYPES(REGISTER_KERNELS);
 #undef REGISTER_KERNELS
 
@@ -285,4 +325,5 @@ TF_CALL_REAL_NUMBER_TYPES(REGISTER_KERNELS);
 #undef REGISTER_KERNELS
 
 #endif  // GOOGLE_CUDA || TENSORFLOW_USE_ROCM
+*/
 }  // namespace tensorflow

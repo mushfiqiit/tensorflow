@@ -20,7 +20,9 @@ limitations under the License.
 #include <unordered_set>
 #include <utility>
 #include <vector>
-
+#include "tensorflow/tsl/platform/status.h"
+#include "span_stub.h"
+/*
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include "absl/types/span.h"
@@ -39,7 +41,9 @@ limitations under the License.
 #include "tensorflow/core/framework/registration/registration.h"
 #include "tensorflow/core/framework/rendezvous.h"
 #include "tensorflow/core/framework/session_state.h"
+*/
 #include "tensorflow/core/framework/tensor.h"
+/*
 #include "tensorflow/core/framework/tensor_shape.h"
 #include "tensorflow/core/framework/tensor_shape.pb.h"  // TODO(b/62899350): Remove
 #include "tensorflow/core/framework/tracking_allocator.h"
@@ -63,9 +67,10 @@ namespace Eigen {
 struct ThreadPoolDevice;
 struct GpuDevice;
 }  // end namespace Eigen
-
+*/
 namespace tensorflow {
-
+class Status;
+/*
 namespace checkpoint {
 class TensorSliceReaderCacheWrapper;
 }  // namespace checkpoint
@@ -75,7 +80,9 @@ class CallFrameInterface;
 class DeviceMgr;
 class FunctionLibraryRuntime;
 class OpKernelConstruction;  // declared below
+*/
 class OpKernelContext;       // declared below,
+/*
 class OpRegistryInterface;
 class ResourceMgr;
 class ScopedStepContainer;
@@ -89,9 +96,10 @@ class CoordinationServiceAgent;
 // disabled if needed.
 extern const char* kJitKernelLabel;
 extern const char* kDisableJitKernelsEnvVar;
-
+*/
 class OpKernel {
  public:
+/*
   // OpKernel won't be instantiated by the scheduler, so you may perform
   // expensive initialization in the descendant's constructor.
   explicit OpKernel(OpKernelConstruction* context);
@@ -137,12 +145,12 @@ class OpKernel {
   // get inputs and write outputs through the given OpKernelContext
   // and returns a status via context->SetStatus(). They must be
   // thread-safe.
-
+*/
   // Synchronous compute.
   //
   // "context" is guaranteed to be alive until Compute() returns.
-  virtual void Compute(OpKernelContext* context) = 0;
-
+  virtual void Compute(OpKernelContext* context) { }
+/*
   // Returns nullptr iff this op kernel is synchronous.
   virtual AsyncOpKernel* AsAsync() { return nullptr; }
 
@@ -209,8 +217,9 @@ class OpKernel {
   bool expensive_;
 
   TF_DISALLOW_COPY_AND_ASSIGN(OpKernel);
+*/
 };
-
+/*
 class AsyncOpKernel : public OpKernel {
  public:
   using OpKernel::OpKernel;  // Lift OpKernel constructors.
@@ -471,10 +480,11 @@ class OpOutputList {
   int start_;
   int stop_;
 };
-
+*/
 // Holds a tensor or tensor reference. For tensor references, we need
 // a mutex to prevent concurrent access to the tensor.
 struct TensorValue {
+/*
   TensorValue() : mutex_if_ref(nullptr), tensor(nullptr) {}
   explicit TensorValue(Tensor* t) : mutex_if_ref(nullptr), tensor(t) {}
   TensorValue(mutex* mu, Tensor* t) : mutex_if_ref(mu), tensor(t) {}
@@ -505,8 +515,9 @@ struct TensorValue {
 
   mutex* mutex_if_ref;  // nullptr if not a ref, != nullptr if a ref
   Tensor* tensor;
+  */
 };
-
+/*
 // Used to store partitioned graphs from function-calling ops.
 struct GraphCollector {
   mutex mu;
@@ -548,18 +559,20 @@ struct GraphCollector {
     return dirty;
   }
 };
-
+*/
 class OpKernelContext {
  public:
+ /*
   // The first element of a WrappedAllocator is a "base" Allocator and
   // the second element is that Allocator wrapped by a
   // TrackingAllocator
   typedef std::pair<Allocator*, TrackingAllocator*> WrappedAllocator;
-
+*/
   // TODO(zhifengc): Do some cleanup of Params.
   // The Params struct is passed in to initialize an OpKernelContext,
   // and must outlive the OpKernelContext.
   struct Params {
+    /*
     ~Params() { delete eigen_gpu_device; }
 
     // The step being executed.
@@ -639,10 +652,10 @@ class OpKernelContext {
     // Mechanism used by this op kernel invocation to register a callback
     // for its cancellation.
     CancellationManager* cancellation_manager = nullptr;
-
+*/
     // Inputs to this op kernel.
     absl::Span<const TensorValue> inputs;
-    bool is_input_dead = false;
+/*    bool is_input_dead = false;
 
     absl::Span<const AllocatorAttributes> input_alloc_attrs;
 
@@ -682,11 +695,12 @@ class OpKernelContext {
 
     // For access to distributed coordination service.
     CoordinationServiceAgent* coordination_service_agent = nullptr;
+    */
   };
-
+/*
   // params must outlive the OpKernelContext.
-  explicit OpKernelContext(Params* params);
-  OpKernelContext(Params* params, int num_outputs);
+  explicit */ OpKernelContext(Params* params) { params_=params; }
+ /* OpKernelContext(Params* params, int num_outputs);
   ~OpKernelContext();
 
   Env* env() const { return params_->device->env(); }
@@ -723,8 +737,9 @@ class OpKernelContext {
   // inputs. For Ref inputs use mutable_input below.
   // REQUIRES: !IsRefType(input_dtype(index))
   // TODO(mrry): Convert this to return Status.
-  const Tensor& input(int index) const;
-
+  */
+  const Tensor& input(int index) const; 
+/*
   // Returns the named immutable input tensor in "tensor", as defined
   // in the OpDef. May only be used for non-Ref inputs. For Ref inputs
   // use mutable_input below.
@@ -1158,9 +1173,11 @@ class OpKernelContext {
   }
 
   // Helper routines for the OP_REQUIRES macros
-  void CtxFailure(const Status& s);
+  void CtxFailure(const Status& s) {}
   void CtxFailureWithWarning(const Status& s);
-  void CtxFailure(const char* file, int line, const Status& s);
+  */
+  void CtxFailure(const char* file, int line, const Status& s) {}
+  /*
   void CtxFailureWithWarning(const char* file, int line, const Status& s);
 
   // Unrecommended functions: these are functions that have some
@@ -1261,7 +1278,9 @@ class OpKernelContext {
 
   Status status_;
   friend class CollectiveExecutor;  // for access to params_
+  */
   Params* params_;                  // not owned
+  /*
   gtl::InlinedVector<TensorValue, 4> outputs_;
 
   // Keep track of calls to ScopedAllocator.
@@ -1291,8 +1310,9 @@ class OpKernelContext {
                                      const char* correct_macro_name);
 
   TF_DISALLOW_COPY_AND_ASSIGN(OpKernelContext);
+  */
 };
-
+/*
 template <>
 const Eigen::ThreadPoolDevice& OpKernelContext::eigen_device() const;
 
@@ -1684,7 +1704,7 @@ inline void CheckNotInComputeAsync(XlaOpKernelContext*, const char*) {}
 inline void CheckNotInComputeAsync(OpKernelConstruction*, const char*) {}
 void CheckNotInComputeAsync(OpKernelContext* ctx,
                             const char* correct_macro_name);
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_OP_KERNEL_H_

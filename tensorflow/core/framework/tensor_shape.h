@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_CORE_FRAMEWORK_TENSOR_SHAPE_H_
 
 #include <string>
-
+/*
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/gtl/array_slice.h"
@@ -27,9 +27,9 @@ limitations under the License.
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/statusor.h"
-
+*/
 namespace tensorflow {
-
+/*
 // START_SKIP_DOXYGEN
 template <class Shape>
 class TensorShapeIter;
@@ -37,10 +37,11 @@ class TensorShape;
 class TensorShapeProto;
 class PartialTensorShape;
 // END_SKIP_DOXYGEN
-
+*/
 /// Internal representation for both TensorShape and PartialTensorShape.
 class TensorShapeRep {
  public:
+ /*
   ~TensorShapeRep();
 
   /// Copy the specified shape
@@ -66,8 +67,9 @@ class TensorShapeRep {
   /// We use `int64` and not `size_t` to be compatible with `Eigen::Tensor`
   /// which uses `ptrdiff_t`.  For PartialTensorShape, -1 means not fully
   /// defined.
+*/
   int64_t num_elements() const { return num_elements_; }
-
+/*
   /// For error messages.
   std::string DebugString() const;
   static std::string DebugString(const TensorShapeProto& proto);
@@ -138,9 +140,9 @@ class TensorShapeRep {
 
   RepTag tag() const { return static_cast<RepTag>(buf()[15]); }
   void set_tag(RepTag tag) { buf()[15] = static_cast<uint8>(tag); }
-
+*/
   void set_num_elements(int64_t n) { num_elements_ = n; }
-
+/*
  private:
   void DestructorOutOfLine();
   void SlowCopyFrom(const TensorShapeRep& b);
@@ -153,16 +155,20 @@ class TensorShapeRep {
     // Force data to be aligned enough for a pointer.
     Rep64* unused_aligner;
   } u_;
+*/
   int64_t num_elements_;
-};
 
+};
+/*
 /// Base class for TensorShape and PartialTensorShape.
 /// The class is templatized by either TensorShape or PartialTensorShape to
 /// allow skipping known/unknown checks in the TensorShape case, but the
 /// representation is shared exactly for fast conversion.
+*/
 template <class Shape>
 class TensorShapeBase : public TensorShapeRep {
  public:
+ /*
   /// \brief Construct a `TensorShapeBase` from the provided sizes.
   /// REQUIRES: `dim_sizes[i] >= 0` (or >= -1 for PartialTensorShape)
   explicit TensorShapeBase(gtl::ArraySlice<int64_t> dim_sizes);
@@ -285,19 +291,21 @@ class TensorShapeBase : public TensorShapeRep {
   bool unknown_rank() const {
     return kIsPartial && ndims_byte() == kUnknownRank;
   }
-
+*/
   /// Return the number of dimensions in the tensor.
   /// Can be -1 meaning unknown rank for PartialTensorShape.
   int dims() const {
-    uint8 dims = ndims_byte();
-    return kIsPartial && dims == kUnknownRank ? -1 : dims;
+    return 3;
+    /* uint8 dims = ndims_byte();
+    return kIsPartial && dims == kUnknownRank ? -1 : dims; */
   }
-
+/*
   /// \brief Returns the number of elements in dimension `d`.
   /// REQUIRES: `0 <= d < dims()`
   // TODO(touts): Rename to `dimension()` to match
   // `Eigen::Tensor::dimension()`?
-  int64_t dim_size(int d) const;
+  */
+  int64_t dim_size(int d) const { return 3; } /*const;
 
   /// Returns sizes of all dimensions.
   // Returns an empty list for unknown rank PartialTensorShape.
@@ -338,14 +346,15 @@ class TensorShapeBase : public TensorShapeRep {
   // For use by TensorShapeUtils::MakeShape
   template <class T, class S>
   friend Status MakeShapeHelper(const T*, int64_t, S*);
+  */
 };
-
+/*
 /// Outputs `TensorShapeBase` to `std::ostream`.
 template <typename Shape>
 std::ostream& operator<<(std::ostream& os, const TensorShapeBase<Shape>& tsb) {
   return os << tsb.DebugString();
 }
-
+*/
 /// Represents the shape of a Tensor.
 ///
 /// A tensor's shape is denoted by its number of dimensions and a size for each
@@ -357,6 +366,7 @@ std::ostream& operator<<(std::ostream& os, const TensorShapeBase<Shape>& tsb) {
 /// zero dimensions and one element, and call AddDim() to add dimensions later.
 class TensorShape : public TensorShapeBase<TensorShape> {
  public:
+ /*
   using TensorShapeBase<TensorShape>::TensorShapeBase;
 
   // These factory methods should be used instead of the constructors that take
@@ -439,9 +449,9 @@ class TensorShape : public TensorShapeBase<TensorShape> {
   Eigen::DSizes<IndexType, NDIMS> AsEigenDSizesCopyAndPad() const;
 
   // For access to TensorShapeBase(DataType).
-  friend class Tensor;
+  friend class Tensor;*/
 };
-
+/*
 /// Outputs `TensorShapeBase` to `std::ostream`.
 inline std::ostream& operator<<(std::ostream& os, const TensorShape& ts) {
   return os << ts.DebugString();
@@ -769,7 +779,7 @@ struct DtypeAndPartialTensorShape {
   DataType dtype;
   PartialTensorShape shape;
 };
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_TENSOR_SHAPE_H_

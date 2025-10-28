@@ -23,7 +23,7 @@ limitations under the License.
 #include <string>
 #include <unordered_map>
 #include <utility>
-
+/*
 #include "absl/base/attributes.h"
 #include "absl/status/status.h"
 #include "absl/strings/cord.h"
@@ -34,9 +34,9 @@ limitations under the License.
 #include "tensorflow/tsl/platform/stack_frame.h"
 #include "tensorflow/tsl/platform/types.h"
 #include "tensorflow/tsl/protobuf/error_codes.pb.h"
-
-namespace tsl {
-
+*/
+namespace tensorflow {
+/*
 #if TF_HAS_CPP_ATTRIBUTE(nodiscard)
 class [[nodiscard]] Status;
 #endif
@@ -74,13 +74,14 @@ typedef ::tensorflow::error::Code Code;
 namespace error {
 typedef ::tensorflow::error::Code Code;
 }  // namespace error
-
+*/
 /// @ingroup core
 /// Denotes success or failure of a call in Tensorflow.
 class Status {
  public:
   /// Create a success status.
   Status() {}
+/*
   ~Status();  // Not inlined to save code space
 
   /// \brief Create a status with the specified error code and msg as a
@@ -238,8 +239,9 @@ class Status {
 
   void SlowCopyFrom(const State* src);
   State* NewStateFromNonOKStatus(const Status& s);
+*/
 };
-
+/*
 // OkStatus()
 //
 // Returns an OK status, equivalent to a default constructed instance. Prefer
@@ -376,7 +378,7 @@ inline tsl::string* TfCheckOpHelper(::tsl::Status v, const char* msg) {
 #define TF_DCHECK_OK(val) \
   while (false && (::tsl::OkStatus() == (val))) LOG(FATAL)
 #endif
-
+*/
 }  // namespace tsl
 
 #endif  // TENSORFLOW_TSL_PLATFORM_STATUS_H_
