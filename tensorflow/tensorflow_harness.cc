@@ -10,6 +10,7 @@ using tensorflow::OpKernelContext;
 using tensorflow::TensorValue;
 using tensorflow::TensorShape;
 using tensorflow::Tensor;
+struct CPUDevice {};
 int main() {
     OpKernelContext::Params params;
   std::memset(&params, 0, sizeof(params));
@@ -24,14 +25,19 @@ int main() {
   // Pass by REFERENCE (no &): Tensor expects (DataType, const TensorShape&)
   Tensor sorted_inputs(tensorflow::DT_INT32, si_shape);
   Tensor values       (tensorflow::DT_INT32, v_shape);
-/*
+
+  // Inputs: OpKernelContext expects an array/vector of TensorValue.
+tensorflow::TensorValue input_vals[2] = {
+tensorflow::TensorValue(&sorted_inputs),
+tensorflow::TensorValue(&values)};
+
   // IMPORTANT: bind TensorValue to the actual tensors (not default-constructed)
   TensorValue inputs_buf[2] = { TensorValue(&sorted_inputs),
                                 TensorValue(&values) };
-  params.inputs = absl::Span<const TensorValue>(inputs_buf, 2); */
+  params.inputs = absl::Span<const TensorValue>(inputs_buf, 2); 
 
-    /* OpKernelContext ctx(&params);
-    tensorflow::UpperBoundOp UpOp;
-    UpOp.Compute(&ctx);  */
+    OpKernelContext ctx(&params);
+    tensorflow::UpperBoundOp<CPUDevice, int, int> op{};
+    op.Compute(&ctx);   
 
 }

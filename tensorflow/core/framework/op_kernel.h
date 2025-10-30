@@ -484,6 +484,11 @@ class OpOutputList {
 // Holds a tensor or tensor reference. For tensor references, we need
 // a mutex to prevent concurrent access to the tensor.
 struct TensorValue {
+
+  // Default-construct to null
+TensorValue() : tensor(nullptr) {}
+
+  explicit TensorValue(Tensor* t) : tensor(t) {}
 /*
   TensorValue() : mutex_if_ref(nullptr), tensor(nullptr) {}
   explicit TensorValue(Tensor* t) : mutex_if_ref(nullptr), tensor(t) {}
@@ -514,8 +519,9 @@ struct TensorValue {
   }
 
   mutex* mutex_if_ref;  // nullptr if not a ref, != nullptr if a ref
-  Tensor* tensor;
   */
+ Tensor* tensor;
+  
 };
 /*
 // Used to store partitioned graphs from function-calling ops.
@@ -1127,9 +1133,10 @@ class OpKernelContext {
   const Eigen::GpuDevice& eigen_gpu_device() const {
     return params_->eigen_gpu_device->device();
   }
+  */
   template <typename EigenDeviceType>
-  const EigenDeviceType& eigen_device() const;
-
+  const EigenDeviceType& eigen_device() const {  }
+/*
   // Error handling.
 
   // If expected_inputs == inputs() and expected_outputs == output_types(),

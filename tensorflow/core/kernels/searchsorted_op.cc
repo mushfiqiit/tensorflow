@@ -18,13 +18,16 @@ limitations under the License.
 #include <limits>
 #include "tensorflow/core/kernels/searchsorted_op.h"
 #include "tensorflow/core/framework/op_requires.h"
+#include "tensor_flat_stub.h"
 /*
 #include "tensorflow/core/framework/bounds_check.h"
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/register_types.h"
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/framework/tensor_shape.h"
+*/
 #include "tensorflow/core/kernels/fill_functor.h"
+/*
 #include "tensorflow/core/lib/core/bits.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/threadpool.h"
@@ -97,22 +100,22 @@ struct LowerBoundFunctor<CPUDevice, T, OutType> {
   }
 };
 }  // namespace functor
-*/
-/* template <typename Device, typename T, typename OutType> */
-/* class UpperBoundOp : public OpKernel {
+
+ template <typename Device, typename T, typename OutType> 
+ class UpperBoundOp : public OpKernel {
  public:
- UpperBoundOp() {} */
+ UpperBoundOp() {} 
   //explicit UpperBoundOp(OpKernelConstruction* ctx) : OpKernel(ctx) {}
 
-  void UpperBoundOp::Compute(OpKernelContext* ctx) {
+  void Compute(OpKernelContext* ctx) {
     const Tensor& sorted_inputs_t = ctx->input(0);
     const Tensor& values_t = ctx->input(1);
 
     // inputs must be at least a matrix
-    /* OP_REQUIRES(
+     OP_REQUIRES(
         ctx, sorted_inputs_t.shape().dims() >= 2,
         errors::InvalidArgument("sorted input argument must be a matrix")
-      ); */
+      ); 
 
     if (!(sorted_inputs_t.shape().dims() >= 2)) {
   CheckNotInComputeAsync(ctx, "OP_REQUIRES_ASYNC");
@@ -123,37 +126,37 @@ struct LowerBoundFunctor<CPUDevice, T, OutType> {
 
 
     // must have same batch dim_size for both
-    /* OP_REQUIRES(ctx, sorted_inputs_t.dim_size(0) == values_t.dim_size(0),
+     OP_REQUIRES(ctx, sorted_inputs_t.dim_size(0) == values_t.dim_size(0),
                  Status(error::INVALID_ARGUMENT,
                        "Leading dim_size of both tensors must match.") 
-                      Status()); */
+                      Status()); 
 
   if (!(sorted_inputs_t.dim_size(0) == values_t.dim_size(0))) {
   CheckNotInComputeAsync(ctx, "OP_REQUIRES_ASYNC");
   ctx->CtxFailure(__FILE__, __LINE__,
-      Status(/* error::INVALID_ARGUMENT,
-             "Leading dim_size of both tensors must match." */));
+      Status( error::INVALID_ARGUMENT,
+             "Leading dim_size of both tensors must match." ));
   return;
 }
 
 
-/*     // this is required because we do indexing in int32 on the GPU
+     // this is required because we do indexing in int32 on the GPU
     OP_REQUIRES(ctx, values_t.NumElements() < std::numeric_limits<int>::max(),
                  Status(error::INVALID_ARGUMENT,
                        "values tensor size must less than INT_MAX") 
-                      Status()); */
+                      Status()); 
 
     if (!(values_t.NumElements() < std::numeric_limits<int>::max())) {
   CheckNotInComputeAsync(ctx, "OP_REQUIRES_ASYNC");
   ctx->CtxFailure(__FILE__, __LINE__,
-      Status(/* error::INVALID_ARGUMENT,
-             "values tensor size must less than INT_MAX" */));
+      Status( error::INVALID_ARGUMENT,
+             "values tensor size must less than INT_MAX" ));
   return;
 }
 
 
     Tensor* output_t;
-/*
+
     OP_REQUIRES_OK(ctx, ctx->allocate_output(0, values_t.shape(), &output_t));
 
     if (output_t->dtype() == DT_INT32) {
@@ -164,25 +167,35 @@ struct LowerBoundFunctor<CPUDevice, T, OutType> {
                                           "INT_MAX for int32 output type, was ",
                                           sorted_inputs_t.dim_size(1)));
     }
-*/
+
     auto output = output_t->template flat<OutType>();
     const auto sorted_inputs = sorted_inputs_t.template flat<T>();
     const auto values = values_t.template flat<T>();
-/*
+
+    #include "tensor_flat_stub.h"
+
+// Writable output flat view
+auto output = flat<OutType>(output_t);
+
+// Read-only input flat views
+auto sorted_inputs = flat<T>(sorted_inputs_t);
+auto values        = flat<T>(values_t);
+
+
     // For empty inputs, all values will be placed at the zeroth position.
     if (sorted_inputs.size() == 0) {
-      functor::SetZeroFunctor<Device, OutType> set_zero;
-      set_zero(ctx->eigen_device<Device>(), output);
-      return;
+       functor::SetZeroFunctor<Device, OutType> set_zero;
+        set_zero(ctx->eigen_device<Device>(), output);
+        return; 
     }
 
     OP_REQUIRES_OK(
         ctx, functor::UpperBoundFunctor<Device, T, OutType>::Compute(
                  ctx, sorted_inputs, values, sorted_inputs_t.dim_size(0),
                  sorted_inputs_t.dim_size(1), values_t.dim_size(1), &output));
-   */              
+                 
   } 
-/*
+
 };
 
 template <typename Device, typename T, typename OutType>
