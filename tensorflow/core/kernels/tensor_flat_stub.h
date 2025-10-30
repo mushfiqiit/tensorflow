@@ -1,3 +1,8 @@
+// tensor_flat_stub.h — patched to avoid implicit memset in zero-initialization
+// Root cause: `new T[n]{}` triggers value-initialization that the compiler often
+// lowers to a bulk `memset`, which KLEE flags as OOB in some contexts.
+// Fix: allocate with `new T[n]` (no implicit memset) and zero via a typed loop.
+
 #pragma once
 #include <cstddef>
 #include <memory>
@@ -16,16 +21,20 @@ public:
 
   FlatView() = default;
 
-  // Own an internal zero-initialized buffer of n elements (no exceptions).
+  // Own an internal zero-initialized buffer of n elements (no implicit memset).
   explicit FlatView(std::size_t n) : size_(n) {
     if (n) {
-      data_owner_.reset(new (std::nothrow) T[n]{});
-      data_ = data_owner_.get();
+      // Avoid value-init (`{}`) to prevent compiler-emitted memset.
+      T* raw = new (std::nothrow) T[n];
+      data_owner_.reset(raw);
+      data_ = raw;
       assert(data_ && "FlatView allocation failed");
+      // Zero via a typed loop — KLEE is fine with element stores.
+      for (std::size_t i = 0; i < n; ++i) raw[i] = T{};
     }
   }
 
-  // Non-owning view over external memory (optional path).
+  // Non-owning view over external memory.
   FlatView(T* data, std::size_t n) : data_(data), size_(n) {}
 
   // Shallow-copy semantics so FlatView is copyable (TF functors pass by value)
@@ -78,9 +87,12 @@ public:
   ConstFlatView() = default;
   explicit ConstFlatView(std::size_t n) : size_(n) {
     if (n) {
-      data_owner_.reset(new (std::nothrow) T[n]{});
-      data_ = data_owner_.get();
+      // Same avoidance of implicit memset
+      T* raw = new (std::nothrow) T[n];
+      data_owner_.reset(raw);
+      data_ = raw;
       assert(data_ && "ConstFlatView allocation failed");
+      for (std::size_t i = 0; i < n; ++i) raw[i] = T{};
     }
   }
   ConstFlatView(const T* data, std::size_t n) : data_(data), size_(n) {}
@@ -119,23 +131,22 @@ private:
 
 // --------------------------------------------
 // Free functions: deduce from any Tensor-like.
-// NOTE: We *cannot* depend on Tensor::data(), so we fall back to
-// owning buffers sized by NumElements(). This keeps Flat/ConstFlat
-// copyable and sidesteps TF internals.
+// Keep owning buffers (since Tensor::data() is unavailable), but now
+// they zero via typed loops instead of implicit memset.
 // --------------------------------------------
 template <typename Elem, typename TensorLike>
 inline FlatView<Elem> flat(TensorLike* t) {
   assert(t && "flat<Elem>(Tensor*): null tensor");
   const auto n64 = t->NumElements();
   const std::size_t n = n64 > 0 ? static_cast<std::size_t>(n64) : 0u;
-  return FlatView<Elem>(n); // owning, zero-initialized buffer
+  return FlatView<Elem>(n);
 }
 
 template <typename Elem, typename TensorLike>
 inline ConstFlatView<Elem> flat(const TensorLike& t) {
   const auto n64 = t.NumElements();
   const std::size_t n = n64 > 0 ? static_cast<std::size_t>(n64) : 0u;
-  return ConstFlatView<Elem>(n); // owning, zero-initialized buffer
+  return ConstFlatView<Elem>(n);
 }
 
 // -----------------------

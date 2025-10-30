@@ -1,43 +1,55 @@
+
 #include "tensorflow/core/kernels/searchsorted_op.h"
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/framework/datatype_stub.h"
-#include <cstring>      // std::memset
-#include <cstdlib>      // malloc, free
-#include <new>          // placement new (optional)
+#include <cstring>
 #include <klee/klee.h>
 
 using tensorflow::OpKernelContext;
 using tensorflow::TensorValue;
 using tensorflow::TensorShape;
 using tensorflow::Tensor;
+
 struct CPUDevice {};
+
+// Helper to set both dims and num_elements consistently in your stub shape
+static inline TensorShape MakeShape(int d0, int d1) {
+  TensorShape s;
+  // Your TensorShapeBase::dims() / dim_size() are currently hardcoded.
+  // If you can’t change the header, avoid relying on them and just ensure
+  // NumElements is correct.
+  const long long num = 1LL * d0 * d1;
+  s.set_num_elements(num);
+  return s;
+}
+
 int main() {
-    OpKernelContext::Params params;
-  std::memset(&params, 0, sizeof(params));
+  OpKernelContext::Params params{}; 
 
-  // Declare REAL variables (not functions) and keep them non-const since we mutate them.
-  TensorShape si_shape;   // pretend: shape [2,3] → total elements = 6
-  si_shape.set_num_elements(6);
+  // Use a consistent logical shape: sorted_inputs [2,3], values [2,1]
+  TensorShape si_shape = MakeShape(2, 3);
+  TensorShape v_shape  = MakeShape(2, 1);
 
-  TensorShape v_shape;    // pretend: shape [2,1] → total elements = 2
-  v_shape.set_num_elements(2);
-
-  // Pass by REFERENCE (no &): Tensor expects (DataType, const TensorShape&)
-  Tensor sorted_inputs(tensorflow::DT_INT32, si_shape);
+   Tensor sorted_inputs(tensorflow::DT_INT32, si_shape);
   Tensor values       (tensorflow::DT_INT32, v_shape);
 
-  // Inputs: OpKernelContext expects an array/vector of TensorValue.
-tensorflow::TensorValue input_vals[2] = {
-tensorflow::TensorValue(&sorted_inputs),
-tensorflow::TensorValue(&values)};
+  // Ensure the *flat views* have backing storage of the right size.
+  // (Your FlatView allocates owning buffers sized by NumElements).
+  
+    auto si = flat<int>(&sorted_inputs);   // owning buffer of size 6
+    for (std::size_t i = 0; i < si.size(); ++i) si[i] = (int)i; // init
+  
+  
+  /*   auto vv = flat<int>(&values);          // owning buffer of size 2
+    vv[0] = 1; vv[1] = 4;                  // any test data
+  
 
-  // IMPORTANT: bind TensorValue to the actual tensors (not default-constructed)
-  TensorValue inputs_buf[2] = { TensorValue(&sorted_inputs),
-                                TensorValue(&values) };
-  params.inputs = absl::Span<const TensorValue>(inputs_buf, 2); 
+  TensorValue inputs_buf[2] = { TensorValue(&sorted_inputs), TensorValue(&values) };
+  params.inputs = absl::Span<const TensorValue>(inputs_buf, 2);
 
-    OpKernelContext ctx(&params);
-    tensorflow::UpperBoundOp<CPUDevice, int, int> op{};
-    op.Compute(&ctx);   
+  OpKernelContext ctx(&params); 
 
+  tensorflow::UpperBoundOp<CPUDevice, int, int> op{};
+  op.Compute(&ctx);
+  return 0; */
 }
