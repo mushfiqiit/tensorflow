@@ -14,7 +14,9 @@ limitations under the License.
 ==============================================================================*/
 
 #include "tensorflow/core/framework/tensor_shape.h"
-
+#include "tensorflow/compiler/xla/shape.h"
+//#include "datatype_stub.h"
+/*
 #include "tensorflow/core/framework/bounds_check.h"
 #include "tensorflow/core/framework/tensor_shape.pb.h"
 #include "tensorflow/core/lib/strings/str_util.h"
@@ -23,9 +25,10 @@ limitations under the License.
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/util/overflow.h"
-
+*/
+//#include "tensorflow/core/platform/status.h"
 namespace tensorflow {
-
+/*
 // TensorShape and PartialTensorShape should have no fields beyond
 // TensorShapeRep.  In particular, their sizes should be the same.
 static_assert(sizeof(TensorShapeRep) == sizeof(TensorShape),
@@ -185,15 +188,16 @@ TensorShapeBase<Shape>::TensorShapeBase(gtl::ArraySlice<int64_t> dim_sizes) {
   set_data_type(DT_INVALID);
   TF_CHECK_OK(InitDims(dim_sizes));
 }
-
-template <class Shape>
+*/
+/* template <class Shape>
 Status TensorShapeBase<Shape>::BuildTensorShapeBase(
     gtl::ArraySlice<int64_t> dim_sizes, TensorShapeBase* out) {
-  out->set_tag(REP16);
-  out->set_data_type(DT_INVALID);
-  return out->InitDims(dim_sizes);
-}
-
+  //out->set_tag(REP16);
+  //out->set_data_type(DT_INVALID);
+  //return out->InitDims(dim_sizes);
+  return Status();
+} */
+/*
 // Returns true iff partial is true and val is < 0.
 // REQUIRES: val < kMaxRep16
 // REQUIRES: partial || val >= 0
@@ -207,17 +211,18 @@ static inline bool Set16(bool partial, uint16* dst, int dim, int64_t val) {
   dst[dim] = val;
   return false;
 }
-
+*/
+/*
 template <class Shape>
 Status TensorShapeBase<Shape>::InitDims(gtl::ArraySlice<int64_t> dim_sizes) {
-  DCHECK_EQ(tag(), REP16);
+  //DCHECK_EQ(tag(), REP16);
 
   // Allow sizes that are under kint64max^0.25 so that 4-way multiplication
   // below cannot overflow.
   static const int64_t kMaxSmall = 0xd744;
   static_assert(kMaxSmall * kMaxSmall * kMaxSmall * kMaxSmall <= kint64max,
                 "bad overflow check");
-  bool large_size = false;
+   bool large_size = false;
   for (auto s : dim_sizes) {
     if (s > kMaxSmall) {
       large_size = true;
@@ -227,9 +232,10 @@ Status TensorShapeBase<Shape>::InitDims(gtl::ArraySlice<int64_t> dim_sizes) {
 
   if (!kIsPartial && !large_size) {
     for (auto s : dim_sizes) {
-      if (TF_PREDICT_FALSE(s < 0)) {
-        return errors::InvalidArgument(
-            "Expected shape dimensions to be non-negative, got ", s);
+      if (TF_PREDICT_FALSE (s < 0)) {
+        return  errors::InvalidArgument(
+            "Expected shape dimensions to be non-negative, got ", s) 
+            Status();
       }
     }
   }
@@ -289,11 +295,11 @@ Status TensorShapeBase<Shape>::InitDims(gtl::ArraySlice<int64_t> dim_sizes) {
     if (!status.ok()) {
       return status;
     }
-  }
+  } 
 
   return status;
-}
-
+}*/
+/*
 template <class Shape>
 TensorShapeBase<Shape>::TensorShapeBase() {
   set_tag(REP16);
@@ -1026,5 +1032,5 @@ Status TensorShapeUtils::NumElements(gtl::ArraySlice<int64_t> shape,
 
 template class TensorShapeBase<TensorShape>;
 template class TensorShapeBase<PartialTensorShape>;
-
+*/
 }  // namespace tensorflow

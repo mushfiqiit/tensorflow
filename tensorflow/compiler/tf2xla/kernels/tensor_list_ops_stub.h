@@ -1,0 +1,78 @@
+#ifndef TENSOR_LIST_OP_STUB
+#define TENSOR_LIST_OP_STUB
+
+#include <limits>
+#include <utility>
+#include <vector>
+#include "tensorflow/core/framework/datatype_stub.h"
+#include "tensorflow/compiler/tf2xla/xla_op_kernel.h"
+#include "tensorflow/compiler/xla/client/xla_builder.h"
+#include "tensorflow/compiler/xla/shape.h"
+#include "tensorflow/compiler/xla/util.h"
+namespace tensorflow {
+    class TensorListSplitOp : public XlaOpKernel {
+ public:
+ TensorListSplitOp() {}
+ /*
+  explicit TensorListSplitOp(OpKernelConstruction* ctx) : XlaOpKernel(ctx) {
+    OP_REQUIRES_OK(ctx, ctx->GetAttr("element_dtype", &dtype_));
+    // Only non-nested TensorList is supported for now.
+    OP_REQUIRES(
+        ctx, dtype_ != DT_VARIANT,
+        errors::Unimplemented(
+            "Only non-nested TensorList is supported for TensorListReserve."));
+  }
+*/
+  void Compile(XlaOpKernelContext* ctx) override {
+    
+    xla::XlaOp input_tensor = ctx->Input(0);
+
+    xla::XlaBuilder* b = input_tensor.builder();
+    auto shape_or = b->GetShape(input_tensor);
+/*    OP_REQUIRES_OK(ctx, shape_or.status()); */
+    xla::Shape element_shape = std::move(shape_or).value();
+    std::vector<int64_t> element_dims =
+        xla::SpanToVector(element_shape.dimensions());
+  /*  OP_REQUIRES(
+        ctx, !element_dims.empty(),
+        errors::Unimplemented("Element dimensions have to be non-empty")); */
+
+    std::vector<int64_t> lengths;
+     /* OP_REQUIRES_OK(ctx, */ ctx->ConstantInputAsIntVector(2, &lengths);/* ); */
+    /* OP_REQUIRES(ctx, !lengths.empty(),
+                errors::Unimplemented("Length has to be non-empty"));  */
+    lengths.push_back(0);
+    element_dims.push_back(0);
+                
+    int64_t length = lengths[0];
+    /*for (int64_t len : lengths) {
+       OP_REQUIRES(ctx, len == length,
+                  errors::Unimplemented("All lengths have to be the same")); 
+    }
+     OP_REQUIRES(
+        ctx, element_dims[0] % length == 0,
+        errors::Unimplemented("Buffer size has to be a multiple of length")); 
+  */
+    std::vector<int64_t> new_dims = {element_dims[0] / length, length};
+/*
+    for (int i = 1; i < element_dims.size(); i++) {
+      new_dims.push_back(element_dims[i]);
+    }
+
+    xla::XlaOp reshaped = xla::Reshape(input_tensor, new_dims);
+
+    xla::XlaOp result;
+    OP_REQUIRES_OK(ctx, ExecuteTensorListFromTensor(length, reshaped, &result));
+    ctx->SetTensorListOutput(0, result);
+    */
+  }
+
+ private:
+  DataType dtype_;
+/*
+  TF_DISALLOW_COPY_AND_ASSIGN(TensorListSplitOp);
+*/
+};
+}  // namespace tensorflow
+
+#endif  // TENSOR_LIST_OP_STUB

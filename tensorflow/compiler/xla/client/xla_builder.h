@@ -22,7 +22,7 @@ limitations under the License.
 #include <string>
 #include <type_traits>
 #include <utility>
-
+/*
 #include "absl/container/flat_hash_map.h"
 #include "absl/container/flat_hash_set.h"
 #include "absl/strings/string_view.h"
@@ -42,10 +42,13 @@ limitations under the License.
 #include "tensorflow/compiler/xla/types.h"
 #include "tensorflow/compiler/xla/xla_data.pb.h"
 #include "tensorflow/core/platform/stacktrace.h"
-
+*/
+#include "tensorflow/compiler/xla/shape.h"
+#include "statusor_stub.h"
 namespace xla {
 
 class XlaBuilder;
+/*
 class XlaOp;
 class HloInstruction;
 
@@ -82,13 +85,15 @@ struct XlaBuilderFriend {
 // This represents an instruction that has been enqueued using the XlaBuilder.
 // This is used to pass to subsequent computations that depends upon the
 // instruction as an operand.
+*/
 class XlaOp {
  public:
+
   XlaOp() : handle_(-1), builder_(nullptr) {
-    static_assert(std::is_trivially_destructible<XlaOp>::value,
-                  "XlaOp should be trivially destructible");
+    /* static_assert(std::is_trivially_destructible<XlaOp>::value,
+                  "XlaOp should be trivially destructible"); */
   }
-  ~XlaOp() = default;
+/*  ~XlaOp() = default;
 
   XlaOp(const XlaOp& other) = default;
   XlaOp& operator=(const XlaOp& other) = default;
@@ -99,11 +104,12 @@ class XlaOp {
   // foo.builder() is null, the call to bar will segfault at some point possibly
   // deep in the callstack when we finally dereference `this`.  The precondition
   // lets us avoid this tricky-to-debug problem.
+*/
   XlaBuilder* builder() const {
-    CHECK(builder_ != nullptr);
+    //CHECK(builder_ != nullptr);
     return builder_;
   }
-
+/*
   // Returns true if the XlaOp represents valid, non-erroneous value.
   bool valid() const { return handle_ >= 0; }
 
@@ -124,14 +130,15 @@ class XlaOp {
   explicit XlaOp(XlaBuilder* builder) : handle_(-1), builder_(builder) {}
   XlaOp(int64_t handle, XlaBuilder* builder)
       : handle_(handle), builder_(builder) {}
-
+*/
   int64_t handle() const { return handle_; }
 
   friend class XlaBuilder;
+/*
   friend class ValueInference;
   friend class MlirHloBuilder;
   friend struct internal::XlaBuilderFriend;
-
+*/
   // < 0 means "invalid handle".
   int64_t handle_;
 
@@ -139,7 +146,7 @@ class XlaOp {
   // handle is invalid.
   XlaBuilder* builder_;
 };
-
+/*
 // Arithmetic operator overloads for the XlaOp type.
 XlaOp operator-(XlaOp x);
 XlaOp operator+(XlaOp x, XlaOp y);
@@ -167,11 +174,13 @@ XlaOp operator>>(XlaOp x, XlaOp y);
 // A convenient interface for building up computations.
 //
 // Thread-compatible.
+*/
 class XlaBuilder {
  public:
-  // computation_name: name to use for the built computation.
-  explicit XlaBuilder(const std::string& computation_name);
 
+  // computation_name: name to use for the built computation.
+  /* explicit */ XlaBuilder(const std::string& computation_name) {}
+/*
   XlaBuilder(const XlaBuilder&) = delete;
   XlaBuilder& operator=(const XlaBuilder&) = delete;
 
@@ -323,13 +332,24 @@ class XlaBuilder {
   // Returns the current status of the builder, complete with the stack trace
   // information.
   Status GetCurrentStatus() const;
+*/
+  // Returns the shape of the given op.
+  StatusOr<Shape> GetShape(XlaOp op) const {
+    //TF_ASSIGN_OR_RETURN(const Shape* shape, GetShapePtr(op));
+    Shape temp_shape=Shape();
+    const Shape* shape=&temp_shape;
+    return *shape;
+  }
 
   // Returns the shape of the given op.
-  StatusOr<Shape> GetShape(XlaOp op) const;
-
-  // Returns the shape of the given op.
-  virtual StatusOr<const Shape*> GetShapePtr(XlaOp op) const;
-
+  virtual StatusOr<const Shape*> GetShapePtr(XlaOp op) const {
+    auto it = handle_to_index_.find(op.handle());
+  if (it == handle_to_index_.end()) {
+    return StatusOr<const Shape*>();
+  }
+  return instruction_shapes_.at(it->second).get();
+  }
+/*
   // Returns the (inferred) result for the current computation's shape. This
   // assumes the root instruction is the last added instruction.
   StatusOr<ProgramShape> GetProgramShape() const;
@@ -932,7 +952,7 @@ class XlaBuilder {
                                          absl::Span<const XlaOp> operands);
   StatusOr<XlaOp> AddInstruction(HloInstructionProto&& instr,
                                  HloOpcode opcode) {
-    return AddInstruction(std::move(instr), opcode, /*operands=*/{});
+    return AddInstruction(std::move(instr), opcode, {});
   }
 
   void AddCalledComputation(const XlaComputation& computation,
@@ -1038,8 +1058,9 @@ class XlaBuilder {
   std::deque<HloInstructionProto> instructions_;
   // An cache for the HloInstructionProto shapes, to avoid recreating Shape
   // objects from protos and to support the GetShapePtr() API.
+  */
   std::vector<std::unique_ptr<Shape>> instruction_shapes_;
-
+/*
   // Dynamic parameter configuration of this computation.
   DynamicParameterBinding dynamic_parameter_binding_;
 
@@ -1049,6 +1070,10 @@ class XlaBuilder {
   // A map from XlaOp::Handle to the index in the instructions_ vector where the
   // instruction is held.
   absl::flat_hash_map<int64_t, int64_t> handle_to_index_;
+  */
+ std::map<int, int> handle_to_index_;
+
+ /*
 
   // Track imported instructions by their computation id and the position in
   // their computation's instruction list.
@@ -1558,8 +1583,9 @@ class XlaBuilder {
   friend struct internal::XlaBuilderFriend;
 
   friend class ValueInference;
+*/
 };
-
+/*
 // RAII-style object: sets the current sharding assignment in builder on
 // construction, and sets back to the previous assignment on destruction.
 class XlaScopedShardingAssignment {
@@ -2787,7 +2813,7 @@ XlaOp ConstantR4FromArray4D(XlaBuilder* builder,
                             const Array4D<NativeT>& values) {
   return ConstantFromArray(builder, values);
 }
-
+*/
 }  // namespace xla
 
 #endif  // TENSORFLOW_COMPILER_XLA_CLIENT_XLA_BUILDER_H_

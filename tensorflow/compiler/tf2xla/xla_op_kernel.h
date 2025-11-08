@@ -16,16 +16,27 @@ limitations under the License.
 #ifndef TENSORFLOW_COMPILER_TF2XLA_XLA_OP_KERNEL_H_
 #define TENSORFLOW_COMPILER_TF2XLA_XLA_OP_KERNEL_H_
 
+#include <mutex>
+/* 
 #include "tensorflow/compiler/tf2xla/xla_compiler.h"
+*/
 #include "tensorflow/compiler/tf2xla/xla_context.h"
+
 #include "tensorflow/compiler/tf2xla/xla_expression.h"
+/*
 #include "tensorflow/compiler/tf2xla/xla_resource.h"
+*/
 #include "tensorflow/compiler/xla/client/value_inference.h"
+/*
 #include "tensorflow/compiler/xla/client/xla_builder.h"
+/*
 #include "tensorflow/compiler/xla/client/xla_computation.h"
 #include "tensorflow/compiler/xla/xla_data.pb.h"
+*/
 #include "tensorflow/core/framework/op_kernel.h"
+/*
 #include "tensorflow/core/platform/macros.h"
+ */
 
 namespace tensorflow {
 
@@ -38,14 +49,15 @@ class XlaOpKernelContext;
 // See the comments in xla_context.h for more details.
 class XlaOpKernel : public OpKernel {
  public:
-  explicit XlaOpKernel(OpKernelConstruction* construction);
+  XlaOpKernel() {}
+  //explicit XlaOpKernel(OpKernelConstruction* construction);
 
   // Subclasses should implement Compile(), much as standard OpKernels implement
   // Compute().
-  virtual void Compile(XlaOpKernelContext* context) = 0;
+  virtual void Compile(XlaOpKernelContext* context) /* = 0; */ {}
 
  private:
-  void Compute(OpKernelContext* context) final;
+  void Compute(OpKernelContext* context) /* final; */ {}
 };
 
 // The context passed to the Compile() method of XlaOpKernel. An
@@ -62,13 +74,17 @@ class XlaOpKernel : public OpKernel {
 // allocate_output or allocate_temp directly on the underlying OpKernelContext.
 class XlaOpKernelContext {
  public:
-  explicit XlaOpKernelContext(OpKernelContext* context);
+ //XlaOpKernelContext() { }
+ 
+  explicit XlaOpKernelContext(OpKernelContext* context) : context_(context) {}
 
-  XlaContext* xla_context() const;
+  /* XlaContext* xla_context() const { 
+  return &XlaContext::Get(context_);
+  }
 
   // Returns the XLA XlaBuilder containing the output of compilation.
-  xla::XlaBuilder* builder() const;
-
+  xla::XlaBuilder* builder() const { xla_context()->builder(); } */
+/*
   xla::ValueInference& value_inference();
 
   // Inputs
@@ -107,8 +123,13 @@ class XlaOpKernelContext {
   // Returns input `index` as a XlaOp. Unlike
   // OpKernelContext::Input returns a symbolic value rather than a concrete
   // Tensor.
-  xla::XlaOp Input(int index);
+*/
+  xla::XlaOp Input(int index) {
+    auto builder_ = xla::XlaBuilder("Builder");
+    return InputExpression(index).AsXlaOp(/* builder() */ &(builder_));
+  }
   // Returns input `name` as a XlaOp.
+/*
   xla::XlaOp Input(absl::string_view name);
 
   // Returns the xla input shape for a given index.
@@ -166,11 +187,27 @@ class XlaOpKernelContext {
   Status ConstantInputAsFloatScalar(
       int index, double* out,
       xla::ValueInferenceMode mode = xla::ValueInferenceMode::kValue);
-
+*/
   // Converts a constant 1D int32 or int64 tensor into a vector of int64s.
   Status ConstantInputAsIntVector(
       int index, std::vector<int64_t>* out,
-      xla::ValueInferenceMode mode = xla::ValueInferenceMode::kValue);
+      xla::ValueInferenceMode mode = xla::ValueInferenceMode::kValue) {
+  if (out == nullptr) {
+      return Status();
+    }
+    out->clear();
+
+    std::lock_guard<std::mutex> lock(GetRegistryMutex());
+    auto& reg = GetRegistry();
+    auto it = reg.find(index);
+    if (it == reg.end()) {
+      return Status();
+    }
+
+    *out = it->second;  // copy registered vector
+    return OkStatus();
+      }
+/*
   Status ConstantInputAsIntVector(
       absl::string_view name, std::vector<int64_t>* out,
       xla::ValueInferenceMode mode = xla::ValueInferenceMode::kValue);
@@ -212,9 +249,21 @@ class XlaOpKernelContext {
   StatusOr<Tensor> ConstantInputTensor(
       int index,
       xla::ValueInferenceMode mode = xla::ValueInferenceMode::kValue);
+*/
+
+const XlaExpression* CastExpressionFromTensor(
+    const Tensor& tensor) {
+  const XlaExpression* expression =
+      reinterpret_cast<const XlaExpression*>(tensor.tensor_data().data());
+  
+  return expression;
+}
 
   // Returns an XlaExpression describing the value of 'index'.
-  const XlaExpression& InputExpression(int index);
+  const XlaExpression& InputExpression(int index) {
+    return * /* XlaExpression:: */CastExpressionFromTensor(context_->input(index));
+  }
+/*
   const XlaExpression& InputExpression(absl::string_view name);
 
   // Outputs
@@ -345,6 +394,17 @@ class XlaOpKernelContext {
   std::string StackTrace() const;
 
  private:
+*/
+ static std::unordered_map<int, std::vector<int64_t>>& GetRegistry() {
+    static std::unordered_map<int, std::vector<int64_t>>* reg =
+        new std::unordered_map<int, std::vector<int64_t>>();
+    return *reg;
+  }
+  static std::mutex& GetRegistryMutex() {
+    static std::mutex* m = new std::mutex();
+    return *m;
+  }
+/*
   // Returns the tensor of input `name`.
   const Tensor& GetInputTensorByName(absl::string_view name);
   // Evaluates input `index`, reshapes it to `new_shape` if new_shape !=
@@ -356,10 +416,11 @@ class XlaOpKernelContext {
       int index, absl::Span<const int64_t> new_dims,
       xla::Literal* constant_literal,
       xla::ValueInferenceMode mode = xla::ValueInferenceMode::kValue);
-
+*/
   OpKernelContext* const context_;
-  bool dynamic_dimension_is_minus_one_;
+/*  bool dynamic_dimension_is_minus_one_;
   xla::ValueInference value_inference_;
+*/
 };
 
 }  // namespace tensorflow

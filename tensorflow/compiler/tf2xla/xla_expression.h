@@ -15,16 +15,20 @@ limitations under the License.
 
 #ifndef TENSORFLOW_COMPILER_TF2XLA_XLA_EXPRESSION_H_
 #define TENSORFLOW_COMPILER_TF2XLA_XLA_EXPRESSION_H_
-
+/*
 #include "absl/types/optional.h"
 #include "tensorflow/compiler/tf2xla/xla_resource.h"
 #include "tensorflow/compiler/xla/client/client.h"
 #include "tensorflow/compiler/xla/client/value_inference.h"
+*/
 #include "tensorflow/compiler/xla/client/xla_builder.h"
+/*
 #include "tensorflow/compiler/xla/statusor.h"
+*/
 #include "tensorflow/core/framework/tensor.h"
+/*
 #include "tensorflow/core/lib/core/status.h"
-
+*/
 namespace tensorflow {
 
 // A XlaExpression represents a symbolic TensorFlow value in a TF->XLA
@@ -56,7 +60,7 @@ class XlaExpression {
   XlaExpression();
   XlaExpression(const XlaExpression&) = default;
   XlaExpression& operator=(const XlaExpression&) = default;
-
+/*
   // Builds an invalid expression. (Same as the default constructor, but makes
   // the intent clearer.)
   static XlaExpression Invalid();
@@ -116,11 +120,14 @@ class XlaExpression {
 
   // Returns a human-readable summary of the expression.
   string HumanString() const;
-
+*/
   // Returns the value of a kValue or kXlaOp as an xla::XlaOp. Returns
   // an erroneous XlaOp if the expression is not a constant or an expression.
-  xla::XlaOp AsXlaOp(xla::XlaBuilder* builder) const;
+  xla::XlaOp AsXlaOp(xla::XlaBuilder* builder)  const  {
+    return xla::XlaOp();
+  }
 
+  /*
   // If a kXlaOp or kValue expression can be resolved to a compile-time
   // constant, returns the value as a host-memory Tensor. Returns an empty
   // optional if it cannot be resolved. Returns an error if passed a resource
@@ -137,10 +144,10 @@ class XlaExpression {
   // The shape of a resource is the shape of a resource handle (i.e., a scalar),
   // not the shape of the resource's value.
   StatusOr<TensorShape> GetShape() const;
-
+*/
   // Retrieves an XlaExpression that was allocated by a previous Op.
   static const XlaExpression* CastExpressionFromTensor(const Tensor& tensor);
-
+/*
   // Assigns an XlaExpression to a tensor on an XLA compilation device.
   static void AssignExpressionToTensor(const XlaExpression& value,
                                        Tensor* tensor);
@@ -165,6 +172,7 @@ class XlaExpression {
 
   // The resource, if kind_ == kResource. Not owned.
   XlaResource* resource_ = nullptr;
+  */
 };
 
 }  // namespace tensorflow

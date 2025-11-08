@@ -17,7 +17,13 @@ limitations under the License.
 #define TENSORFLOW_CORE_FRAMEWORK_TENSOR_SHAPE_H_
 
 #include <string>
-
+#include <cstdint>
+#include <limits>
+#include "tensorflow/compiler/xla/inlined_vector_stub.h"
+#include "tensorflow/compiler/xla/span_stub.h"
+#include "tensorflow/core/platform/status.h"
+#include "tensorflow/core/framework/datatype_stub.h"
+/*
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/gtl/array_slice.h"
@@ -27,9 +33,24 @@ limitations under the License.
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/statusor.h"
-
+*/
 namespace tensorflow {
 
+typedef signed char int8;
+typedef short int16;
+typedef int int32;
+typedef ::std::int64_t int64;
+
+typedef unsigned char uint8;
+typedef unsigned short uint16;
+typedef unsigned int uint32;
+typedef std::uint64_t uint64;
+static const int64_t kint64max = static_cast<int64_t>(0x7FFFFFFFFFFFFFFFll);
+namespace gtl {
+template <typename T>
+using ArraySlice = absl::Span<const T>;
+}
+/*
 // START_SKIP_DOXYGEN
 template <class Shape>
 class TensorShapeIter;
@@ -37,10 +58,11 @@ class TensorShape;
 class TensorShapeProto;
 class PartialTensorShape;
 // END_SKIP_DOXYGEN
-
+*/
 /// Internal representation for both TensorShape and PartialTensorShape.
 class TensorShapeRep {
  public:
+ /*
   ~TensorShapeRep();
 
   /// Copy the specified shape
@@ -89,33 +111,35 @@ class TensorShapeRep {
   //        an out of line vector.
   // For PartialTensorShape, a dimension of static_cast<uint??>(-1) is unknown.
   // This value is not allowed in TensorShape either for format compatibility.
+  */
   struct Rep16 {
     uint16 dims_[6];
   };
+  
   struct Rep32 {
     uint32 dims_[3];
   };
   struct Rep64 {
     gtl::InlinedVector<int64_t, 4>* dims_;
   };
-
+/*
   // We use the max value of uint16 or uint32 to represent unknown shapes, so
   // the maximum representable valid shape in these representations is one less.
   static constexpr int64_t kMaxRep16 = std::numeric_limits<uint16>::max() - 1;
   static constexpr int64_t kMaxRep32 = std::numeric_limits<uint32>::max() - 1;
   static constexpr uint16 kUnknownRep16 = std::numeric_limits<uint16>::max();
   static constexpr uint32 kUnknownRep32 = std::numeric_limits<uint32>::max();
-
+*/
   Rep16* as16() { return reinterpret_cast<Rep16*>(buf()); }
   Rep32* as32() { return reinterpret_cast<Rep32*>(buf()); }
   Rep64* as64() { return reinterpret_cast<Rep64*>(buf()); }
-
+/*
   const Rep16* as16() const { return reinterpret_cast<const Rep16*>(buf()); }
   const Rep32* as32() const { return reinterpret_cast<const Rep32*>(buf()); }
   const Rep64* as64() const { return reinterpret_cast<const Rep64*>(buf()); }
-
+*/
   enum RepTag { REP16 = 0, REP32 = 1, REP_OUT_OF_LINE = 2 };
-
+/*
   // Since we have a convenient extra byte available, we allow the
   // Tensor class to store an 8-bit value in this extra storage.  This
   // allows it to store the Tensor's datatype enum value here and avoid
@@ -123,28 +147,31 @@ class TensorShapeRep {
   friend class Tensor;
   friend class TensorShapeTestHelper;
   DataType data_type() const { return static_cast<DataType>(buf()[13]); }
+  */
   void set_data_type(DataType dt) {
     // We only have 8 bits available to store DataType, so make sure it fits
-    DCHECK_LT(static_cast<uint32>(dt), 256u);
+    //DCHECK_LT(static_cast<uint32>(dt), 256u);
     buf()[13] = static_cast<uint8>(dt);
   }
-
+/*
   // We store the number of dimensions in byte 14, and the RepTag in byte 15.
   // Bytes [0..13] vary depending on the representation.
   // A value of 255 indicates unknown rank in the PartialTensorShape case.
   static constexpr uint8 kUnknownRank = 255;
   uint8 ndims_byte() const { return buf()[14]; }
+  */
   void set_ndims_byte(uint8 nd) { buf()[14] = nd; }
-
+/*
   RepTag tag() const { return static_cast<RepTag>(buf()[15]); }
+  */
   void set_tag(RepTag tag) { buf()[15] = static_cast<uint8>(tag); }
 
   void set_num_elements(int64_t n) { num_elements_ = n; }
-
+/*
  private:
   void DestructorOutOfLine();
   void SlowCopyFrom(const TensorShapeRep& b);
-
+*/
   uint8* buf() { return &u_.buf[0]; }
   const uint8* buf() const { return &u_.buf[0]; }
 
@@ -153,6 +180,7 @@ class TensorShapeRep {
     // Force data to be aligned enough for a pointer.
     Rep64* unused_aligner;
   } u_;
+
   int64_t num_elements_;
 };
 
@@ -163,6 +191,7 @@ class TensorShapeRep {
 template <class Shape>
 class TensorShapeBase : public TensorShapeRep {
  public:
+ /*
   /// \brief Construct a `TensorShapeBase` from the provided sizes.
   /// REQUIRES: `dim_sizes[i] >= 0` (or >= -1 for PartialTensorShape)
   explicit TensorShapeBase(gtl::ArraySlice<int64_t> dim_sizes);
@@ -180,8 +209,17 @@ class TensorShapeBase : public TensorShapeRep {
   // an array of sizes if calling code cannot validate that the sizes specify a
   // valid `TensorShape`.
   // The value in `*out` is valid iff the returned value is `Status::OK`.
+  */
   static Status BuildTensorShapeBase(gtl::ArraySlice<int64_t> dim_sizes,
-                                     TensorShapeBase* out);
+                                     TensorShapeBase* out) 
+{
+  out->set_tag(REP16);
+  out->set_data_type(DT_INVALID);
+  return out->InitDims(dim_sizes);
+  //return Status();
+}
+                                     
+  /*
   static Status BuildTensorShapeBase(std::initializer_list<int64_t> dim_sizes,
                                      TensorShapeBase* out) {
     return BuildTensorShapeBase(gtl::ArraySlice<int64_t>(dim_sizes), out);
@@ -324,8 +362,109 @@ class TensorShapeBase : public TensorShapeRep {
 
  private:
   Status RecomputeNumElements();
-  Status InitDims(gtl::ArraySlice<int64_t> dim_sizes);
+  */
+static inline bool Set16(bool partial, uint16* dst, int dim, int64_t val) {
+  if (partial) {
+    if (val < 0) {
+      dst[dim] = std::numeric_limits<uint16>::max();
+      return true;
+    }
+  }
+  dst[dim] = val;
+  return false;
+}
 
+  
+  Status InitDims(gtl::ArraySlice<int64_t> dim_sizes) {
+    //DCHECK_EQ(tag(), REP16);
+
+  // Allow sizes that are under kint64max^0.25 so that 4-way multiplication
+  // below cannot overflow.
+  static const int64_t kMaxSmall = 0xd744;
+  static_assert(kMaxSmall * kMaxSmall * kMaxSmall * kMaxSmall <= kint64max,
+                "bad overflow check"); 
+   bool large_size = false;
+  for (auto s : dim_sizes) {
+    if (s > kMaxSmall) {
+      large_size = true;
+      break;
+    }
+  }
+
+  if (!kIsPartial && !large_size) {
+    for (auto s : dim_sizes) {
+      if (/* TF_PREDICT_FALSE */ (s < 0)) {
+        return Status(); /* errors::InvalidArgument(
+            "Expected shape dimensions to be non-negative, got ", s) 
+            Status(); */
+      }
+    }
+  }
+
+  if (!large_size) {
+    // Every size fits in 16 bits; use fast-paths for dims in {1,2,3,4}.
+    uint16* dst = as16()->dims_;
+    switch (dim_sizes.size()) {
+      case 1: {
+        set_ndims_byte(1);
+        const int64_t size = dim_sizes[0];
+        const bool neg = Set16(kIsPartial, dst, 0, size);
+        set_num_elements(neg ? -1 : size);
+        return Status();
+      }
+      case 2: {
+        set_ndims_byte(2);
+        const int64_t size0 = dim_sizes[0];
+        const int64_t size1 = dim_sizes[1];
+        bool neg = Set16(kIsPartial, dst, 0, size0);
+        neg |= Set16(kIsPartial, dst, 1, size1);
+        set_num_elements(neg ? -1 : (size0 * size1));
+        return Status();
+      }
+      case 3: {
+        set_ndims_byte(3);
+        const int64_t size0 = dim_sizes[0];
+        const int64_t size1 = dim_sizes[1];
+        const int64_t size2 = dim_sizes[2];
+        bool neg = Set16(kIsPartial, dst, 0, size0);
+        neg |= Set16(kIsPartial, dst, 1, size1);
+        neg |= Set16(kIsPartial, dst, 2, size2);
+        set_num_elements(neg ? -1 : (size0 * size1 * size2));
+        return Status();
+      }
+      case 4: {
+        set_ndims_byte(4);
+        const int64_t size0 = dim_sizes[0];
+        const int64_t size1 = dim_sizes[1];
+        const int64_t size2 = dim_sizes[2];
+        const int64_t size3 = dim_sizes[3];
+        bool neg = Set16(kIsPartial, dst, 0, size0);
+        neg |= Set16(kIsPartial, dst, 1, size1);
+        neg |= Set16(kIsPartial, dst, 2, size2);
+        neg |= Set16(kIsPartial, dst, 3, size3);
+        set_num_elements(neg ? -1 : (size0 * size1 * size2 * size3));
+        return Status();
+      }
+    }
+  }
+
+  set_ndims_byte(0);
+  set_num_elements(1);
+/*  Status status = OkStatus();
+  for (int64_t s : dim_sizes) {
+    status.Update(AddDimWithStatus(internal::SubtleMustCopy(s)));
+    if (!status.ok()) {
+      return status;
+    }
+  } 
+
+  return status;
+  */
+ return Status();
+  }
+  
+  static constexpr bool kIsPartial = false;
+/*
   // True for PartialTensorShape, false for TensorShape
   static constexpr bool kIsPartial =
       std::is_same<Shape, PartialTensorShape>::value;
@@ -338,14 +477,15 @@ class TensorShapeBase : public TensorShapeRep {
   // For use by TensorShapeUtils::MakeShape
   template <class T, class S>
   friend Status MakeShapeHelper(const T*, int64_t, S*);
+  */
 };
 
-/// Outputs `TensorShapeBase` to `std::ostream`.
+/* /// Outputs `TensorShapeBase` to `std::ostream`.
 template <typename Shape>
 std::ostream& operator<<(std::ostream& os, const TensorShapeBase<Shape>& tsb) {
   return os << tsb.DebugString();
 }
-
+ */
 /// Represents the shape of a Tensor.
 ///
 /// A tensor's shape is denoted by its number of dimensions and a size for each
@@ -357,6 +497,7 @@ std::ostream& operator<<(std::ostream& os, const TensorShapeBase<Shape>& tsb) {
 /// zero dimensions and one element, and call AddDim() to add dimensions later.
 class TensorShape : public TensorShapeBase<TensorShape> {
  public:
+ 
   using TensorShapeBase<TensorShape>::TensorShapeBase;
 
   // These factory methods should be used instead of the constructors that take
@@ -367,6 +508,7 @@ class TensorShape : public TensorShapeBase<TensorShape> {
                                  TensorShape* out) {
     return BuildTensorShapeBase(dim_sizes, out);
   }
+/*
   static Status BuildTensorShape(std::initializer_list<int64_t> dim_sizes,
                                  TensorShape* out) {
     return BuildTensorShape(gtl::ArraySlice<int64_t>(dim_sizes), out);
@@ -437,11 +579,12 @@ class TensorShape : public TensorShapeBase<TensorShape> {
   // `AsEigenDSizeWithPaddingWithStatus()`.
   template <int NDIMS, typename IndexType = Eigen::DenseIndex>
   Eigen::DSizes<IndexType, NDIMS> AsEigenDSizesCopyAndPad() const;
-
+*/
   // For access to TensorShapeBase(DataType).
   friend class Tensor;
-};
 
+};
+/*
 /// Outputs `TensorShapeBase` to `std::ostream`.
 inline std::ostream& operator<<(std::ostream& os, const TensorShape& ts) {
   return os << ts.DebugString();
@@ -769,7 +912,7 @@ struct DtypeAndPartialTensorShape {
   DataType dtype;
   PartialTensorShape shape;
 };
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_TENSOR_SHAPE_H_

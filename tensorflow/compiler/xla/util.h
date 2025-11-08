@@ -27,7 +27,9 @@ limitations under the License.
 #include <type_traits>
 #include <utility>
 #include <vector>
-
+#include "span_stub.h"
+#include "inlined_vector_stub.h"
+/*
 #include "absl/algorithm/container.h"
 #include "absl/base/thread_annotations.h"
 #include "absl/container/inlined_vector.h"
@@ -41,9 +43,9 @@ limitations under the License.
 #include "tensorflow/compiler/xla/xla_data.pb.h"
 #include "tensorflow/core/lib/core/errors.h"  // IWYU pragma: keep
 #include "tensorflow/core/lib/math/math_util.h"
-
+*/
 namespace xla {
-
+/*
 // Converts the unsigned integer n into a mixed-radix representation with the
 // given bounds (radices). More precisely, if there are K radices, then the
 // returned vector digits has K entries and satisfies
@@ -60,14 +62,15 @@ std::vector<int64_t> ToMixedRadix(int64_t n, absl::Span<const int64_t> bounds);
 // is created, such that we can use --vmodule=util=1 to see all status
 // creation backtraces.
 Status WithLogBacktrace(const Status& status);
-
+*/
 // Ranks greater than 6 are very rare, so use InlinedVector<int64_t, 6> to store
 // the bounds and indices. And for the rare cases of ranks greater than 6,
 // the InlinedVector will just behave like an std::vector<> and allocate the
 // memory to store its values.
 inline constexpr int InlineRank() { return 6; }
-using DimensionVector = absl::InlinedVector<int64_t, InlineRank()>;
 
+using DimensionVector = absl::InlinedVector<int64_t, InlineRank()>;
+/*
 // RAII timer that logs with a given label the wall clock time duration in human
 // readable form. This differs from base's ElapsedTimer primarily in that it
 // spits out the human-readable duration form.
@@ -97,7 +100,7 @@ using DimensionVector = absl::InlinedVector<int64_t, InlineRank()>;
 #define XLA_SCOPED_LOGGING_TIMER_HELPER2(label, level, counter)      \
   static ::xla::TimerStats XLA_TimerStats##counter;                  \
   ::xla::ScopedLoggingTimer XLA_ScopedLoggingTimerInstance##counter( \
-      label, /*enabled=*/VLOG_IS_ON(level), __FILE__, __LINE__,      \
+      label, VLOG_IS_ON(level), __FILE__, __LINE__,      \
       &XLA_TimerStats##counter);
 
 struct TimerStats {
@@ -623,12 +626,12 @@ template <typename C>
 void EraseAt(C* c, int64_t index) {
   c->erase(c->begin() + index);
 }
-
+*/
 template <typename T>
 std::vector<T> SpanToVector(absl::Span<const T> slice) {
   return std::vector<T>(slice.begin(), slice.end());
 }
-
+/*
 template <typename T, size_t N>
 std::vector<T> InlinedVectorToVector(
     const absl::InlinedVector<T, N>& inlined_vector) {
@@ -670,9 +673,9 @@ class HloInstruction;
 using HloPredicate = std::function<bool(const HloInstruction*)>;
 
 using Vector3 = std::array<int64_t, 3>;
-
+*/
 }  // namespace xla
-
+/*
 #define XLA_LOG_LINES(SEV, STRING) \
   ::xla::LogLines(SEV, STRING, __FILE__, __LINE__)
 
@@ -687,5 +690,5 @@ using Vector3 = std::array<int64_t, 3>;
 #define XLA_FATAL_LOG(X)                 \
   XLA_LOG_LINES(::tensorflow::ERROR, X); \
   LOG(FATAL) << "Aborting in " << __FUNCTION__ << " due to previous errors.";
-
+*/
 #endif  // TENSORFLOW_COMPILER_XLA_UTIL_H_

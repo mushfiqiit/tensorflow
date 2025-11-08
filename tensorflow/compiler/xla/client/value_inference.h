@@ -17,7 +17,7 @@ limitations under the License.
 
 #include <optional>
 
-#include "absl/container/flat_hash_map.h"
+/* #include "absl/container/flat_hash_map.h"
 #include "tensorflow/compiler/xla/client/xla_builder.h"
 #include "tensorflow/compiler/xla/literal.h"
 #include "tensorflow/compiler/xla/literal_util.h"
@@ -26,7 +26,7 @@ limitations under the License.
 #include "tensorflow/compiler/xla/service/hlo_evaluator.h"
 #include "tensorflow/compiler/xla/service/hlo_opcode.h"
 #include "tensorflow/compiler/xla/util.h"
-#include "tensorflow/compiler/xla/xla_data.pb.h"
+#include "tensorflow/compiler/xla/xla_data.pb.h" */
 
 namespace xla {
 // OptionalLiteral is an augmented literal class which returns optional
@@ -34,6 +34,7 @@ namespace xla {
 // implementation keeps two literals, a value literal, holding both the valid
 // and garabage value, and a masking literal representing if a value is valid or
 // garbage.
+/*
 class OptionalLiteral {
  public:
   explicit OptionalLiteral(Literal value, Literal mask)
@@ -65,7 +66,7 @@ class OptionalLiteral {
   Literal value_;
   Literal mask_;
 };
-
+*/
 enum ValueInferenceMode {
   // Inference the constant value itself.
   kValue = 0,
@@ -73,7 +74,7 @@ enum ValueInferenceMode {
   kUpperBound,
   kLowerBound,
 };
-
+/*
 class ValueInference {
  public:
   // ValueInference analyzes values in XlaOp answers following questions:
@@ -106,6 +107,7 @@ class ValueInference {
   // A map from instruction_hash to handle that helps perform CSE.
   absl::flat_hash_map<int64_t, int64_t> cse_map_;
 };
+*/
 }  // namespace xla
 
 #endif  // TENSORFLOW_COMPILER_XLA_CLIENT_VALUE_INFERENCE_H_

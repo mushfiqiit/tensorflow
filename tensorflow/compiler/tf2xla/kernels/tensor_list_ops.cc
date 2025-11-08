@@ -18,21 +18,28 @@ limitations under the License.
 #include <limits>
 #include <utility>
 #include <vector>
-
+#include "tensorflow/core/framework/datatype_stub.h"
+/*
 #include "tensorflow/compiler/tf2xla/kernels/gather_op_helpers.h"
 #include "tensorflow/compiler/tf2xla/kernels/tensor_list_utils.h"
 #include "tensorflow/compiler/tf2xla/shape_util.h"
 #include "tensorflow/compiler/tf2xla/type_util.h"
 #include "tensorflow/compiler/tf2xla/xla_helpers.h"
+*/
 #include "tensorflow/compiler/tf2xla/xla_op_kernel.h"
+/*
 #include "tensorflow/compiler/tf2xla/xla_op_registry.h"
+*/
 #include "tensorflow/compiler/xla/client/xla_builder.h"
+/*
 #include "tensorflow/compiler/xla/literal.h"
 #include "tensorflow/compiler/xla/status_macros.h"
 #include "tensorflow/compiler/xla/xla_data.pb.h"
 #include "tensorflow/core/framework/bounds_check.h"
 #include "tensorflow/core/framework/op_kernel.h"
-#include "tensorflow/core/framework/partial_tensor_shape.h"
+*/
+//#include "tensorflow/core/framework/partial_tensor_shape.h"
+/*
 #include "tensorflow/core/framework/register_types.h"
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/framework/tensor_types.h"
@@ -40,9 +47,11 @@ limitations under the License.
 #include "tensorflow/core/lib/core/errors.h"
 #include "tensorflow/core/lib/core/status.h"
 #include "tensorflow/core/platform/types.h"
-
+*/
+#include "tensorflow/compiler/xla/shape.h"
+#include "tensorflow/compiler/xla/util.h"
 namespace tensorflow {
-
+/*
 namespace {
 
 // GetTensorListDynamicDims collects the dynamic dimensions that a tensorlist
@@ -421,8 +430,8 @@ class TensorListGatherOp : public XlaOpKernel {
 
     xla::XlaOp result;
     OP_REQUIRES_OK(
-        ctx, XlaGather(buffer, buffer_shape, indices, indices_shape, /*axis=*/0,
-                       /*indices_are_nd=*/false, dtype_, indices_type,
+        ctx, XlaGather(buffer, buffer_shape, indices, indices_shape, 0,
+                       false, dtype_, indices_type,
                        ctx->builder(), &result));
     ctx->SetOutput(0, result);
   }
@@ -519,9 +528,10 @@ class TensorListConcatOp : public XlaOpKernel {
 };
 
 REGISTER_XLA_OP(Name("TensorListConcatV2"), TensorListConcatOp);
-
+*/
 class TensorListSplitOp : public XlaOpKernel {
  public:
+ /*
   explicit TensorListSplitOp(OpKernelConstruction* ctx) : XlaOpKernel(ctx) {
     OP_REQUIRES_OK(ctx, ctx->GetAttr("element_dtype", &dtype_));
     // Only non-nested TensorList is supported for now.
@@ -530,33 +540,36 @@ class TensorListSplitOp : public XlaOpKernel {
         errors::Unimplemented(
             "Only non-nested TensorList is supported for TensorListReserve."));
   }
-
+*/
   void Compile(XlaOpKernelContext* ctx) override {
+
     xla::XlaOp input_tensor = ctx->Input(0);
 
     xla::XlaBuilder* b = input_tensor.builder();
     auto shape_or = b->GetShape(input_tensor);
-    OP_REQUIRES_OK(ctx, shape_or.status());
+/*    OP_REQUIRES_OK(ctx, shape_or.status()); */
     xla::Shape element_shape = std::move(shape_or).value();
     std::vector<int64_t> element_dims =
         xla::SpanToVector(element_shape.dimensions());
-    OP_REQUIRES(
+/*    OP_REQUIRES(
         ctx, !element_dims.empty(),
         errors::Unimplemented("Element dimensions have to be non-empty"));
-
+*/
     std::vector<int64_t> lengths;
-    OP_REQUIRES_OK(ctx, ctx->ConstantInputAsIntVector(2, &lengths));
+/*    OP_REQUIRES_OK(ctx, ctx->ConstantInputAsIntVector(2, &lengths));
     OP_REQUIRES(ctx, !lengths.empty(),
                 errors::Unimplemented("Length has to be non-empty"));
+                */
     int64_t length = lengths[0];
     for (int64_t len : lengths) {
-      OP_REQUIRES(ctx, len == length,
-                  errors::Unimplemented("All lengths have to be the same"));
+      /* OP_REQUIRES(ctx, len == length,
+                  errors::Unimplemented("All lengths have to be the same")); */
     }
-    OP_REQUIRES(
+    /* OP_REQUIRES(
         ctx, element_dims[0] % length == 0,
-        errors::Unimplemented("Buffer size has to be a multiple of length"));
+        errors::Unimplemented("Buffer size has to be a multiple of length")); */
     std::vector<int64_t> new_dims = {element_dims[0] / length, length};
+/*
     for (int i = 1; i < element_dims.size(); i++) {
       new_dims.push_back(element_dims[i]);
     }
@@ -566,14 +579,16 @@ class TensorListSplitOp : public XlaOpKernel {
     xla::XlaOp result;
     OP_REQUIRES_OK(ctx, ExecuteTensorListFromTensor(length, reshaped, &result));
     ctx->SetTensorListOutput(0, result);
+    */
   }
 
  private:
   DataType dtype_;
-
+/*
   TF_DISALLOW_COPY_AND_ASSIGN(TensorListSplitOp);
+*/
 };
-
+/*
 REGISTER_XLA_OP(Name("TensorListSplit")
                     .CompileTimeConstantInput("element_shape")
                     .CompileTimeConstantInput("lengths"),
@@ -613,7 +628,7 @@ class TensorListSetItemOp : public XlaOpKernel {
     xla::XlaOp element = ctx->Input(2);
     xla::XlaOp initialized_list;
     OP_REQUIRES_OK(ctx, GetInitializedTensorListForElement(
-                            list, element, /*element_is_tensor_list=*/false,
+                            list, element, false,
                             &initialized_list));
 
     // Only non-nested TensorList is supported for now.
@@ -701,4 +716,5 @@ REGISTER_XLA_OP(Name("TensorListPopBack").AllowVariantTypes(),
                 TensorListPopBackOp);
 
 }  // anonymous namespace
+*/
 }  // namespace tensorflow

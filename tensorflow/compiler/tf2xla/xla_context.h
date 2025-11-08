@@ -21,16 +21,18 @@ limitations under the License.
 #include <vector>
 
 #include "tensorflow/compiler/tf2xla/xla_expression.h"
-#include "tensorflow/compiler/tf2xla/xla_helpers.h"
+/*#include "tensorflow/compiler/tf2xla/xla_helpers.h" */
+
 #include "tensorflow/compiler/xla/client/xla_builder.h"
-#include "tensorflow/compiler/xla/client/xla_computation.h"
+/*#include "tensorflow/compiler/xla/client/xla_computation.h"
 #include "tensorflow/compiler/xla/status_macros.h"
 #include "tensorflow/compiler/xla/xla_data.pb.h"
+*/
 #include "tensorflow/core/framework/op_kernel.h"
-#include "tensorflow/core/framework/resource_mgr.h"
+/*#include "tensorflow/core/framework/resource_mgr.h"
 #include "tensorflow/core/graph/graph.h"
 #include "tensorflow/core/platform/macros.h"
-
+*/
 namespace tensorflow {
 
 class XlaOpKernelContext;
@@ -39,11 +41,27 @@ class XlaCompiler;
 // The XlaContext is the data structure that holds the state of an XLA
 // compilation, that is accessible from OpKernelContexts when compiling a
 // subgraph of Ops using XLA.
-class XlaContext : public ResourceBase {
+class XlaContext /* : public ResourceBase */ {
  public:
-  // Retrieves the XlaContext of the current compilation.
-  static XlaContext& Get(const OpKernelContext* ctx);
 
+  XlaContext(xla::XlaBuilder* builder): builder_(builder) {}
+
+  // Retrieves the XlaContext of the current compilation.
+  static XlaContext& Get(const OpKernelContext* ctx) {
+    
+    std::string comp_name="Builder";
+    auto xbuilder= xla::XlaBuilder(comp_name);
+    xla::XlaBuilder* builder=&xbuilder;
+    XlaContext context(&xbuilder);
+  /* TF_CHECK_OK(ctx->step_container()->Lookup(ctx->resource_manager(),
+                                            kXlaContextResourceName, &context)); */
+  // The resource manager handed us a fresh reference to 'context', but retains
+  // a reference itself so the context won't be freed. The resource manager will
+  // outlive the JIT compilation.
+  //context->Unref();
+  return context;
+  }
+/*
   // Creates a new XlaContext. See the documentation on the class data fields
   // for descriptions of the arguments.
   XlaContext(XlaCompiler* compiler, xla::XlaBuilder* builder,
@@ -61,10 +79,10 @@ class XlaContext : public ResourceBase {
     }
     return nullptr;
   }
-
+*/
   // Returns the XlaBuilder that Ops use for compiling new expressions.
   xla::XlaBuilder* builder() { return builder_; }
-
+/*
   const std::vector<XlaExpression>& args() const { return args_; }
   void set_args(std::vector<XlaExpression> args);
 
@@ -120,10 +138,10 @@ class XlaContext : public ResourceBase {
 
  private:
   XlaCompiler* const compiler_;
-
+*/
   // The XlaBuilder used to construct the subgraph's compiled representation.
   xla::XlaBuilder* builder_;
-
+/*
   // Stack traces for the graph used for compilation.
   StackTracesMap stack_traces_;
 
@@ -167,6 +185,7 @@ class XlaContext : public ResourceBase {
   ComputationMap sigmoid_func_;
 
   TF_DISALLOW_COPY_AND_ASSIGN(XlaContext);
+  */
 };
 
 }  // namespace tensorflow

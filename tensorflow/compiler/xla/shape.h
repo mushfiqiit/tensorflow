@@ -21,12 +21,13 @@ limitations under the License.
 #include <string>
 #include <utility>
 #include <vector>
-
+#include "util.h"
+/*
 #include "absl/container/inlined_vector.h"
 #include "tensorflow/compiler/xla/layout.h"
 #include "tensorflow/compiler/xla/primitive_util.h"
 #include "tensorflow/compiler/xla/xla_data.pb.h"
-
+*/
 namespace xla {
 
 // A shape describes the number of dimensions in a array, the bounds of each
@@ -34,8 +35,8 @@ namespace xla {
 // structure (number of elements and nesting).
 class Shape {
  public:
-  Shape() = default;
-
+  Shape() /* = default; */ {}
+/*
   // Construct a shape from a ShapeProto.
   explicit Shape(const ShapeProto& shape_proto);
 
@@ -134,7 +135,9 @@ class Shape {
     dimensions_.clear();
     dynamic_dimensions_.clear();
   }
+*/
   absl::Span<const int64_t> dimensions() const { return dimensions_; }
+/*
   absl::Span<int64_t> mutable_dimensions() {
     return absl::MakeSpan(dimensions_);
   }
@@ -286,8 +289,9 @@ class Shape {
   // The array bounds of the dimensions. This is nonempty only for array
   // shapes. For a dynamically-sized dimension, the respective value in this
   // vector is an inclusive upper limit of the array bound.
+  */
   DimensionVector dimensions_;
-
+/*
   // This vector is the same size as 'dimensions_' and indicates whether the
   // respective dimension is dynamically sized.
   absl::InlinedVector<bool, InlineRank()> dynamic_dimensions_;
@@ -297,8 +301,9 @@ class Shape {
 
   // The layout of the shape. Only relevant for arrays.
   Layout layout_;
+*/
 };
-
+/*
 // Shape of the parameters and output of an XLA computation. This is analogous
 // to a traditional function signature.
 class ProgramShape {
@@ -377,7 +382,7 @@ class ProgramShape {
 
 std::ostream& operator<<(std::ostream& out, const Shape& shape);
 std::ostream& operator<<(std::ostream& out, const ProgramShape& program_shape);
-
+*/
 }  // namespace xla
 
 #endif  // TENSORFLOW_COMPILER_XLA_SHAPE_H_
