@@ -41,7 +41,7 @@ limitations under the License.
 #include <stdint.h>
 
 #include "tensorflow/lite/c/c_api_types.h"  // IWYU pragma: export
-
+/*
 #ifdef __cplusplus
 extern "C" {
 #endif  // __cplusplus
@@ -300,11 +300,11 @@ typedef struct TfLiteAffineQuantization {
   int32_t quantized_dimension;
 } TfLiteAffineQuantization;
 
-/* A union of pointers that points to memory for a given tensor. */
+// A union of pointers that points to memory for a given tensor. 
 typedef union TfLitePtrUnion {
-  /* Do not access these members directly, if possible, use
-   * GetTensorData<TYPE>(tensor) instead, otherwise only access .data, as other
-   * members are deprecated. */
+  // Do not access these members directly, if possible, use* GetTensorData<TYPE>(tensor) instead, otherwise only access .data, as other* members are deprecated. 
+   
+   
   int32_t* i32;
   uint32_t* u32;
   int64_t* i64;
@@ -321,7 +321,6 @@ typedef union TfLitePtrUnion {
   TfLiteComplex64* c64;
   TfLiteComplex128* c128;
   int8_t* int8;
-  /* Only use this member. */
   void* data;
 } TfLitePtrUnion;
 
@@ -465,11 +464,12 @@ typedef struct TfLiteTensor {
   // exists when TF_LITE_STATIC_MEMORY is not defined.
   const TfLiteIntArray* dims_signature;
 } TfLiteTensor;
-
+*/
 // A structure representing an instance of a node.
 // This structure only exhibits the inputs, outputs, user defined data and some
 // node properties (like statefulness), not other features like the type.
 typedef struct TfLiteNode {
+/*
   // Inputs to this node expressed as indices into the simulator's tensors.
   TfLiteIntArray* inputs;
 
@@ -504,7 +504,9 @@ typedef struct TfLiteNode {
 
   // Whether this op might have side effect (e.g. stateful op).
   bool might_have_side_effect;
+*/
 } TfLiteNode;
+/*
 #else   // defined(TF_LITE_STATIC_MEMORY)?
 // NOTE: This flag is opt-in only at compile time.
 //
@@ -657,8 +659,9 @@ typedef struct TfLiteDelegateParams {
   TfLiteIntArray* input_tensors;
   TfLiteIntArray* output_tensors;
 } TfLiteDelegateParams;
-
+*/
 typedef struct TfLiteContext {
+/*
   // Number of tensors in the context.
   size_t tensors_size;
 
@@ -840,8 +843,9 @@ typedef struct TfLiteContext {
   TfLiteStatus (*GetModelMetadata)(const struct TfLiteContext* context,
                                    const char* name, const char** ptr,
                                    size_t* bytes);
+*/
 } TfLiteContext;
-
+/*
 // `TfLiteRegistrationExternal` is an external version of `TfLiteRegistration`
 // for C API which doesn't use internal types (such as `TfLiteContext`) but only
 // uses stable API types (such as `TfLiteOpaqueContext`). The purpose of each
@@ -1019,4 +1023,5 @@ TfLiteDelegate TfLiteDelegateCreate(void);
 #ifdef __cplusplus
 }  // extern "C"
 #endif  // __cplusplus
+*/
 #endif  // TENSORFLOW_LITE_C_COMMON_H_

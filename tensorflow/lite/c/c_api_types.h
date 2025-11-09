@@ -20,7 +20,7 @@ limitations under the License.
 #define TENSORFLOW_LITE_C_C_API_TYPES_H_
 
 #include <stdint.h>
-
+/*
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -42,7 +42,7 @@ extern "C" {
 #define TFL_CAPI_EXPORT __attribute__((visibility("default")))
 #endif  // _WIN32
 #endif  // SWIG
-
+*/
 // Note that new error status values may be added in future in order to
 // indicate more fine-grained internal states, therefore, applications should
 // not rely on status values being members of the enum.
@@ -79,6 +79,7 @@ typedef enum TfLiteStatus {
   kTfLiteUnresolvedOps = 7,
 } TfLiteStatus;
 
+/*
 // Types supported by tensor
 typedef enum {
   kTfLiteNoType = 0,
@@ -127,4 +128,5 @@ typedef struct TfLiteOpaqueTensor TfLiteOpaqueTensor;
 #ifdef __cplusplus
 }  // extern C
 #endif
+*/
 #endif  // TENSORFLOW_LITE_C_C_API_TYPES_H_
