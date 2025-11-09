@@ -9,6 +9,8 @@
 #include "tensorflow/compiler/xla/client/xla_builder.h"
 #include "tensorflow/compiler/xla/shape.h"
 #include "tensorflow/compiler/xla/util.h"
+#include "klee/klee.h"
+
 namespace tensorflow {
     class TensorListSplitOp : public XlaOpKernel {
  public:
@@ -39,10 +41,14 @@ namespace tensorflow {
 
     std::vector<int64_t> lengths;
      /* OP_REQUIRES_OK(ctx, */ ctx->ConstantInputAsIntVector(2, &lengths);/* ); */
+     int64_t sym_len, sym_elem0;
+    klee_make_symbolic(&sym_len,   sizeof(sym_len),   "length0");
+    klee_make_symbolic(&sym_elem0, sizeof(sym_elem0), "element_dim0");
     /* OP_REQUIRES(ctx, !lengths.empty(),
                 errors::Unimplemented("Length has to be non-empty"));  */
-    lengths.push_back(0);
-    element_dims.push_back(0);
+    lengths.push_back(sym_len);
+    element_dims.push_back(sym_elem0);
+
                 
     int64_t length = lengths[0];
     /*for (int64_t len : lengths) {
