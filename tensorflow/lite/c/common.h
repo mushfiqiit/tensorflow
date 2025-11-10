@@ -75,7 +75,7 @@ typedef struct TfLiteExternalContext {
 } TfLiteExternalContext;
 
 #define kTfLiteOptionalTensor (-1)
-
+*/
 // Fixed size list of integers. Used for dimensions and inputs/outputs tensor
 // indices
 typedef struct TfLiteIntArray {
@@ -95,7 +95,7 @@ typedef struct TfLiteIntArray {
   int data[];
 #endif
 } TfLiteIntArray;
-
+/*
 // Given the size (number of elements) in a TfLiteIntArray, calculate its size
 // in bytes.
 size_t TfLiteIntArrayGetSizeInBytes(int size);
@@ -469,10 +469,10 @@ typedef struct TfLiteTensor {
 // This structure only exhibits the inputs, outputs, user defined data and some
 // node properties (like statefulness), not other features like the type.
 typedef struct TfLiteNode {
-/*
+
   // Inputs to this node expressed as indices into the simulator's tensors.
   TfLiteIntArray* inputs;
-
+/*
   // Outputs to this node expressed as indices into the simulator's tensors.
   TfLiteIntArray* outputs;
 
@@ -484,14 +484,14 @@ typedef struct TfLiteNode {
   // tensors, but ops are allowed to change that if they need scratch space of
   // any sort.
   TfLiteIntArray* temporaries;
-
+*/
   // Opaque data provided by the node implementer through `Registration.init`.
   void* user_data;
 
   // Opaque data provided to the node if the node is a builtin. This is usually
   // a structure defined in builtin_op_data.h
   void* builtin_data;
-
+/*
   // Custom initial data. This is the opaque data provided in the flatbuffer.
   // WARNING: This is an experimental interface that is subject to change.
   const void* custom_initial_data;

@@ -350,10 +350,10 @@ typedef struct {
   int block_size;
 } TfLiteDepthToSpaceParams;
 
-typedef struct {
+/* typedef struct {
   TfLiteType in_data_type;
   TfLiteType out_data_type;
-} TfLiteCastParams;
+} TfLiteCastParams; */
 
 typedef enum {
   kTfLiteCombinerTypeSum = 0,
@@ -401,13 +401,13 @@ typedef struct {
   int shrink_axis_mask;
 } TfLiteStridedSliceParams;
 
-typedef struct {
+/* typedef struct {
   TfLiteType output_type;
 } TfLiteArgMaxParams;
 
 typedef struct {
   TfLiteType output_type;
-} TfLiteArgMinParams;
+} TfLiteArgMinParams; */
 
 typedef struct {
   TfLitePadding padding;
@@ -419,9 +419,9 @@ typedef struct {
   bool validate_indices;
 } TfLiteSparseToDenseParams;
 
-typedef struct {
+/* typedef struct {
   TfLiteType out_type;
-} TfLiteShapeParams;
+} TfLiteShapeParams; */
 
 typedef struct {
   EmptyStructPlaceholder placeholder;
@@ -455,9 +455,9 @@ typedef struct {
   float alpha;
 } TfLiteLeakyReluParams;
 
-typedef struct {
+/* typedef struct {
   TfLiteType index_out_type;
-} TfLiteUniqueParams;
+} TfLiteUniqueParams; */
 
 typedef struct {
   int seq_dim;
@@ -491,11 +491,11 @@ typedef struct {
   int init_subgraph_index;
 } TfLiteCallOnceParams;
 
-typedef struct {
+/* typedef struct {
   int table_id;
   TfLiteType key_dtype;
   TfLiteType value_dtype;
-} TfLiteHashtableParams;
+} TfLiteHashtableParams; */
 
 typedef struct {
   const char* container;

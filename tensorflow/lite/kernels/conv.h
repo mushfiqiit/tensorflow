@@ -1,5 +1,13 @@
+#ifndef TENSORFLOW_LITE_KERNEL_CONV
+#define TENSORFLOW_LITE_KERNEL_CONV
+
+#include <vector>
 #include "tensorflow/lite/c/c_api_types.h"
 #include "tensorflow/lite/c/common.h"
+#include "tensorflow/lite/c/builtin_op_data.h"
+
+const int kTensorNotAllocated = -1;
+
 
 enum KernelType {
   kReference,
@@ -14,14 +22,66 @@ enum KernelType {
   kCblasOptimized,
 };
 
+struct OpData {
+  // IDs are the arbitrary identifiers used by TF Lite to identify and access
+  // memory buffers.
+  int im2col_id = kTensorNotAllocated;
+  int hwcn_weights_id = kTensorNotAllocated;
+  int input_quantized_id = kTensorNotAllocated;
+  int scaling_factors_id = kTensorNotAllocated;
+  int input_offset_id = kTensorNotAllocated;
+  int accum_scratch_id = kTensorNotAllocated;
+  // Row sums are used to cache filter sums for hybrid zero-point calculations.
+  int row_sums_id = kTensorNotAllocated;
+
+  TfLitePaddingValues padding;
+  // The scaling factor from input to output (aka the 'real multiplier') can
+  // be represented as a fixed point multiplier plus a left shift.
+  int32_t output_multiplier;
+  int output_shift;
+
+  // Per channel output multiplier and shift.
+  std::vector<int32_t> per_channel_output_multiplier;
+  std::vector<int> per_channel_output_shift;
+
+  // The range of the fused activation layer. For example for kNone and
+  // uint8_t these would be 0 and 255.
+  int32_t output_activation_min;
+  int32_t output_activation_max;
+  // Indexes are the offset to the memory buffer in the array used to keep track
+  // of the allocated temporaries.
+  int32_t im2col_index;
+  int32_t hwcn_weights_index;
+  int32_t input_quantized_index;
+  int32_t scaling_factors_index;
+  int32_t accum_scratch_index;
+  int32_t input_offset_index;
+  int32_t row_sums_index;
+
+  bool need_hwcn_weights = false;
+  bool have_weights_been_transposed = false;
+  bool need_im2col = false;
+  // If it's true, it means im2col is needed but gets disabled because the
+  // temporary im2col tensor requires too much memory (i.e.
+  // >= kMaxIm2colBufferSize);
+  bool im2col_oversized = false;
+
+  bool supports_multithreaded_kernel = false;
+  bool is_hybrid_per_channel = false;
+  bool compute_hybrid_row_sums = true;
+
+  // Number of convolution groups.
+  int32_t groups = 1;
+};
+
 TfLiteStatus Prepare( KernelType kernel_type, TfLiteContext* context,
                      TfLiteNode* node ) {
-   auto* params = reinterpret_cast<TfLiteConvParams*>(node->builtin_data);
-/*  OpData* data = reinterpret_cast<OpData*>(node->user_data);
+   auto params = reinterpret_cast<TfLiteConvParams*>(node->builtin_data);
+  OpData* data = reinterpret_cast<OpData*>(node->user_data);
 
   bool has_bias = node->inputs->size == 3;
   // Check number of inputs/outputs
-  TF_LITE_ENSURE(context, has_bias || node->inputs->size == 2);
+/*  TF_LITE_ENSURE(context, has_bias || node->inputs->size == 2);
   TF_LITE_ENSURE_EQ(context, node->outputs->size, 1);
   TfLiteTensor* output;
   TF_LITE_ENSURE_OK(context, GetOutputSafe(context, node, 0, &output));
@@ -42,3 +102,6 @@ TfLiteStatus Prepare( KernelType kernel_type, TfLiteContext* context,
   data->groups = input_channel / filter_input_channel; */
   return kTfLiteOk;
 }
+
+
+#endif  // TENSORFLOW_LITE_KERNEL_CONV
