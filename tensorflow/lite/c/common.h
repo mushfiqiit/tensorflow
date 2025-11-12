@@ -187,7 +187,7 @@ void TfLiteFloatArrayFree(TfLiteFloatArray* a);
       return kTfLiteError;                             \
     }                                                  \
   } while (0)
-
+*/
 // Check whether the value `a` is true, and if not return kTfLiteError from
 // the current function, while also reporting the location of the error.
 #define TF_LITE_ENSURE(context, a)                                      \
@@ -198,7 +198,7 @@ void TfLiteFloatArrayFree(TfLiteFloatArray* a);
       return kTfLiteError;                                              \
     }                                                                   \
   } while (0)
-
+/*
 #define TF_LITE_ENSURE_STATUS(a) \
   do {                           \
     const TfLiteStatus s = (a);  \
@@ -241,7 +241,7 @@ void TfLiteFloatArrayFree(TfLiteFloatArray* a);
       return kTfLiteError;                                                   \
     }                                                                        \
   } while (0)
-
+*/
 #define TF_LITE_ENSURE_OK(context, status) \
   do {                                     \
     const TfLiteStatus s = (status);       \
@@ -249,7 +249,7 @@ void TfLiteFloatArrayFree(TfLiteFloatArray* a);
       return s;                            \
     }                                      \
   } while (0)
-
+/*
 // Single-precision complex data type compatible with the C99 definition.
 typedef struct TfLiteComplex64 {
   float re, im;  // real and imaginary parts, respectively.
@@ -398,26 +398,26 @@ typedef enum TfLiteCustomAllocationFlags {
 
 // A tensor in the interpreter system which is a wrapper around a buffer of
 // data including a dimensionality (or NULL if not currently defined).
-#ifndef TF_LITE_STATIC_MEMORY
+#ifndef TF_LITE_STATIC_MEMORY*/
 typedef struct TfLiteTensor {
   // The data type specification for data stored in `data`. This affects
   // what member of `data` union should be used.
-  TfLiteType type;
+ /*  TfLiteType type;
   // A union of data pointers. The appropriate type should be used for a typed
   // tensor based on `type`.
-  TfLitePtrUnion data;
+  TfLitePtrUnion data; */
   // A pointer to a structure representing the dimensionality interpretation
   // that the buffer should have. NOTE: the product of elements of `dims`
   // and the element datatype size should be equal to `bytes` below.
   TfLiteIntArray* dims;
   // Quantization information.
-  TfLiteQuantizationParams params;
+  /* TfLiteQuantizationParams params;
   // How memory is mapped
   //  kTfLiteMmapRo: Memory mapped read only.
   //  i.e. weights
   //  kTfLiteArenaRw: Arena allocated read write memory
   //  (i.e. temporaries, outputs).
-  TfLiteAllocationType allocation_type;
+  TfLiteAllocationType allocation_type; */
   // The number of bytes required to store the data of this Tensor. I.e.
   // (bytes of each element) * dims[0] * ... * dims[n-1].  For example, if
   // type is kTfLiteFloat32 and dims = {3, 2} then
@@ -437,7 +437,7 @@ typedef struct TfLiteTensor {
   // An integer buffer handle that can be handled by `delegate`.
   // The value is valid only when delegate is not null.
   // WARNING: This is an experimental interface that is subject to change.
-  TfLiteBufferHandle buffer_handle;
+  /* TfLiteBufferHandle buffer_handle; */
 
   // If the delegate uses its own buffer (e.g. GPU memory), the delegate is
   // responsible to set data_is_stale to true.
@@ -450,21 +450,22 @@ typedef struct TfLiteTensor {
   bool is_variable;
 
   // Quantization information. Replaces params field above.
-  TfLiteQuantization quantization;
+  /* TfLiteQuantization quantization; */
 
   // Parameters used to encode a sparse tensor.
   // This is optional. The field is NULL if a tensor is dense.
   // WARNING: This is an experimental interface that is subject to change.
-  TfLiteSparsity* sparsity;
-
+  /* TfLiteSparsity* sparsity;
+ */
   // Optional. Encodes shapes with unknown dimensions with -1. This field is
   // only populated when unknown dimensions exist in a read-write tensor (i.e.
   // an input or output tensor). (e.g.  `dims` contains [1, 1, 1, 3] and
   // `dims_signature` contains [1, -1, -1, 3]). Note that this field only
   // exists when TF_LITE_STATIC_MEMORY is not defined.
   const TfLiteIntArray* dims_signature;
-} TfLiteTensor;
-*/
+} 
+TfLiteTensor;
+
 // A structure representing an instance of a node.
 // This structure only exhibits the inputs, outputs, user defined data and some
 // node properties (like statefulness), not other features like the type.
@@ -661,10 +662,10 @@ typedef struct TfLiteDelegateParams {
 } TfLiteDelegateParams;
 */
 typedef struct TfLiteContext {
-/*
+
   // Number of tensors in the context.
   size_t tensors_size;
-
+/*
   // The execution plan contains a list of the node indices in execution
   // order. execution_plan->size is the current number of nodes. And,
   // execution_plan->data[0] is the first node that needs to be run.
@@ -705,10 +706,10 @@ typedef struct TfLiteContext {
   // WARNING: This is an experimental interface that is subject to change.
   TfLiteStatus (*GetExecutionPlan)(struct TfLiteContext* context,
                                    TfLiteIntArray** execution_plan);
-
+*/
   // An array of tensors in the interpreter context (of length `tensors_size`)
   TfLiteTensor* tensors;
-
+/*
   // opaque full context ptr (an opaque c++ data structure)
   void* impl_;
 
@@ -718,13 +719,13 @@ typedef struct TfLiteContext {
                                TfLiteIntArray* new_size);
   // Request that an error be reported with format string msg.
   void (*ReportError)(struct TfLiteContext*, const char* msg, ...);
-
+*/
   // Add `tensors_to_add` tensors, preserving pre-existing Tensor entries.  If
   // non-null, the value pointed to by `first_new_tensor_index` will be set to
   // the index of the first new tensor.
   TfLiteStatus (*AddTensors)(struct TfLiteContext*, int tensors_to_add,
                              int* first_new_tensor_index);
-
+/*
   // Get a Tensor node by node_index.
   // WARNING: This is an experimental interface that is subject to change.
   TfLiteStatus (*GetNodeAndRegistration)(
@@ -819,13 +820,13 @@ typedef struct TfLiteContext {
   TfLiteStatus (*PreviewDelegatePartitioning)(
       struct TfLiteContext* context, const TfLiteIntArray* nodes_to_replace,
       TfLiteDelegateParams** partition_params_array, int* num_partitions);
-
+*/
   // Returns a TfLiteTensor struct for a given index.
   // WARNING: This is an experimental interface that is subject to change.
   // WARNING: This method may not be available on all platforms.
   TfLiteTensor* (*GetTensor)(const struct TfLiteContext* context,
                              int tensor_idx);
-
+/*
   // Returns a TfLiteEvalTensor struct for a given index.
   // WARNING: This is an experimental interface that is subject to change.
   // WARNING: This method may not be available on all platforms.
