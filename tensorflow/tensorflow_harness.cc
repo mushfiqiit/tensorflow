@@ -21,10 +21,12 @@ int main()
     // 1) Allocate a tensor arena in the context
     context_.tensors_size = 4; // must be > max tensor id you’ll reference
     context_.tensors = static_cast<TfLiteTensor*>(
-        std::calloc(context_.tensors_size, sizeof(TfLiteTensor)));  // zero-inits
+        std::calloc(context_.tensors_size, 4*sizeof(TfLiteTensor)));  // zero-inits
 
 
     TfLiteNode node;
+    auto* data = new OpData();     // runs constructor; groups starts at 1
+    node.user_data = data;
     node.inputs=MakeIntArray(3);
     node.inputs->data[0]=0; node.inputs->data[1]=1; node.inputs->data[2]=2;
     node.inputs->data[0]=1;

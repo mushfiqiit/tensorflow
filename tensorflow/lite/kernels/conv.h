@@ -10,6 +10,10 @@
 
 const int kTensorNotAllocated = -1;
 
+#define ARGS_UNUSED(...) (void)sizeof(#__VA_ARGS__)
+
+#define TF_LITE_KERNEL_LOG(context, ...) ARGS_UNUSED(__VA_ARGS__)
+
 #define TF_LITE_ENSURE_OK(context, status) \
   do {                                     \
     const TfLiteStatus s = (status);       \
@@ -17,6 +21,15 @@ const int kTensorNotAllocated = -1;
       return s;                            \
     }                                      \
   } while (0) 
+
+#define TF_LITE_ENSURE(context, a)                                      \
+  do {                                                                  \
+    if (!(a)) {                                                         \
+      TF_LITE_KERNEL_LOG((context), "%s:%d %s was not true.", __FILE__, \
+                         __LINE__, #a);                                 \
+      return kTfLiteError;                                              \
+    }                                                                   \
+  } while (0)
 
 
 enum KernelType {
@@ -98,11 +111,12 @@ TfLiteStatus Prepare( KernelType kernel_type, TfLiteContext* context,
                      TfLiteNode* node ) {
    auto params = reinterpret_cast<TfLiteConvParams*>(node->builtin_data);
   OpData* data = reinterpret_cast<OpData*>(node->user_data);
+  if(!data) return kTfLiteError;
 
   bool has_bias = node->inputs->size == 3;
   // Check number of inputs/outputs
-/*  TF_LITE_ENSURE(context, has_bias || node->inputs->size == 2);
-  TF_LITE_ENSURE_EQ(context, node->outputs->size, 1); */
+  TF_LITE_ENSURE(context, has_bias || node->inputs->size == 2);
+/*  TF_LITE_ENSURE_EQ(context, node->outputs->size, 1); */
   TfLiteTensor* output;
 /*TF_LITE_ENSURE_OK(context, GetOutputSafe(context, node, 0, &output)); */
   const TfLiteTensor* input;
@@ -118,8 +132,9 @@ TfLiteStatus Prepare( KernelType kernel_type, TfLiteContext* context,
   // or equals (normal conv).
   //auto input_channel = input->dims->data[3];
   //auto filter_input_channel = filter->dims->data[3];
-  int input_channel=1, filter_input_channel;
+  int input_channel, filter_input_channel;
   klee_make_symbolic(&filter_input_channel, sizeof (filter_input_channel), "filter_input_channel");
+  klee_make_symbolic(&input_channel, sizeof (input_channel), "input_channel");
 /*  TF_LITE_ENSURE_EQ(context, input_channel % filter_input_channel, 0);*/
   data->groups = input_channel / filter_input_channel; 
   return kTfLiteOk;
