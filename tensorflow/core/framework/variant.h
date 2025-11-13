@@ -22,15 +22,15 @@ limitations under the License.
 #include <type_traits>
 #include <unordered_map>
 #include <utility>
-
+/*
 #include "absl/memory/memory.h"
 #include "tensorflow/core/framework/type_index.h"
 #include "tensorflow/core/framework/variant_tensor_data.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/strcat.h"
-
+*/
 namespace tensorflow {
-
+/*
 template <typename T>
 std::string TypeNameVariant(const T& value);
 
@@ -147,12 +147,14 @@ void EncodeVariant(const T& value, std::string* buf);
 //   EXPECT_EQ(TypeIndex::Make<VariantTensorDataProto>(),
 //             y_type_unknown.TypeId());
 //
+*/
 class Variant {
  public:
+ /*
   // Constructs a Variant holding no value (aka `is_empty()`).
   //
   // This is done by pointing at nullptr via the heap value.
-  Variant() noexcept : heap_value_(/*pointer=*/nullptr), is_inline_(false) {}
+  Variant() noexcept : heap_value_(nullptr), is_inline_(false) {}
 
   ~Variant();
 
@@ -322,12 +324,13 @@ class Variant {
     virtual bool Decode(VariantTensorData data) = 0;
     virtual void Encode(std::string* buf) const = 0;
     virtual bool Decode(std::string data) = 0;
+*/
   };
-
+/*
   template <typename T>
   struct Value final : ValueInterface {
     template <class... Args>
-    explicit Value(in_place_t /*tag*/, Args&&... args)
+    explicit Value(in_place_t , Args&&... args)
         : value(std::forward<Args>(args)...) {}
 
     // NOTE(ebrevdo): Destructor must be explicitly defined for CUDA to happily
@@ -387,7 +390,7 @@ class Variant {
   struct InlineValue {
     // We try to size InlineValue so that sizeof(Variant) <= 64 and it can fit
     // into the aligned space of a TensorBuffer.
-    static constexpr int kMaxValueSize = (64 - /*some extra padding=*/8);
+    static constexpr int kMaxValueSize = (64 - 8);
 
     typedef char ValueDataArray[kMaxValueSize];
     alignas(kMaxInlineValueAlignSize) ValueDataArray value_data;
@@ -398,7 +401,7 @@ class Variant {
     struct Tag {};
 
     template <typename VT, class... Args>
-    explicit InlineValue(Tag<VT> /*tag*/, Args&&... args) noexcept {
+    explicit InlineValue(Tag<VT> , Args&&... args) noexcept {
       Value<VT>* inline_value_data = reinterpret_cast<Value<VT>*>(value_data);
       new (inline_value_data) Value<VT>(InPlace(), std::forward<Args>(args)...);
     }
@@ -582,7 +585,7 @@ inline void Variant::clear() noexcept {
   // We set the internal unique_ptr to nullptr so that we preserve the
   // invariant that one of the two states must be set at all times. nullptr
   // indicates that the variant is empty.
-  ResetAndSetHeap(/*pointer=*/nullptr);
+  ResetAndSetHeap(nullptr);
 }
 
 inline void Variant::swap(Variant& other) noexcept {
@@ -622,7 +625,7 @@ void* Variant::get();
 
 template <>
 const void* Variant::get() const;
-
+*/
 }  // end namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_VARIANT_H_

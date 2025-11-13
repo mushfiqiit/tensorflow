@@ -18,24 +18,97 @@ limitations under the License.
 
 #include <cstdint>
 #include <type_traits>
-
+/*
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/framework/allocator.h"
+*/
 #include "tensorflow/core/framework/tensor_shape.h"
+/*
 #include "tensorflow/core/framework/tensor_types.h"
 #include "tensorflow/core/framework/types.h"
 #include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/core/refcount.h"
 #include "tensorflow/core/lib/core/status.h"
+*/
 #include "tensorflow/core/lib/core/stringpiece.h"
+/*
 #include "tensorflow/core/lib/gtl/inlined_vector.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/mem.h"
 #include "tensorflow/core/platform/types.h"
-
+*/
 namespace tensorflow {
 
+  // Simple placeholder for whatever TF uses here.
+class TypeSpecClass {
+ public:
+  TypeSpecClass() = default;
+};
+
+// Proto-like stub that can return a TypeSpecClass.
+class TypeSpecProto {
+ public:
+  TypeSpecProto() = default;
+
+  TypeSpecClass type_spec_class() const {
+    return TypeSpecClass();
+  }
+};
+
+// Metadata stub used by CompositeTensorVariant.
+class CompositeTensorVariantMetadata {
+ public:
+  CompositeTensorVariantMetadata() = default;
+
+  TypeSpecProto type_spec_proto() const {
+    return TypeSpecProto();
+  }
+};
+
+class CompositeTensorVariant {
+ public:
+  CompositeTensorVariant() = default;
+
+  const CompositeTensorVariantMetadata& metadata() const {
+    // Access a non-static data member; this forces a dereference of `this`.
+    return *metadata_;
+  }
+
+ private:
+  int dummy_ = 0;  // any data member is fine
+  std::unique_ptr<CompositeTensorVariantMetadata> metadata_;
+};
+
+
+  class Variant {
+public:
+  // In real TF this returns a pointer to the stored object.
+  // For a stub, returning nullptr is enough to keep things safe.
+  template <typename T>
+  T* get() {
+    return nullptr;  // <-- always returns null for now
+  }
+};
+
+template <typename T>
+class FlatProxy {
+public:
+  // You can store a pointer to backing data if you want,
+  // but for a stub a static dummy is enough.
+  T& operator()(int /*index*/) {
+    static T dummy;
+    return dummy;
+  }
+
+  // Optional const overload
+  const T& operator()(int /*index*/) const {
+    static T dummy;
+    return dummy;
+  }
+};
+
+/*
 // Forward declarations.  In particular, we forward declare protos so that their
 // symbols can be removed from .so exports.
 class AllocationDescription;
@@ -103,10 +176,11 @@ class TensorBuffer : public core::RefCounted {
  private:
   void* const data_;
 };
-
+*/
 /// Represents an n-dimensional array of values.
 class Tensor {
  public:
+
   /// \brief Creates a 1-dimensional, 0-element float tensor.
   ///
   /// The returned Tensor is not a scalar (shape {}), but is instead
@@ -121,8 +195,8 @@ class Tensor {
   ///     Tensor(DT_FLOAT, TensorShape({}))
   ///
   /// ```
-  Tensor();
-
+  Tensor() {}
+/*
   /// \brief Creates a Tensor of the given `type` and `shape`.  If
   /// LogMemory::IsEnabled() the allocation is logged as coming from
   /// an unknown kernel and step. Calling the Tensor constructor
@@ -131,8 +205,11 @@ class Tensor {
   /// allocate a new tensor, which record the kernel and step.
   ///
   /// The underlying buffer is allocated using a `CPUAllocator`.
-  Tensor(DataType type, const TensorShape& shape);
-
+  */
+  Tensor(DataType type, const TensorShape& shape): shape_(shape) {
+    set_dtype(type);
+  }
+/*
   /// \brief Creates a tensor with the input `type` and `shape`, using
   /// the allocator `a` to allocate the underlying buffer. If
   /// LogMemory::IsEnabled() the allocation is logged as coming from
@@ -629,7 +706,9 @@ class Tensor {
   /// not get destroyed while the `StringPiece` is still used.
   ///
   /// REQUIRES: `DataTypeCanUseMemcpy(dtype())`.
-  StringPiece tensor_data() const;
+  */
+  StringPiece tensor_data() const { return StringPiece(); }
+  /*
   void* data() const;
 
   /// Copy the other tensor into this tensor, reshape it and reinterpret the
@@ -675,16 +754,17 @@ class Tensor {
   void CheckType(DataType expected_dtype) const;
   void CheckTypeAndIsAligned(DataType expected_dtype) const;
   void CheckIsAlignedAndSingleElement() const;
+  */
   void set_dtype(DataType t) { shape_.set_data_type(t); }
-
+/*
   // TensorShape's InlineVector.
   static gtl::InlinedVector<int64_t, 4> ComputeFlatInnerDims(
       gtl::ArraySlice<int64_t> orig, int64_t num_out_dims);
   static gtl::InlinedVector<int64_t, 4> ComputeFlatOuterDims(
       gtl::ArraySlice<int64_t> orig, int64_t num_out_dims);
-
+*/
   TensorShape shape_;
-  TensorBuffer* buf_;
+/*  TensorBuffer* buf_;
 
   friend class DMAHelper;             // For access to buf_.
   friend class TensorCApi;            // For access to buf_.
@@ -747,12 +827,24 @@ class Tensor {
   void FillDimsAndValidateCompatibleShape(
       gtl::ArraySlice<int64_t> new_sizes,
       Eigen::array<Eigen::DenseIndex, NDIMS>* dims) const;
+*/
+
+template <typename T>
+  FlatProxy<T> flat() {
+    return FlatProxy<T>{};
+  }
+
+  template <typename T>
+  const FlatProxy<T> flat() const {
+    return FlatProxy<T>{};
+  }
+
 };
 
 // Implementation details
 
 // START_SKIP_DOXYGEN
-
+/*
 template <typename T>
 T* Tensor::base() const {
   return buf_ == nullptr ? nullptr : buf_->base<T>();
@@ -1016,7 +1108,7 @@ struct Tensor::ValueAndTensorBuffer {
   HostScalarTensorBuffer tensor_buffer;
 };
 
-/* static */
+
 template <typename T>
 void Tensor::ValueAndTensorBuffer<T>::HostScalarTensorBuffer::operator delete(
     void* ptr) {
@@ -1063,7 +1155,7 @@ inline Tensor& Tensor::operator=(Tensor&& other) {
 }
 
 // END_SKIP_DOXYGEN
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_TENSOR_H_

@@ -16,14 +16,16 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_TENSOR_TYPES_H_
 #define TENSORFLOW_CORE_FRAMEWORK_TENSOR_TYPES_H_
 
-#include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
-#include "tensorflow/core/platform/logging.h"
+/* #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
+#include "tensorflow/core/platform/logging.h" */
 
 namespace tensorflow {
-
+/*
 // Helper to define Tensor types given that the scalar is of type T.
 template <typename T, int NDIMS = 1, typename IndexType = Eigen::DenseIndex>
+*/
 struct TTypes {
+/*
   // Rank-<NDIMS> tensor of scalar type T.
   typedef Eigen::TensorMap<Eigen::Tensor<T, NDIMS, Eigen::RowMajor, IndexType>,
                            Eigen::Aligned>
@@ -101,8 +103,9 @@ struct TTypes {
   typedef Eigen::TensorMap<
       Eigen::Tensor<const T, 2, Eigen::RowMajor, IndexType> >
       UnalignedConstMatrix;
+*/
 };
-
+/*
 typedef typename TTypes<float, 1>::Tensor32Bit::Index Index32;
 
 template <typename Index, int NumDims>
@@ -194,6 +197,6 @@ void MaybeWith32BitIndexing(Func func, Args&&... args) {
   return internal::MaybeWith32BitIndexingImpl<Device>()(
       func, std::forward<Args>(args)...);
 }
-
+*/
 }  // namespace tensorflow
 #endif  // TENSORFLOW_CORE_FRAMEWORK_TENSOR_TYPES_H_
