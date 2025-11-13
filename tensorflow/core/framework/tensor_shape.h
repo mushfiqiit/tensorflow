@@ -16,8 +16,9 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_TENSOR_SHAPE_H_
 #define TENSORFLOW_CORE_FRAMEWORK_TENSOR_SHAPE_H_
 
-#include <string>
-
+ #include <string>
+ #include "tensorflow/core/framework/inlined_vector_stub.h"
+/*
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/framework/types.pb.h"
 #include "tensorflow/core/lib/gtl/array_slice.h"
@@ -26,11 +27,11 @@ limitations under the License.
 #include "tensorflow/core/platform/errors.h"
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
-#include "tensorflow/core/platform/statusor.h"
+#include "tensorflow/core/platform/statusor.h" */
 
 namespace tensorflow {
 
-// START_SKIP_DOXYGEN
+/* // START_SKIP_DOXYGEN
 template <class Shape>
 class TensorShapeIter;
 class TensorShape;
@@ -38,9 +39,11 @@ class TensorShapeProto;
 class PartialTensorShape;
 // END_SKIP_DOXYGEN
 
+*/
 /// Internal representation for both TensorShape and PartialTensorShape.
 class TensorShapeRep {
  public:
+/*
   ~TensorShapeRep();
 
   /// Copy the specified shape
@@ -120,7 +123,9 @@ class TensorShapeRep {
   // Tensor class to store an 8-bit value in this extra storage.  This
   // allows it to store the Tensor's datatype enum value here and avoid
   // an extra word of storage.
+  */
   friend class Tensor;
+  /*
   friend class TensorShapeTestHelper;
   DataType data_type() const { return static_cast<DataType>(buf()[13]); }
   void set_data_type(DataType dt) {
@@ -154,15 +159,19 @@ class TensorShapeRep {
     Rep64* unused_aligner;
   } u_;
   int64_t num_elements_;
+  */
 };
 
+/*
 /// Base class for TensorShape and PartialTensorShape.
 /// The class is templatized by either TensorShape or PartialTensorShape to
 /// allow skipping known/unknown checks in the TensorShape case, but the
 /// representation is shared exactly for fast conversion.
+*/
 template <class Shape>
 class TensorShapeBase : public TensorShapeRep {
  public:
+ /*
   /// \brief Construct a `TensorShapeBase` from the provided sizes.
   /// REQUIRES: `dim_sizes[i] >= 0` (or >= -1 for PartialTensorShape)
   explicit TensorShapeBase(gtl::ArraySlice<int64_t> dim_sizes);
@@ -298,11 +307,17 @@ class TensorShapeBase : public TensorShapeRep {
   // TODO(touts): Rename to `dimension()` to match
   // `Eigen::Tensor::dimension()`?
   int64_t dim_size(int d) const;
-
+*/
   /// Returns sizes of all dimensions.
   // Returns an empty list for unknown rank PartialTensorShape.
-  gtl::InlinedVector<int64_t, 4> dim_sizes() const;
-
+  gtl::InlinedVector<int64_t, 4> dim_sizes() const {
+    gtl::InlinedVector<int64_t, 4> result;
+    /* for (auto dim : *this) {
+      result.push_back(dim.size);
+    } */
+    return result;
+  }
+/*
   /// Return true iff the rank and all of the dimensions are well defined
   // TODO(irving): Rename to is_fully_defined now that it's fast.
   bool IsFullyDefined() const { return !kIsPartial || num_elements() != -1; }
@@ -338,8 +353,10 @@ class TensorShapeBase : public TensorShapeRep {
   // For use by TensorShapeUtils::MakeShape
   template <class T, class S>
   friend Status MakeShapeHelper(const T*, int64_t, S*);
+  */
 };
 
+/*
 /// Outputs `TensorShapeBase` to `std::ostream`.
 template <typename Shape>
 std::ostream& operator<<(std::ostream& os, const TensorShapeBase<Shape>& tsb) {
@@ -355,8 +372,10 @@ std::ostream& operator<<(std::ostream& os, const TensorShapeBase<Shape>& tsb) {
 /// If you know the exact shape of your Tensor when you create the TensorShape
 /// object, you can specify it then, or you can create a TensorShape with
 /// zero dimensions and one element, and call AddDim() to add dimensions later.
+*/
 class TensorShape : public TensorShapeBase<TensorShape> {
  public:
+ /*
   using TensorShapeBase<TensorShape>::TensorShapeBase;
 
   // These factory methods should be used instead of the constructors that take
@@ -437,11 +456,13 @@ class TensorShape : public TensorShapeBase<TensorShape> {
   // `AsEigenDSizeWithPaddingWithStatus()`.
   template <int NDIMS, typename IndexType = Eigen::DenseIndex>
   Eigen::DSizes<IndexType, NDIMS> AsEigenDSizesCopyAndPad() const;
-
+*/
   // For access to TensorShapeBase(DataType).
   friend class Tensor;
+  
 };
 
+/*
 /// Outputs `TensorShapeBase` to `std::ostream`.
 inline std::ostream& operator<<(std::ostream& os, const TensorShape& ts) {
   return os << ts.DebugString();
@@ -768,7 +789,7 @@ extern template class TensorShapeBase<PartialTensorShape>;
 struct DtypeAndPartialTensorShape {
   DataType dtype;
   PartialTensorShape shape;
-};
+}; */
 
 }  // namespace tensorflow
 

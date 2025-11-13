@@ -16,12 +16,19 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_FRAMEWORK_TENSOR_H_
 #define TENSORFLOW_CORE_FRAMEWORK_TENSOR_H_
 
-#include <cstdint>
+#include <utility>
+#include <memory>
+//#include "string_stub.h"
+#include "string"
+#include "tensorflow/core/framework/inlined_vector_stub.h"
+/* #include <cstdint>
 #include <type_traits>
 
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/framework/allocator.h"
+*/
 #include "tensorflow/core/framework/tensor_shape.h"
+/*
 #include "tensorflow/core/framework/tensor_types.h"
 #include "tensorflow/core/framework/types.h"
 #include "tensorflow/core/framework/types.pb.h"
@@ -32,11 +39,62 @@ limitations under the License.
 #include "tensorflow/core/platform/logging.h"
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/mem.h"
-#include "tensorflow/core/platform/types.h"
+#include "tensorflow/core/platform/types.h" */
+using string=std::string;
+namespace strings {
+  void StrAppend(string *result, string a) {
+
+  }
+}
+
 
 namespace tensorflow {
 
-// Forward declarations.  In particular, we forward declare protos so that their
+
+class TensorShape;  // forward declare if needed
+
+string PrintOneElement(const char* a, bool print_v2) {
+  return string();
+}
+
+string PrintOneElement(const bool a, bool print_v2) {
+  return string();
+}
+
+template <typename T>
+string SummarizeArray(int64_t limit, int64_t num_elts,
+                           const TensorShape& tensor_shape,
+                           const char* data,
+                           bool print_v2)
+{
+  string ret;
+  const T* array = reinterpret_cast<const T*>(data);
+
+  const gtl::InlinedVector<int64_t, 4> shape = tensor_shape.dim_sizes();
+  std::string temp;
+   if (shape.empty()) {
+    for (int64_t i = 0; i < limit; ++i) {
+      if (i > 0) strings::StrAppend(&ret, " ");
+      strings::StrAppend(&ret, PrintOneElement(array[i], print_v2));
+    }
+    if (num_elts > limit) strings::StrAppend(&ret, "..."); 
+    return ret; 
+  }
+  /*if (print_v2) {
+    const int num_dims = tensor_shape.dims();
+    PrintOneDimV2(0, shape, limit, num_dims, array, 0, &ret);
+  } else {
+    int64_t data_index = 0;
+    const int shape_size = tensor_shape.dims();
+    PrintOneDim(0, shape, limit, shape_size, array, &data_index, &ret);
+
+    if (num_elts > limit) strings::StrAppend(&ret, "...");
+  } */
+
+  return ret;
+}
+
+/* // Forward declarations.  In particular, we forward declare protos so that their
 // symbols can be removed from .so exports.
 class AllocationDescription;
 class Allocator;
@@ -1016,7 +1074,6 @@ struct Tensor::ValueAndTensorBuffer {
   HostScalarTensorBuffer tensor_buffer;
 };
 
-/* static */
 template <typename T>
 void Tensor::ValueAndTensorBuffer<T>::HostScalarTensorBuffer::operator delete(
     void* ptr) {
@@ -1060,7 +1117,7 @@ inline Tensor& Tensor::operator=(Tensor&& other) {
     other.buf_ = nullptr;
   }
   return *this;
-}
+} */
 
 // END_SKIP_DOXYGEN
 
