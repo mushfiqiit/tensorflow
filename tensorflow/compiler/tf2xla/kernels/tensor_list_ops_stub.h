@@ -60,6 +60,7 @@ namespace tensorflow {
         errors::Unimplemented("Buffer size has to be a multiple of length")); 
   */
     std::vector<int64_t> new_dims = {element_dims[0] / length, length};
+    
 /*
     for (int i = 1; i < element_dims.size(); i++) {
       new_dims.push_back(element_dims[i]);
