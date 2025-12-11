@@ -12,6 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
+/*
 #include "tensorflow/core/grappler/utils/functions.h"
 
 #include "absl/container/flat_hash_map.h"
@@ -32,10 +33,10 @@ limitations under the License.
 #include "tensorflow/core/grappler/op_types.h"
 #include "tensorflow/core/grappler/utils.h"
 #include "tensorflow/core/lib/strings/scanner.h"
-
+*/
 namespace tensorflow {
 namespace grappler {
-
+/*
 GrapplerFunctionItem::GrapplerFunctionItem(
     string func_name, string description, AttrSlice func_attr,
     std::vector<const FunctionDef::ArgAttrs*> arg_attr,
@@ -295,9 +296,9 @@ Status MakeGrapplerFunctionItem(const FunctionDef& func,
   }
 
   *item = GrapplerFunctionItem(
-      /*func_name=*/signature.name(),
-      /*description=*/signature.description(),
-      /*func_attr=*/AttrSlice(&func.attr()), std::move(arg_attr),
+      signature.name(),
+      signature.description(),
+      AttrSlice(&func.attr()), std::move(arg_attr),
       std::move(inputs), std::move(outputs), std::move(control_outputs),
       graph_def_version, signature.is_stateful(), std::move(function_body));
   return OkStatus();
@@ -609,6 +610,6 @@ Status MakeFunctionDef(const GrapplerFunctionItem& item,
 
   return OkStatus();
 }
-
+*/
 }  // end namespace grappler
 }  // end namespace tensorflow

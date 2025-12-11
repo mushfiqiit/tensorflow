@@ -10,24 +10,26 @@
 // // // #include "absl/container/flat_hash_set.h"
 // // // #include "absl/container/inlined_vector.h"
 // // // #include "tensorflow/core/framework/attr_value.pb.h"
-// // // #include "tensorflow/core/framework/function.h"
+#include "tensorflow/core/framework/function.h"
 // // // #include "tensorflow/core/framework/function.pb.h"
-// // // #include "tensorflow/core/framework/node_def_util.h"
+#include "tensorflow/core/platform/status.h"
+ #include "tensorflow/core/framework/node_def_util.h"
 // // // #include "tensorflow/core/framework/op_def.pb.h"
-// // // #include "tensorflow/core/grappler/grappler_item.h"
+ #include "tensorflow/core/grappler/grappler_item.h"
 // // // #include "tensorflow/core/lib/gtl/flatset.h"
-// // //
+#include "functiondef_stub.h"
+
 namespace tensorflow {
 namespace grappler {
 // // //
 // // // // Function input argument instantiated into an '_Arg' node in the function body
 // // // // graph, with an 'index' attribute corresponding to the input position.
-// // // struct InputArgInstantiation {
+ struct InputArgInstantiation {
 // // //   InputArgInstantiation(string node_name, DataType data_type)
 // // //       : node_name(std::move(node_name)), data_type(data_type) {}
 // // //   string node_name;
 // // //   DataType data_type;
-// // // };
+ };
 // // //
 // // // // Function output instantiated into a '_Retval' node in the function body
 // // // // graph, with an 'index' attribute corresponding to the output position.
@@ -48,8 +50,8 @@ namespace grappler {
 // // // };
 // // //
 // // // // A special case of GrapplerItem, constructed from a TensorFlow Function.
-// // // class GrapplerFunctionItem : public GrapplerItem {
-// // //  public:
+class GrapplerFunctionItem : public GrapplerItem {
+  public:
 // // //   GrapplerFunctionItem() = default;
 // // //
 // // //   const string& description() const;
@@ -105,7 +107,7 @@ namespace grappler {
 // // //   std::vector<ControlOutput> control_outputs_;
 // // //
 // // //   bool is_stateful_ = false;
-// // // };
+};
 // // //
 // // // // Check if function input/output types are fully defined only at instantiation
 // // // // time (parametrized by its instantiation node).
@@ -148,11 +150,94 @@ namespace grappler {
 // // // // Make a GrapplerFunctionItem from the function definition and function
 // // // // instantiation attributes (caller node attributes). Returns error if the given
 // // // // function def cannot be converted (e.g. not all attributes are defined).
-// // // Status MakeGrapplerFunctionItem(const FunctionDef& func,
-// // //                                 const AttrSlice& func_instantiation_attr,
-// // //                                 const FunctionLibraryDefinition& flib,
-// // //                                 int graph_def_version,
-// // //                                 GrapplerFunctionItem* item);
+ Status MakeGrapplerFunctionItem(const FunctionDef& func,
+                                 const AttrSlice& func_instantiation_attr,
+                                 const FunctionLibraryDefinition& flib,
+                                 int graph_def_version,
+                                 GrapplerFunctionItem* item) 
+{
+    const OpDef& signature = func.signature();
+
+  /* if (signature.name().empty()) {
+    return errors::InvalidArgument("Function name must be specified");
+  }
+
+  // Function types will be resolved from function instantiation attributes. All
+  // other attributes will be lost during conversion to FunctionDef.
+  for (const OpDef::AttrDef& attr : signature.attr()) {
+    if (attr.type() != "type") {
+      return errors::InvalidArgument(
+          "Function signature must have only type attributes");
+    }
+  }
+
+  // Instantiate function into a statically defined FunctionBody Graph.
+  std::unique_ptr<FunctionBody> fbody;
+  TF_RETURN_IF_ERROR(
+      FunctionDefToBodyHelper(func, func_instantiation_attr, &flib, &fbody));
+
+  GraphDef function_body;
+  fbody->graph->ToGraphDef(&function_body);
+
+  // Function body shares the library with the graph that instantiated it. We do
+  // not need a full copy of the function library, just the reachable subset.
+  *function_body.mutable_library() = flib.ReachableDefinitions(func).ToProto();
+
+  VLOG(3) << absl::Substitute(
+      "Deleted $0 unreachable functions from the Grappler function item "
+      "instantiation of $1 (library size = $2)",
+      flib.num_functions() - function_body.library().function_size(),
+      signature.name(), function_body.library().function_size());
+
+  const int num_instantiated_inputs = fbody->arg_types.size();
+  const int num_instantiated_outputs = fbody->ret_types.size();
+*/
+  std::vector<InputArgInstantiation> inputs;
+  /*
+  inputs.reserve(num_instantiated_inputs);
+
+  for (int in_id = 0; in_id < num_instantiated_inputs; ++in_id) {
+    const Node* node = fbody->arg_nodes[in_id];
+    const DataType& dtype = fbody->arg_types[in_id];
+    inputs.emplace_back(node->name(), dtype);
+  }
+
+  std::vector<OutputArgInstantiation> outputs;
+  outputs.reserve(num_instantiated_outputs);
+
+  for (int out_id = 0; out_id < num_instantiated_outputs; ++out_id) {
+    const Node* node = fbody->ret_nodes[out_id];
+    const DataType& dtype = fbody->ret_types[out_id];
+    outputs.emplace_back(node->name(), dtype);
+  }
+
+  // Control outputs ensure that all side-effectful nodes in the function body
+  // will execute, even if they are not required to compute regular output args.
+  std::vector<ControlOutput> control_outputs;
+  control_outputs.reserve(func.control_ret_size());
+  for (const auto& control_ret : func.control_ret()) {
+    control_outputs.push_back({control_ret.first, control_ret.second});
+  }
+  // Sort control outputs to keep FunctionDef output stable. The sort order of
+  // map entries in func.control_ret() are not stable.
+  // See b/174715578 for context on why stability is desired.
+  std::sort(control_outputs.begin(), control_outputs.end());
+*/
+  std::vector<const FunctionDef::ArgAttrs*> arg_attr(inputs.size(), nullptr);
+  for (const auto& attr : func.arg_attr()) {
+    arg_attr.at(attr.first) = &attr.second;
+  }
+/*
+  *item = GrapplerFunctionItem(
+      signature.name(),
+      signature.description(),
+      AttrSlice(&func.attr()), std::move(arg_attr),
+      std::move(inputs), std::move(outputs), std::move(control_outputs),
+      graph_def_version, signature.is_stateful(), std::move(function_body));
+  return OkStatus(); */
+  Status();
+
+}
 // // //
 // // // // Make a GrapplerFunction item from the function definition. Function must be
 // // // // fully defined (no type or body parametrization).

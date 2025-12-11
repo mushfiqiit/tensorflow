@@ -23,10 +23,10 @@ limitations under the License.
 #include <utility>
 #include <vector>
 
-#include "tensorflow/core/framework/graph.pb.h"
+/* #include "tensorflow/core/framework/graph.pb.h"
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow/core/framework/variable.pb.h"
-#include "tensorflow/core/protobuf/queue_runner.pb.h"
+#include "tensorflow/core/protobuf/queue_runner.pb.h" */
 
 namespace tensorflow {
 namespace grappler {
@@ -35,7 +35,7 @@ namespace grappler {
 // Models are represented by the combination of a graph, one of more fetch
 // nodes, and potentially a set of nodes to feed.
 struct GrapplerItem {
-  GrapplerItem() = default;
+  /* GrapplerItem() = default;
   GrapplerItem(const GrapplerItem& other) = default;
   GrapplerItem(GrapplerItem&& other) = default;
   GrapplerItem& operator=(const GrapplerItem& other) = default;
@@ -130,10 +130,10 @@ struct GrapplerItem {
   // Example of a fully defined name: "/job:work/replica:1/task:1/device:CPU:0"
   std::unordered_set<string> devices_;
 
-  OptimizationOptions optimization_options_;
+  OptimizationOptions optimization_options_; */
 };
 
-GrapplerItem::OptimizationOptions CreateOptOptionsForEager();
+//GrapplerItem::OptimizationOptions CreateOptOptionsForEager();
 
 }  // end namespace grappler
 }  // end namespace tensorflow

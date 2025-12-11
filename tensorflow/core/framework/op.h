@@ -19,7 +19,7 @@ limitations under the License.
 #include <functional>
 #include <unordered_map>
 #include <vector>
-
+/*
 #include "tensorflow/core/framework/full_type.pb.h"
 #include "tensorflow/core/framework/full_type_inference_util.h"
 #include "tensorflow/core/framework/full_type_util.h"
@@ -35,7 +35,7 @@ limitations under the License.
 #include "tensorflow/core/platform/mutex.h"
 #include "tensorflow/core/platform/thread_annotations.h"
 #include "tensorflow/core/platform/types.h"
-
+*/
 namespace tensorflow {
 
 // Users that want to look up an OpDef by type name should take an
@@ -43,6 +43,7 @@ namespace tensorflow {
 // (const) OpRegistryInterface* may call LookUp() from multiple threads.
 class OpRegistryInterface {
  public:
+ /*
   virtual ~OpRegistryInterface();
 
   // Returns an error status and sets *op_reg_data to nullptr if no OpDef is
@@ -54,6 +55,7 @@ class OpRegistryInterface {
   // Shorthand for calling LookUp to get the OpDef.
   Status LookUpOpDef(const std::string& op_type_name,
                      const OpDef** op_def) const;
+                     */
 };
 
 // The standard implementation of OpRegistryInterface, along with a
@@ -68,6 +70,7 @@ class OpRegistryInterface {
 //   });
 class OpRegistry : public OpRegistryInterface {
  public:
+ /*
   typedef std::function<Status(OpRegistrationData*)> OpRegistrationDataFactory;
 
   OpRegistry();
@@ -171,8 +174,9 @@ class OpRegistry : public OpRegistryInterface {
   mutable Watcher watcher_ TF_GUARDED_BY(mu_);
 
   std::function<Status(const OpRegistryInterface&)> op_registry_validator_;
+  */
 };
-
+/*
 // An adapter to allow an OpList to be used as an OpRegistryInterface.
 //
 // Note that shape inference functions are not passed in to OpListOpRegistry, so
@@ -314,7 +318,7 @@ class OpDefBuilderWrapper {
   TF_ATTRIBUTE_ANNOTATE("tf:op")        \
   TF_ATTRIBUTE_ANNOTATE("tf:op:system") \
   TF_NEW_ID_FOR_INIT(REGISTER_OP_IMPL, name, true)
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_OP_H_

@@ -1,17 +1,4 @@
-/* Copyright 2015 The TensorFlow Authors. All Rights Reserved.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-==============================================================================*/
 
 #ifndef TENSORFLOW_CORE_FRAMEWORK_NODE_DEF_UTIL_H_
 #define TENSORFLOW_CORE_FRAMEWORK_NODE_DEF_UTIL_H_
@@ -20,7 +7,7 @@ limitations under the License.
 #include <unordered_set>
 #include <vector>
 
-#include "tensorflow/core/framework/attr_value_util.h"
+/* #include "tensorflow/core/framework/attr_value_util.h"
 #include "tensorflow/core/framework/node_def.pb.h"
 #include "tensorflow/core/framework/op_def.pb.h"
 #include "tensorflow/core/framework/tensor.h"
@@ -36,10 +23,11 @@ limitations under the License.
 #include "tensorflow/core/platform/status.h"
 #include "tensorflow/core/platform/stringpiece.h"
 #include "tensorflow/core/platform/types.h"
-#include "tensorflow/core/util/padding.h"
+#include "tensorflow/core/util/padding.h" */
+#include "tensorflow/core/grappler/utils/functiondef_stub.h"
 
 namespace tensorflow {
-
+/*
 class AttrSlice;
 // We forward declare protos so that kernels don't need to depend on them
 class OpDef;
@@ -141,13 +129,13 @@ void AddNodeAttr(StringPiece name, std::initializer_list<T> value,
 // Adds an attr to an attr value map.
 void AddAttr(StringPiece name, const AttrValue& value, AttrValueMap* map);
 void AddAttr(StringPiece name, bool value, AttrValueMap* map);
-
+*/
 class AttrSlice {
  public:
-  AttrSlice(const NodeDef& node_def);  // NOLINT(runtime/explicit)
+  AttrSlice(const NodeDef& node_def) {}  // NOLINT(runtime/explicit)
 
-  AttrSlice();  // Empty
-  explicit AttrSlice(const AttrValueMap* a);
+  AttrSlice() {}  // Empty
+/*  explicit AttrSlice(const AttrValueMap* a);
 
   int size() const { return attrs()->size(); }
 
@@ -200,8 +188,10 @@ class AttrSlice {
 
   const NodeDef* ndef_;
   const AttrValueMap* attrs_;
+  */
 };
 
+/*
 // Return true if the attr with the name attr_name is defined in node_def.
 bool HasNodeAttr(const NodeDef& node_def, StringPiece attr_name);
 
@@ -439,7 +429,7 @@ Status MaybeAddPrefixToColocationConstraints(
 Status MaybeUpdateColocationConstraintsWithMap(
     const std::map<absl::string_view, absl::string_view>& node_name_map,
     NodeDef* node_def);
-
+*/
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_NODE_DEF_UTIL_H_

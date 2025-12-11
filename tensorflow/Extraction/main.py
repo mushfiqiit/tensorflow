@@ -5,7 +5,7 @@ from ProcessFile import process_file
 BASEDIR="/home/mushfiqur/Desktop/Github/tensorflow/"
 
 def main():
-    file_to_read = "/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/tensorflow_harness.cc"
+    file_to_read = "/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/function.h"
     files=extract_includes(file_to_read)
 
     for file in files:
@@ -20,8 +20,8 @@ def main():
     # Call the method from RemoveBlockComments.py
     remove_block_comments(input_file, output_file)
 
-    print(f"Block comments removed. Clean file saved to: {output_file}")
-    process_file(input_file, output_file)
+    #print(f"Block comments removed. Clean file saved to: {output_file}")
+    #process_file(input_file, output_file)
 
     print("Processing complete. Output written to:", output_file)
 

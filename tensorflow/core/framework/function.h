@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_CORE_FRAMEWORK_FUNCTION_H_
 
 #include <vector>
-
+/*
 // clang-format off
 // Required for IS_MOBILE_PLATFORM
 #include "tensorflow/core/platform/platform.h"
@@ -30,7 +30,9 @@ limitations under the License.
 #include "tensorflow/core/framework/attr_value_util.h"
 #include "tensorflow/core/framework/function.pb.h"
 #include "tensorflow/core/framework/node_def_util.h"
+*/
 #include "tensorflow/core/framework/op.h"
+/*
 #include "tensorflow/core/framework/op_kernel.h"
 #include "tensorflow/core/framework/registration/registration.h"
 #include "tensorflow/core/framework/types.h"
@@ -46,9 +48,9 @@ limitations under the License.
 #if !defined(IS_MOBILE_PLATFORM)
 #include "tensorflow/core/protobuf/remote_tensor_handle.pb.h"
 #endif  // IS_MOBILE_PLATFORM
-
+*/
 namespace tensorflow {
-
+/*
 class CancellationManager;
 class CollectiveExecutor;
 class DeviceSet;
@@ -67,26 +69,26 @@ class Node;
 // E.g.,
 //   FunctionDef my_func = FunctionDefHelper::Create(
 //     "my_func_name",
-//     {"x:T", "y:T" /* one string per argument */},
-//     {"z:T" /* one string per return value */},
-//     {"T: {float, double}" /* one string per attribute  */},
+//     {"x:T", "y:T" },
+//     {"z:T" },
+//     {"T: {float, double}" },
 //     {
 //        {{"o"}, "Mul", {"x", "y"}, {{"T", "$T"}}}
-//        /* one entry per function node */
+//        
 //     },
-//     /* Mapping between function returns and function node outputs. */
+//     
 //     {{"z", "o:z"}});
 //
 // For the old Function::Node approach, use FunctionDefHelper::Define()
 // E.g.,
 //   FunctionDef my_func = FunctionDefHelper::Define(
 //     "my_func_name",
-//     {"x:T", "y:T" /* one string per argument */},
-//     {"z:T" /* one string per return value */},
-//     {"T: {float, double}" /* one string per attribute  */},
+//     {"x:T", "y:T" },
+//     {"z:T" },
+//     {"T: {float, double}" },
 //     {
 //        {{"z"}, "Mul", {"x", "y"}, {{"T", "$T"}}}
-//        /* one entry per function node */
+//       
 //     });
 class FunctionDefHelper {
  public:
@@ -376,13 +378,14 @@ class AbstractStackTrace {
 using StackTracesMap =
     std::unordered_map<std::string,
                        std::shared_ptr<tensorflow::AbstractStackTrace>>;
-
+*/
 // Helper to maintain a map between function names in a given
 // FunctionDefLibrary and function definitions.
 //
 // This class is thread-safe.
 class FunctionLibraryDefinition : public OpRegistryInterface {
  public:
+ /*
   // Ops created for function arguments bear the name given by `kArgOp`; those
   // created for return values bear the name given by `kRetOp`.
   static constexpr const char* const kArgOp = "_Arg";
@@ -607,8 +610,9 @@ class FunctionLibraryDefinition : public OpRegistryInterface {
   gtl::FlatMap<string, std::shared_ptr<FunctionDefAndOpRegistration>>
       function_defs_ TF_GUARDED_BY(mu_);
   gtl::FlatMap<string, string> func_grad_ TF_GUARDED_BY(mu_);
+  */
 };
-
+/*
 // Forward declare. Defined in common_runtime/function.h
 struct FunctionBody;
 
@@ -740,10 +744,10 @@ class FunctionLibraryRuntime {
 
     // If provided, this optimization function will be invoked before
     // the placer for multi-device functions.
-    std::function<Status(std::vector<string> /*ret_node_names*/,
-                         std::vector<string> /*keep_node_names*/,
+    std::function<Status(std::vector<string> ,
+                         std::vector<string> ,
                          FunctionLibraryDefinition*, const DeviceSet&,
-                         Device* /*cpu_device*/, std::unique_ptr<Graph>*)>
+                         Device* , std::unique_ptr<Graph>*)>
         optimize_graph_fn;
 
     // If set, partitioned functions will be added to `graph_collector`.
@@ -1162,7 +1166,7 @@ Status GetOpGradientCreator(const std::string& op, Creator* creator);
 GET_ATTR(string)
 GET_ATTR(bool)
 #undef GET_ATTR
-
+*/
 }  // end namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_FUNCTION_H_
