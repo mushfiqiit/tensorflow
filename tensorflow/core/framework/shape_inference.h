@@ -17,15 +17,15 @@ limitations under the License.
 
 #include <vector>
 
-#include "absl/memory/memory.h"
+/* #include "absl/memory/memory.h"
 #include "tensorflow/core/framework/full_type.pb.h"
 #include "tensorflow/core/framework/node_def_util.h"
 #include "tensorflow/core/lib/core/errors.h"
 #include "tensorflow/core/lib/core/status.h"
-#include "tensorflow/core/platform/macros.h"
+#include "tensorflow/core/platform/macros.h" */
 
 namespace tensorflow {
-
+/*
 namespace grappler {
 class GraphProperties;
 class SymbolicShapeManager;
@@ -229,8 +229,10 @@ struct ShapeAndType {
 //
 // All Shape* and Dimension* returned by functions of InferenceContext are owned
 // by the InferenceContext.
+*/
 class InferenceContext {
  public:
+ /*
   static constexpr int64_t kUnknownDim = -1;
   static constexpr int32_t kUnknownRank = -1;
 
@@ -566,13 +568,13 @@ class InferenceContext {
   // Returns in <out> a new shape corresponding to <shape>.
   Status MakeShapeFromTensorShape(const TensorShape& shape, ShapeHandle* out);
   StatusOr<ShapeHandle> MakeShapeFromShapeTensor(const TensorShape& shape);
-
+*/
   // Returns a new dimension of the given size.  The returned value is owned by
   // this context.
-  inline DimensionHandle MakeDim(DimensionOrConstant d) {
-    return shape_manager_.MakeDim(d);
+  inline /* DimensionHandle */ void MakeDim(/* DimensionOrConstant d */ int x) {
+    return /* shape_manager_.MakeDim(d) */;
   }
-
+/*
   inline DimensionHandle UnknownDim() { return MakeDim(kUnknownDim); }
 
   // Returns in <val> a scalar value from an input tensor <t>.  The input tensor
@@ -862,8 +864,9 @@ class InferenceContext {
   std::vector<std::pair<DimensionHandle, DimensionHandle>> merged_dims_;
 
   TF_DISALLOW_COPY_AND_ASSIGN(InferenceContext);
+*/
 };
-
+/*
 // -----------------------------------------------------------------------------
 // Template and inline method implementations, please ignore
 
@@ -897,6 +900,7 @@ Status InferenceContext::GetAttr(StringPiece attr_name, T* value) const {
 }
 
 }  // namespace shape_inference
+  */
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_FRAMEWORK_SHAPE_INFERENCE_H_

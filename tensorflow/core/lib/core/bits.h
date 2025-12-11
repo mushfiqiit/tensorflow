@@ -16,12 +16,12 @@ limitations under the License.
 #ifndef TENSORFLOW_CORE_LIB_CORE_BITS_H_
 #define TENSORFLOW_CORE_LIB_CORE_BITS_H_
 
-#include "tensorflow/core/platform/logging.h"
-#include "tensorflow/core/platform/types.h"
+/* #include "tensorflow/core/platform/logging.h"*/
+#include "tensorflow/core/platform/types.h" 
 
 namespace tensorflow {
 
-// Return floor(log2(n)) for positive integer n.  Returns -1 iff n == 0.
+/* // Return floor(log2(n)) for positive integer n.  Returns -1 iff n == 0.
 int Log2Floor(uint32 n);
 int Log2Floor64(uint64 n);
 
@@ -91,19 +91,19 @@ inline int Log2Ceiling64(uint64 n) {
   else
     return floor + 1;
 }
-
+*/
 inline uint32 NextPowerOfTwo(uint32 value) {
   int exponent = Log2Ceiling(value);
-  DCHECK_LT(exponent, std::numeric_limits<uint32>::digits);
+  //DCHECK_LT(exponent, std::numeric_limits<uint32>::digits);
   return 1 << exponent;
 }
-
+/*
 inline uint64 NextPowerOfTwo64(uint64 value) {
   int exponent = Log2Ceiling(value);
   DCHECK_LT(exponent, std::numeric_limits<uint64>::digits);
   return 1LL << exponent;
 }
-
+ */
 }  // namespace tensorflow
 
 #endif  // TENSORFLOW_CORE_LIB_CORE_BITS_H_
