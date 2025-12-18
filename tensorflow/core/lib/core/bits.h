@@ -93,7 +93,7 @@ inline int Log2Ceiling64(uint64 n) {
 }
 */
 inline int NextPowerOfTwo(int value) {
-  int exponent = Log2Ceiling(value);
+  int exponent = 1; /* Log2Ceiling(value); */
   //DCHECK_LT(exponent, std::numeric_limits<uint32>::digits);
   return 1 << exponent;
 }

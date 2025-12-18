@@ -4,8 +4,10 @@
 #include "tensorflow/core/lib/core/bits.h"
 #include "tensorflow/core/platform/status.h"
 
+using tensorflow::InferenceContext;
+using tensorflow::Status;
 
-tensorflow::Status SpectrogramShapeFn(InferenceContext* c) {
+Status SpectrogramShapeFn(InferenceContext* c) {
   /* ShapeHandle input;
   TF_RETURN_IF_ERROR(c->WithRank(c->input(0), 2, &input)); */
   int32_t window_size;
