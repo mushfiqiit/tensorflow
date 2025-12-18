@@ -17,7 +17,7 @@ limitations under the License.
 #define TENSORFLOW_CORE_LIB_CORE_BITS_H_
 
 /* #include "tensorflow/core/platform/logging.h"*/
-#include "tensorflow/core/platform/types.h" 
+//#include "tensorflow/core/platform/types.h" 
 
 namespace tensorflow {
 
@@ -92,7 +92,7 @@ inline int Log2Ceiling64(uint64 n) {
     return floor + 1;
 }
 */
-inline uint32 NextPowerOfTwo(uint32 value) {
+inline int NextPowerOfTwo(int value) {
   int exponent = Log2Ceiling(value);
   //DCHECK_LT(exponent, std::numeric_limits<uint32>::digits);
   return 1 << exponent;

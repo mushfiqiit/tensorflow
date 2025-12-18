@@ -1,7 +1,7 @@
 #include "tensorflow/core/ops/audio_ops.h"
 
 int main() {
-    InferenceContext ictx;
+    tensorflow::InferenceContext ictx;
     SpectrogramShapeFn(ictx);
 
 }

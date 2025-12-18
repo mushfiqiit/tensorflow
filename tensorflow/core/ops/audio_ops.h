@@ -1,11 +1,11 @@
 /* #include "tensorflow/core/framework/common_shape_fns.h"
 #include "tensorflow/core/framework/op.h" */
 #include "tensorflow/core/framework/shape_inference.h"
-//#include "tensorflow/core/lib/core/bits.h"
+#include "tensorflow/core/lib/core/bits.h"
 #include "tensorflow/core/platform/status.h"
 
 
-Status SpectrogramShapeFn(InferenceContext* c) {
+tensorflow::Status SpectrogramShapeFn(InferenceContext* c) {
   /* ShapeHandle input;
   TF_RETURN_IF_ERROR(c->WithRank(c->input(0), 2, &input)); */
   int32_t window_size;
@@ -32,7 +32,7 @@ Status SpectrogramShapeFn(InferenceContext* c) {
   } */
 
   /* DimensionHandle output_channels = */
-      c->MakeDim(1 + NextPowerOfTwo(window_size) / 2);
+      c->MakeDim(1 + tensorflow::NextPowerOfTwo(window_size) / 2);
   /* c->set_output(0,
                 c->MakeShape({input_channels, output_length, output_channels}));
   return OkStatus(); */
