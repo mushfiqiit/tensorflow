@@ -1,31 +1,31 @@
 /* Copyright 2017 The TensorFlow Authors. All Rights Reserved.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+/*Licensed under the Apache License, Version 2.0 (the "License");*/
+/*you may not use this file except in compliance with the License.*/
+/*You may obtain a copy of the License at*/
 
-    http://www.apache.org/licenses/LICENSE-2.0
+/*    http://www.apache.org/licenses/LICENSE-2.0*/
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-==============================================================================*/
+/*Unless required by applicable law or agreed to in writing, software*/
+/*distributed under the License is distributed on an "AS IS" BASIS,*/
+/*WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.*/
+/*See the License for the specific language governing permissions and*/
+/*limitations under the License.*/
+// ==============================================================================*/
 
 #ifndef TENSORFLOW_COMPILER_TF2XLA_XLA_OP_KERNEL_H_
 #define TENSORFLOW_COMPILER_TF2XLA_XLA_OP_KERNEL_H_
 
-#include "tensorflow/compiler/tf2xla/xla_compiler.h"
-#include "tensorflow/compiler/tf2xla/xla_context.h"
-#include "tensorflow/compiler/tf2xla/xla_expression.h"
-#include "tensorflow/compiler/tf2xla/xla_resource.h"
-#include "tensorflow/compiler/xla/client/value_inference.h"
-#include "tensorflow/compiler/xla/client/xla_builder.h"
-#include "tensorflow/compiler/xla/client/xla_computation.h"
-#include "tensorflow/compiler/xla/xla_data.pb.h"
+/*#include "tensorflow/compiler/tf2xla/xla_compiler.h"*/
+/*#include "tensorflow/compiler/tf2xla/xla_context.h"*/
+/*#include "tensorflow/compiler/tf2xla/xla_expression.h"*/
+/*#include "tensorflow/compiler/tf2xla/xla_resource.h"*/
+/*#include "tensorflow/compiler/xla/client/value_inference.h"*/
+/*#include "tensorflow/compiler/xla/client/xla_builder.h"*/
+/*#include "tensorflow/compiler/xla/client/xla_computation.h"*/
+/*#include "tensorflow/compiler/xla/xla_data.pb.h"*/
 #include "tensorflow/core/framework/op_kernel.h"
-#include "tensorflow/core/platform/macros.h"
+/*#include "tensorflow/core/platform/macros.h"*/
 
 namespace tensorflow {
 
@@ -37,7 +37,7 @@ class XlaOpKernelContext;
 //
 // See the comments in xla_context.h for more details.
 class XlaOpKernel : public OpKernel {
- public:
+/* public:
   explicit XlaOpKernel(OpKernelConstruction* construction);
 
   // Subclasses should implement Compile(), much as standard OpKernels implement
@@ -46,7 +46,7 @@ class XlaOpKernel : public OpKernel {
 
  private:
   void Compute(OpKernelContext* context) final;
-};
+*/};
 
 // The context passed to the Compile() method of XlaOpKernel. An
 // XlaOpKernelContext is a variant of the standard OpKernel class, tailored for
@@ -61,7 +61,7 @@ class XlaOpKernel : public OpKernel {
 // is a valid XlaExpression backing the tensor. No Op should ever call
 // allocate_output or allocate_temp directly on the underlying OpKernelContext.
 class XlaOpKernelContext {
- public:
+/* public:
   explicit XlaOpKernelContext(OpKernelContext* context);
 
   XlaContext* xla_context() const;
@@ -360,7 +360,7 @@ class XlaOpKernelContext {
   OpKernelContext* const context_;
   bool dynamic_dimension_is_minus_one_;
   xla::ValueInference value_inference_;
-};
+*/};
 
 }  // namespace tensorflow
 

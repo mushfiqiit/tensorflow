@@ -1,0 +1,28 @@
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/tensorflow_harness.cc:1:
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/compiler/tf2xla/kernels/tensor_list_ops.h:4:
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/compiler/tf2xla/xla_op_kernel.h:3:1: warning: '/*' within block comment [-Wcomment]
+/*Licensed under the Apache License, Version 2.0 (the "License");*/
+^
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/tensorflow_harness.cc:1:
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/compiler/tf2xla/kernels/tensor_list_ops.h:4:
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/compiler/tf2xla/xla_op_kernel.h:27:
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/op_kernel.h:1373:1: warning: '/*' within block comment [-Wcomment]
+/* public:
+^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/op_kernel.h:1393:1: warning: '/*' within block comment [-Wcomment]
+/*  TF_EXTRACT_KERNEL_NAME_IMPL(m, TF_EXTRACT_KERNEL_NAME_##kernel_builder, \
+^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/op_kernel.h:1394:1: warning: '/*' within block comment [-Wcomment]
+/*                              __VA_ARGS__)
+^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/core/framework/op_kernel.h:1402:1: warning: '/*' within block comment [-Wcomment]
+/*                                       is_system_kernel, ...)               \*/
+^
+In file included from /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/tensorflow_harness.cc:1:
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/compiler/tf2xla/kernels/tensor_list_ops.h:29:9: error: use of undeclared identifier 'xla'
+        xla::SpanToVector(element_shape.dimensions());
+        ^
+/home/mushfiqur/Desktop/Github/tensorflow/tensorflow/compiler/tf2xla/kernels/tensor_list_ops.h:29:27: error: use of undeclared identifier 'element_shape'
+        xla::SpanToVector(element_shape.dimensions());
+                          ^
+5 warnings and 2 errors generated.

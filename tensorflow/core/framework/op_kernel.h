@@ -1,63 +1,50 @@
-/* Copyright 2015 The TensorFlow Authors. All Rights Reserved.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-==============================================================================*/
 
 #ifndef TENSORFLOW_CORE_FRAMEWORK_OP_KERNEL_H_
 #define TENSORFLOW_CORE_FRAMEWORK_OP_KERNEL_H_
 
-#include <functional>
-#include <unordered_set>
-#include <utility>
-#include <vector>
+/*#include <functional>*/
+/*#include <unordered_set>*/
+/*#include <utility>*/
+/*#include <vector>*/
 
-#include "absl/time/time.h"
-#include "absl/types/optional.h"
-#include "absl/types/span.h"
-#include "tensorflow/core/framework/allocator.h"
-#include "tensorflow/core/framework/cancellation.h"
-#include "tensorflow/core/framework/control_flow.h"
-#include "tensorflow/core/framework/device_base.h"
-#include "tensorflow/core/framework/graph.pb.h"
-#include "tensorflow/core/framework/kernel_def.pb.h"
-#include "tensorflow/core/framework/kernel_def_builder.h"
-#include "tensorflow/core/framework/node_def.pb.h"
-#include "tensorflow/core/framework/node_def_util.h"
-#include "tensorflow/core/framework/node_properties.h"
-#include "tensorflow/core/framework/op.h"  // TODO(b/62899350): Remove
-#include "tensorflow/core/framework/op_requires.h"
-#include "tensorflow/core/framework/registration/registration.h"
-#include "tensorflow/core/framework/rendezvous.h"
-#include "tensorflow/core/framework/session_state.h"
-#include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/framework/tensor_shape.h"
-#include "tensorflow/core/framework/tensor_shape.pb.h"  // TODO(b/62899350): Remove
-#include "tensorflow/core/framework/tracking_allocator.h"
-#include "tensorflow/core/framework/types.h"
-#include "tensorflow/core/framework/types.pb.h"
-#include "tensorflow/core/lib/core/errors.h"
-#include "tensorflow/core/lib/core/status.h"
-#include "tensorflow/core/lib/gtl/array_slice.h"
-#include "tensorflow/core/lib/gtl/manual_constructor.h"
-#include "tensorflow/core/platform/env.h"
-#include "tensorflow/core/platform/logging.h"
-#include "tensorflow/core/platform/macros.h"
-#include "tensorflow/core/platform/mutex.h"
-#include "tensorflow/core/platform/profile_utils/cpu_utils.h"
-#include "tensorflow/core/platform/thread_annotations.h"
-#include "tensorflow/core/platform/types.h"
-#include "tensorflow/core/protobuf/config.pb.h"
-#include "tensorflow/core/util/managed_stack_trace.h"
+/*#include "absl/time/time.h"*/
+/*#include "absl/types/optional.h"*/
+/*#include "absl/types/span.h"*/
+/*#include "tensorflow/core/framework/allocator.h"*/
+/*#include "tensorflow/core/framework/cancellation.h"*/
+/*#include "tensorflow/core/framework/control_flow.h"*/
+/*#include "tensorflow/core/framework/device_base.h"*/
+/*#include "tensorflow/core/framework/graph.pb.h"*/
+/*#include "tensorflow/core/framework/kernel_def.pb.h"*/
+/*#include "tensorflow/core/framework/kernel_def_builder.h"*/
+/*#include "tensorflow/core/framework/node_def.pb.h"*/
+/*#include "tensorflow/core/framework/node_def_util.h"*/
+/*#include "tensorflow/core/framework/node_properties.h"*/
+/*#include "tensorflow/core/framework/op.h"  // TODO(b/62899350): Remove*/
+/*#include "tensorflow/core/framework/op_requires.h"*/
+/*#include "tensorflow/core/framework/registration/registration.h"*/
+/*#include "tensorflow/core/framework/rendezvous.h"*/
+/*#include "tensorflow/core/framework/session_state.h"*/
+/*#include "tensorflow/core/framework/tensor.h"*/
+/*#include "tensorflow/core/framework/tensor_shape.h"*/
+/*#include "tensorflow/core/framework/tensor_shape.pb.h"  // TODO(b/62899350): Remove*/
+/*#include "tensorflow/core/framework/tracking_allocator.h"*/
+/*#include "tensorflow/core/framework/types.h"*/
+/*#include "tensorflow/core/framework/types.pb.h"*/
+/*#include "tensorflow/core/lib/core/errors.h"*/
+/*#include "tensorflow/core/lib/core/status.h"*/
+/*#include "tensorflow/core/lib/gtl/array_slice.h"*/
+/*#include "tensorflow/core/lib/gtl/manual_constructor.h"*/
+/*#include "tensorflow/core/platform/env.h"*/
+/*#include "tensorflow/core/platform/logging.h"*/
+/*#include "tensorflow/core/platform/macros.h"*/
+/*#include "tensorflow/core/platform/mutex.h"*/
+/*#include "tensorflow/core/platform/profile_utils/cpu_utils.h"*/
+/*#include "tensorflow/core/platform/thread_annotations.h"*/
+/*#include "tensorflow/core/platform/types.h"*/
+/*#include "tensorflow/core/protobuf/config.pb.h"*/
+/*#include "tensorflow/core/util/managed_stack_trace.h"*/
 
 namespace Eigen {
 struct ThreadPoolDevice;
@@ -87,11 +74,11 @@ class CoordinationServiceAgent;
 // removed before kernels are looked up, so they can be used without specifying
 // the label. This label is a temporary measure to allow JIT kernels to be
 // disabled if needed.
-extern const char* kJitKernelLabel;
-extern const char* kDisableJitKernelsEnvVar;
+/*extern const char* kJitKernelLabel;*/
+/*extern const char* kDisableJitKernelsEnvVar;*/
 
 class OpKernel {
- public:
+/* public:
   // OpKernel won't be instantiated by the scheduler, so you may perform
   // expensive initialization in the descendant's constructor.
   explicit OpKernel(OpKernelConstruction* context);
@@ -209,10 +196,10 @@ class OpKernel {
   bool expensive_;
 
   TF_DISALLOW_COPY_AND_ASSIGN(OpKernel);
-};
+*/};
 
 class AsyncOpKernel : public OpKernel {
- public:
+/* public:
   using OpKernel::OpKernel;  // Lift OpKernel constructors.
 
   // Asynchronous compute.
@@ -236,10 +223,10 @@ class AsyncOpKernel : public OpKernel {
   AsyncOpKernel* AsAsync() override { return this; }
 
   void Compute(OpKernelContext* context) override;
-};
+*/};
 
 class OpKernelConstruction {
- public:
+/* public:
   OpKernelConstruction(DeviceType device_type, DeviceBase* device,
                        Allocator* allocator, FunctionLibraryRuntime* flib,
                        ResourceMgr* resource_mgr,
@@ -355,14 +342,14 @@ class OpKernelConstruction {
   friend class OpKernel;
 
   TF_DISALLOW_COPY_AND_ASSIGN(OpKernelConstruction);
-};
+*/};
 
 // TODO(mrry): Consider converting to a random_access_iterator, and upgrading
 // tensorflow::gtl::iterator_range to make the below container classes
 // unnecessary.
-template <typename ListType, typename ElementType>
+/*template <typename ListType, typename ElementType>*/
 class OpArgIterator {
- public:
+/* public:
   using iterator_category = std::forward_iterator_tag;
   using value_type = ElementType;
   using pointer = ElementType*;
@@ -403,12 +390,12 @@ class OpArgIterator {
  private:
   const ListType* const list_;
   int i_;
-};
+*/};
 
 // Utility class for representing a list of immutable input tensors
 // that are passed to the op as a single named argument.
 class OpInputList {
- public:
+/* public:
   typedef OpArgIterator<OpInputList, const Tensor> Iterator;
   OpInputList() : ctx_(nullptr), start_(0), stop_(0) {}
   OpInputList(OpKernelContext* ctx, int start, int stop)
@@ -423,12 +410,12 @@ class OpInputList {
   OpKernelContext* ctx_;  // not owned
   int start_;
   int stop_;
-};
+*/};
 
 // Utility class for representing a list of mutable ("ref") input tensors
 // that are passed to the op as a single named argument.
 class OpMutableInputList {
- public:
+/* public:
   typedef OpArgIterator<OpMutableInputList, Tensor*> Iterator;
   OpMutableInputList(OpKernelContext* ctx, int start, int stop)
       : ctx_(ctx), start_(start), stop_(stop) {}
@@ -444,12 +431,12 @@ class OpMutableInputList {
   OpKernelContext* ctx_;  // not owned
   int start_;
   int stop_;
-};
+*/};
 
 // Utility class for representing a list of output tensors that are
 // grouped as a single named output.
 class OpOutputList {
- public:
+/* public:
   typedef OpArgIterator<OpOutputList, const Tensor*> Iterator;
   OpOutputList() : ctx_(nullptr), start_(0), stop_(0) {}
   OpOutputList(OpKernelContext* ctx, int start, int stop)
@@ -470,12 +457,12 @@ class OpOutputList {
   OpKernelContext* ctx_;  // not owned
   int start_;
   int stop_;
-};
+*/};
 
 // Holds a tensor or tensor reference. For tensor references, we need
 // a mutex to prevent concurrent access to the tensor.
 struct TensorValue {
-  TensorValue() : mutex_if_ref(nullptr), tensor(nullptr) {}
+/*  TensorValue() : mutex_if_ref(nullptr), tensor(nullptr) {}
   explicit TensorValue(Tensor* t) : mutex_if_ref(nullptr), tensor(t) {}
   TensorValue(mutex* mu, Tensor* t) : mutex_if_ref(mu), tensor(t) {}
   Tensor* operator->() const { return tensor; }
@@ -505,11 +492,11 @@ struct TensorValue {
 
   mutex* mutex_if_ref;  // nullptr if not a ref, != nullptr if a ref
   Tensor* tensor;
-};
+*/};
 
 // Used to store partitioned graphs from function-calling ops.
 struct GraphCollector {
-  mutex mu;
+/*  mutex mu;
   std::vector<GraphDef> partitioned_graphs TF_GUARDED_BY(mu);
   GraphDef raw_graph TF_GUARDED_BY(mu);
   GraphDef optimized_graph TF_GUARDED_BY(mu);
@@ -547,10 +534,10 @@ struct GraphCollector {
     mutex_lock ml(mu);
     return dirty;
   }
-};
+*/};
 
 class OpKernelContext {
- public:
+/* public:
   // The first element of a WrappedAllocator is a "base" Allocator and
   // the second element is that Allocator wrapped by a
   // TrackingAllocator
@@ -1296,13 +1283,13 @@ class OpKernelContext {
                                      const char* correct_macro_name);
 
   TF_DISALLOW_COPY_AND_ASSIGN(OpKernelContext);
-};
+*/};
 
-template <>
-const Eigen::ThreadPoolDevice& OpKernelContext::eigen_device() const;
+/*template <>*/
+/*const Eigen::ThreadPoolDevice& OpKernelContext::eigen_device() const;*/
 
-template <>
-const Eigen::GpuDevice& OpKernelContext::eigen_device() const;
+/*template <>*/
+/*const Eigen::GpuDevice& OpKernelContext::eigen_device() const;*/
 
 // Register your OpKernel by specifying the Op's name, the device the
 // kernel runs on, any type attr constraints for this kernel, any
@@ -1337,44 +1324,44 @@ const Eigen::GpuDevice& OpKernelContext::eigen_device() const;
 // of the returned pointer.
 // EXPECTED USAGE: unique_ptr<OpKernel> op = CreateOpKernel(...);
 // REQUIRES: def has all attrs specified (e.g. using AddDefaultsToNodeDef()).
-std::unique_ptr<OpKernel> CreateOpKernel(DeviceType device_type,
-                                         DeviceBase* device,
-                                         Allocator* allocator,
-                                         const NodeDef& node_def,
-                                         int graph_def_version, Status* status);
+/*std::unique_ptr<OpKernel> CreateOpKernel(DeviceType device_type,*/
+/*                                         DeviceBase* device,*/
+/*                                         Allocator* allocator,*/
+/*                                         const NodeDef& node_def,*/
+/*                                         int graph_def_version, Status* status);*/
 
-std::unique_ptr<OpKernel> CreateOpKernel(
-    DeviceType device_type, DeviceBase* device, Allocator* allocator,
-    const std::shared_ptr<const NodeProperties>& props, int graph_def_version,
-    Status* status);
+/*std::unique_ptr<OpKernel> CreateOpKernel(*/
+/*    DeviceType device_type, DeviceBase* device, Allocator* allocator,*/
+/*    const std::shared_ptr<const NodeProperties>& props, int graph_def_version,*/
+/*    Status* status);*/
 
-Status CreateOpKernel(DeviceType device_type, DeviceBase* device,
-                      Allocator* allocator, FunctionLibraryRuntime* flib,
-                      const std::shared_ptr<const NodeProperties>& props,
-                      int graph_def_version, OpKernel** kernel);
+/*Status CreateOpKernel(DeviceType device_type, DeviceBase* device,*/
+/*                      Allocator* allocator, FunctionLibraryRuntime* flib,*/
+/*                      const std::shared_ptr<const NodeProperties>& props,*/
+/*                      int graph_def_version, OpKernel** kernel);*/
 
-Status CreateOpKernel(DeviceType device_type, DeviceBase* device,
-                      Allocator* allocator, FunctionLibraryRuntime* flib,
-                      ResourceMgr* resource_mgr,
-                      const std::shared_ptr<const NodeProperties>& props,
-                      int graph_def_version, OpKernel** kernel);
+/*Status CreateOpKernel(DeviceType device_type, DeviceBase* device,*/
+/*                      Allocator* allocator, FunctionLibraryRuntime* flib,*/
+/*                      ResourceMgr* resource_mgr,*/
+/*                      const std::shared_ptr<const NodeProperties>& props,*/
+/*                      int graph_def_version, OpKernel** kernel);*/
 
 // Returns into 'device_types' the subset of prioritized_types that this
 // binary has registered for the given NodeDef.
 //
 // REQUIRES: * 'device_types' is not nullptr.
 //           * def has all attrs specified (e.g. using AddDefaultsToNodeDef()).
-Status SupportedDeviceTypesForNode(
-    const std::vector<DeviceType>& prioritized_types, const NodeDef& def,
-    PrioritizedDeviceTypeVector* device_types,
-    const DeviceNameUtils::ParsedName* local_address_spec = nullptr);
+/*Status SupportedDeviceTypesForNode(*/
+/*    const std::vector<DeviceType>& prioritized_types, const NodeDef& def,*/
+/*    PrioritizedDeviceTypeVector* device_types,*/
+/*    const DeviceNameUtils::ParsedName* local_address_spec = nullptr);*/
 
 // Returns a message with a description of the kernels registered for op
 // `op_name`.
-std::string KernelsRegisteredForOp(StringPiece op_name);
+/*std::string KernelsRegisteredForOp(StringPiece op_name);*/
 
 // Call once after Op registration has completed.
-Status ValidateKernelRegistrations(const OpRegistryInterface& op_registry);
+/*Status ValidateKernelRegistrations(const OpRegistryInterface& op_registry);*/
 
 // -----------------------------------------------------------------------------
 // OpKernel registration implementation follows, please ignore.
@@ -1382,10 +1369,10 @@ Status ValidateKernelRegistrations(const OpRegistryInterface& op_registry);
 // Allow the REGISTER_KERNEL_BUILDER(Name("op_name").Device(...)...) syntax.
 namespace register_kernel {
 
-class Name : public KernelDefBuilder {
- public:
+/* class Name : public KernelDefBuilder {
+/* public:
   explicit Name(const char* op) : KernelDefBuilder(op) {}
-};
+}; */
 
 }  // namespace register_kernel
 
@@ -1399,12 +1386,12 @@ class Name : public KernelDefBuilder {
 // involves treating Name("OpName") as a macro call, via token-pasting (e.g.
 // M_## =>  M_Name("OpName")), and having it expand to '"OpName",
 // Name("OpName")' which is then usable as two arguments.
-#define TF_EXTRACT_KERNEL_NAME_Name(name_str) \
-  name_str, ::tensorflow::register_kernel::Name(name_str)
+/* #define TF_EXTRACT_KERNEL_NAME_Name(name_str) \ */
+/*  name_str, ::tensorflow::register_kernel::Name(name_str)
 #define TF_EXTRACT_KERNEL_NAME_IMPL(m, ...) m(__VA_ARGS__)
 #define TF_EXTRACT_KERNEL_NAME(m, kernel_builder, ...)                    \
-  TF_EXTRACT_KERNEL_NAME_IMPL(m, TF_EXTRACT_KERNEL_NAME_##kernel_builder, \
-                              __VA_ARGS__)
+/*  TF_EXTRACT_KERNEL_NAME_IMPL(m, TF_EXTRACT_KERNEL_NAME_##kernel_builder, \
+/*                              __VA_ARGS__)
 
 // REGISTER_KERNEL_BUILDER_IMPL_2, with a unique 'ctr' as the first argument.
 // TODO(dodgen): There are some uses of this macro inside functions, where
@@ -1412,80 +1399,80 @@ class Name : public KernelDefBuilder {
 // accommodate those, kernel_builder.Build() appears as an argument to an
 // immediately-called lambda (not in the lambda itself).
 #define REGISTER_KERNEL_BUILDER_IMPL_3(ctr, op_name, kernel_builder_expr,   \
-                                       is_system_kernel, ...)               \
-  static ::tensorflow::InitOnStartupMarker const register_kernel_##ctr      \
-      TF_ATTRIBUTE_UNUSED =                                                 \
-          TF_INIT_ON_STARTUP_IF(is_system_kernel ||                         \
-                                (SHOULD_REGISTER_OP_KERNEL(#__VA_ARGS__) && \
-                                 SHOULD_REGISTER_OP(op_name)))              \
-          << ([](::tensorflow::KernelDef const* kernel_def) {               \
-               ::tensorflow::kernel_factory::OpKernelRegistrar registrar(   \
-                   kernel_def, #__VA_ARGS__,                                \
-                   [](::tensorflow::OpKernelConstruction* context)          \
-                       -> ::tensorflow::OpKernel* {                         \
-                     return new __VA_ARGS__(context);                       \
-                   });                                                      \
-               (void)registrar;                                             \
-               return ::tensorflow::InitOnStartupMarker{};                  \
-             })(kernel_builder_expr.Build());
+/*                                       is_system_kernel, ...)               \*/
+/*  static ::tensorflow::InitOnStartupMarker const register_kernel_##ctr      \*/
+/*      TF_ATTRIBUTE_UNUSED =                                                 \*/
+/*          TF_INIT_ON_STARTUP_IF(is_system_kernel ||                         \*/
+/*                                (SHOULD_REGISTER_OP_KERNEL(#__VA_ARGS__) && \*/
+/*                                 SHOULD_REGISTER_OP(op_name)))              \*/
+/*          << ([](::tensorflow::KernelDef const* kernel_def) {               \*/
+/*               ::tensorflow::kernel_factory::OpKernelRegistrar registrar(   \*/
+/*                   kernel_def, #__VA_ARGS__,                                \*/
+/*                   [](::tensorflow::OpKernelConstruction* context)          \*/
+/*                       -> ::tensorflow::OpKernel* {                         \*/
+/*                     return new __VA_ARGS__(context);                       \*/
+/*                   });                                                      \*/
+/*               (void)registrar;                                             \*/
+/*               return ::tensorflow::InitOnStartupMarker{};                  \*/
+/*             })(kernel_builder_expr.Build());*/
 
 // REGISTER_KERNEL_BUILDER_IMPL, but with kernel_builder split to op_name,
 // kernel_builder_expr.
-#define REGISTER_KERNEL_BUILDER_IMPL_2(op_name, kernel_builder_expr, \
-                                       is_system_kernel, ...)        \
-  TF_NEW_ID_FOR_INIT(REGISTER_KERNEL_BUILDER_IMPL_3, op_name,        \
-                     kernel_builder_expr, is_system_kernel, __VA_ARGS__)
+/* #define REGISTER_KERNEL_BUILDER_IMPL_2(op_name, kernel_builder_expr, \ */
+/*                                       is_system_kernel, ...)        \*/
+/*  TF_NEW_ID_FOR_INIT(REGISTER_KERNEL_BUILDER_IMPL_3, op_name,        \*/
+/*                     kernel_builder_expr, is_system_kernel, __VA_ARGS__)*/
 
 // REGISTER_KERNEL_BUILDER, but with is_system_kernel bound.
-#define REGISTER_KERNEL_BUILDER_IMPL(kernel_builder, is_system_kernel, ...) \
-  TF_EXTRACT_KERNEL_NAME(REGISTER_KERNEL_BUILDER_IMPL_2, kernel_builder,    \
-                         is_system_kernel, __VA_ARGS__)
+/* #define REGISTER_KERNEL_BUILDER_IMPL(kernel_builder, is_system_kernel, ...) \ */
+/*  TF_EXTRACT_KERNEL_NAME(REGISTER_KERNEL_BUILDER_IMPL_2, kernel_builder,    \*/
+/*                         is_system_kernel, __VA_ARGS__)*/
 
-#define REGISTER_KERNEL_BUILDER(kernel_builder, ...) \
-  TF_ATTRIBUTE_ANNOTATE("tf:kernel")                 \
-  REGISTER_KERNEL_BUILDER_IMPL(kernel_builder, false, __VA_ARGS__)
+/* #define REGISTER_KERNEL_BUILDER(kernel_builder, ...) \ */
+/*  TF_ATTRIBUTE_ANNOTATE("tf:kernel")                 \*/
+/*  REGISTER_KERNEL_BUILDER_IMPL(kernel_builder, false, __VA_ARGS__)*/
 
 // The `REGISTER_SYSTEM_KERNEL_BUILDER()` macro acts as
 // `REGISTER_KERNEL_BUILDER()` except that the kernel is registered
 // unconditionally even when selective registration is used.
-#define REGISTER_SYSTEM_KERNEL_BUILDER(kernel_builder, ...) \
-  TF_ATTRIBUTE_ANNOTATE("tf:kernel")                        \
-  TF_ATTRIBUTE_ANNOTATE("tf:kernel:system")                 \
-  REGISTER_KERNEL_BUILDER_IMPL(kernel_builder, true, __VA_ARGS__)
+/* #define REGISTER_SYSTEM_KERNEL_BUILDER(kernel_builder, ...) \ */
+/*  TF_ATTRIBUTE_ANNOTATE("tf:kernel")                        \*/
+/*  TF_ATTRIBUTE_ANNOTATE("tf:kernel:system")                 \*/
+/*  REGISTER_KERNEL_BUILDER_IMPL(kernel_builder, true, __VA_ARGS__)*/
 
 // Checks whether a given kernel is registered on device_type.
-bool KernelDefAvailable(const DeviceType& device_type, const NodeDef& node_def);
+/*bool KernelDefAvailable(const DeviceType& device_type, const NodeDef& node_def);*/
 
 // If node of node_name, experimental_debug_info, node_op, node_device and
 // node_attrs has a corresponding kernel registered on device_type, returns OK
 // and fill in the kernel def and kernel_class_name. <def> and
 // <kernel_class_name> may be null.
-Status FindKernelDef(
-    const DeviceType& device_type, StringPiece node_name,
-    bool has_experimental_debug_info,
-    const NodeDef_ExperimentalDebugInfo& experimental_debug_info,
-    StringPiece node_op, StringPiece node_device, AttrSlice node_attrs,
-    const KernelDef** def, std::string* kernel_class_name);
+/*Status FindKernelDef(*/
+/*    const DeviceType& device_type, StringPiece node_name,*/
+/*    bool has_experimental_debug_info,*/
+/*    const NodeDef_ExperimentalDebugInfo& experimental_debug_info,*/
+/*    StringPiece node_op, StringPiece node_device, AttrSlice node_attrs,*/
+/*    const KernelDef** def, std::string* kernel_class_name);*/
 
 // If node_def has a corresponding kernel registered on device_type,
 // returns OK and fill in the kernel def and kernel_class_name. <def> and
 // <kernel_class_name> may be null.
-Status FindKernelDef(const DeviceType& device_type, const NodeDef& node_def,
-                     const KernelDef** def, std::string* kernel_class_name);
+/*Status FindKernelDef(const DeviceType& device_type, const NodeDef& node_def,*/
+/*                     const KernelDef** def, std::string* kernel_class_name);*/
 
 // Writes a list of all registered kernels to LOG(INFO), to help users debug
 // missing kernel errors.
-void LogAllRegisteredKernels();
+/*void LogAllRegisteredKernels();*/
 
 // Gets a list of all registered kernels.
-KernelList GetAllRegisteredKernels();
+/*KernelList GetAllRegisteredKernels();*/
 
 // Gets a list of all registered kernels for which predicate returns true
-KernelList GetFilteredRegisteredKernels(
-    const std::function<bool(const KernelDef&)>& predicate);
+/*KernelList GetFilteredRegisteredKernels(*/
+/*    const std::function<bool(const KernelDef&)>& predicate);*/
 
 // Gets a list of all registered kernels for a given op
-KernelList GetRegisteredKernelsForOp(StringPiece op_name);
+/*KernelList GetRegisteredKernelsForOp(StringPiece op_name);*/
 
 namespace kernel_factory {
 
@@ -1493,13 +1480,13 @@ namespace kernel_factory {
 // them. You register factories with the TensorFlow core by constructing an
 // OpKernelRegistrar and passing the factory as a constructor parameter.
 class OpKernelFactory {
- public:
+/* public:
   virtual OpKernel* Create(OpKernelConstruction* context) = 0;
   virtual ~OpKernelFactory() = default;
-};
+*/};
 
 class OpKernelRegistrar {
- public:
+/* public:
   // Registers the given kernel factory with TensorFlow. TF will call the
   // factory Create() method when it determines that a kernel matching the given
   // KernelDef is required.
@@ -1528,174 +1515,174 @@ class OpKernelRegistrar {
 
   void InitInternal(const KernelDef* kernel_def, StringPiece kernel_class_name,
                     std::unique_ptr<OpKernelFactory> factory);
-};
+*/};
 
 }  // namespace kernel_factory
 
 // -----------------------------------------------------------------------------
 // Template and inline method implementations, please ignore
 
-template <class T>
-Status OpKernelConstruction::GetAttr(StringPiece attr_name, T* value) const {
-  return GetNodeAttr(def(), attr_name, value);
-}
+/*template <class T>*/
+/*Status OpKernelConstruction::GetAttr(StringPiece attr_name, T* value) const {*/
+/*  return GetNodeAttr(def(), attr_name, value);*/
+/*}*/
 
-inline DataType OpKernelContext::input_dtype(int index) const {
-  DCHECK_GE(index, 0);
-  DCHECK_LT(index, num_inputs());
-  const TensorValue& value(params_->inputs[index]);
-  return value.dtype();
-}
+/*inline DataType OpKernelContext::input_dtype(int index) const {*/
+/*  DCHECK_GE(index, 0);*/
+/*  DCHECK_LT(index, num_inputs());*/
+/*  const TensorValue& value(params_->inputs[index]);*/
+/*  return value.dtype();*/
+/*}*/
 
-inline MemoryType OpKernelContext::input_memory_type(int index) const {
-  DCHECK_GE(index, 0);
-  DCHECK_LT(index, num_inputs());
-  return op_kernel().input_memory_types()[index];
-}
+/*inline MemoryType OpKernelContext::input_memory_type(int index) const {*/
+/*  DCHECK_GE(index, 0);*/
+/*  DCHECK_LT(index, num_inputs());*/
+/*  return op_kernel().input_memory_types()[index];*/
+/*}*/
 
-inline DataType OpKernelContext::expected_output_dtype(int index) const {
-  DCHECK_GE(index, 0);
-  DCHECK_LT(index, num_outputs());
-  return params_->op_kernel->output_type(index);
-}
+/*inline DataType OpKernelContext::expected_output_dtype(int index) const {*/
+/*  DCHECK_GE(index, 0);*/
+/*  DCHECK_LT(index, num_outputs());*/
+/*  return params_->op_kernel->output_type(index);*/
+/*}*/
 
-inline MemoryType OpKernelContext::output_memory_type(int index) const {
-  DCHECK_GE(index, 0);
-  DCHECK_LT(index, num_outputs());
-  return op_kernel().output_memory_types()[index];
-}
+/*inline MemoryType OpKernelContext::output_memory_type(int index) const {*/
+/*  DCHECK_GE(index, 0);*/
+/*  DCHECK_LT(index, num_outputs());*/
+/*  return op_kernel().output_memory_types()[index];*/
+/*}*/
 
-inline bool OpKernelContext::input_is_ref(int index) const {
-  const TensorValue& value(params_->inputs[index]);
-  return value.is_ref();
-}
+/*inline bool OpKernelContext::input_is_ref(int index) const {*/
+/*  const TensorValue& value(params_->inputs[index]);*/
+/*  return value.is_ref();*/
+/*}*/
 
 // no input if tensor == nullptr.
-inline bool OpKernelContext::has_input(int index) const {
-  DCHECK_GE(index, 0);
-  DCHECK_LT(index, num_inputs());
-  return params_->inputs[index].tensor != nullptr;
-}
+/*inline bool OpKernelContext::has_input(int index) const {*/
+/*  DCHECK_GE(index, 0);*/
+/*  DCHECK_LT(index, num_inputs());*/
+/*  return params_->inputs[index].tensor != nullptr;*/
+/*}*/
 
-inline mutex* OpKernelContext::input_ref_mutex(int index) {
-  DCHECK_GE(index, 0);
-  DCHECK_LT(index, num_inputs());
-  DCHECK(input_is_ref(index));
-  return params_->inputs[index].mutex_if_ref;
-}
+/*inline mutex* OpKernelContext::input_ref_mutex(int index) {*/
+/*  DCHECK_GE(index, 0);*/
+/*  DCHECK_LT(index, num_inputs());*/
+/*  DCHECK(input_is_ref(index));*/
+/*  return params_->inputs[index].mutex_if_ref;*/
+/*}*/
 
-inline Tensor* OpKernelContext::mutable_output(int index) {
-  DCHECK_GE(index, 0);
-  DCHECK_LT(index, num_outputs());
-  return outputs_[index].tensor;
-}
+/*inline Tensor* OpKernelContext::mutable_output(int index) {*/
+/*  DCHECK_GE(index, 0);*/
+/*  DCHECK_LT(index, num_outputs());*/
+/*  return outputs_[index].tensor;*/
+/*}*/
 
-inline TensorValue OpKernelContext::release_output(int index) {
-  DCHECK_GE(index, 0);
-  DCHECK_LT(index, num_outputs());
-  TensorValue value = outputs_[index];
-  outputs_[index] = TensorValue();
-  return value;
-}
+/*inline TensorValue OpKernelContext::release_output(int index) {*/
+/*  DCHECK_GE(index, 0);*/
+/*  DCHECK_LT(index, num_outputs());*/
+/*  TensorValue value = outputs_[index];*/
+/*  outputs_[index] = TensorValue();*/
+/*  return value;*/
+/*}*/
 
-inline Status OpKernelContext::forward_input_or_allocate_output(
-    gtl::ArraySlice<int> candidate_input_indices, int output_index,
-    const TensorShape& output_shape, Tensor** output, int* forwarded_input) {
-  for (int input_index : candidate_input_indices) {
-    if (forward_input_to_output_with_shape(input_index, output_index,
-                                           output_shape, output)) {
-      if (forwarded_input != nullptr) {
-        *forwarded_input = input_index;
-      }
-      return OkStatus();
-    }
-  }
-  if (forwarded_input != nullptr) {
-    *forwarded_input = -1;
-  }
-  return allocate_output(output_index, output_shape, output);
-}
+/*inline Status OpKernelContext::forward_input_or_allocate_output(*/
+/*    gtl::ArraySlice<int> candidate_input_indices, int output_index,*/
+/*    const TensorShape& output_shape, Tensor** output, int* forwarded_input) {*/
+/*  for (int input_index : candidate_input_indices) {*/
+/*    if (forward_input_to_output_with_shape(input_index, output_index,*/
+/*                                           output_shape, output)) {*/
+/*      if (forwarded_input != nullptr) {*/
+/*        *forwarded_input = input_index;*/
+/*      }*/
+/*      return OkStatus();*/
+/*    }*/
+/*  }*/
+/*  if (forwarded_input != nullptr) {*/
+/*    *forwarded_input = -1;*/
+/*  }*/
+/*  return allocate_output(output_index, output_shape, output);*/
+/*}*/
 
-inline Status OpKernelContext::forward_input_or_allocate_output(
-    gtl::ArraySlice<StringPiece> candidate_input_names, StringPiece output_name,
-    const TensorShape& output_shape, Tensor** output) {
-  for (const StringPiece& input_name : candidate_input_names) {
-    if (forward_input_to_output_with_shape(input_name, output_name,
-                                           output_shape, output)
-            .ok()) {
-      return OkStatus();
-    }
-  }
-  return allocate_output(output_name, output_shape, output);
-}
+/*inline Status OpKernelContext::forward_input_or_allocate_output(*/
+/*    gtl::ArraySlice<StringPiece> candidate_input_names, StringPiece output_name,*/
+/*    const TensorShape& output_shape, Tensor** output) {*/
+/*  for (const StringPiece& input_name : candidate_input_names) {*/
+/*    if (forward_input_to_output_with_shape(input_name, output_name,*/
+/*                                           output_shape, output)*/
+/*            .ok()) {*/
+/*      return OkStatus();*/
+/*    }*/
+/*  }*/
+/*  return allocate_output(output_name, output_shape, output);*/
+/*}*/
 
-template <typename T>
-T* OpKernelContext::op_device_context() {
-  static_assert(std::is_base_of<DeviceContext, T>::value,
-                "T is not a subclass of DeviceContext");
-  return static_cast<T*>(op_device_context());
-}
+/*template <typename T>*/
+/*T* OpKernelContext::op_device_context() {*/
+/*  static_assert(std::is_base_of<DeviceContext, T>::value,*/
+/*                "T is not a subclass of DeviceContext");*/
+/*  return static_cast<T*>(op_device_context());*/
+/*}*/
 
-inline const Tensor& OpInputList::operator[](int i) const {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, stop_ - start_);
-  return ctx_->input(start_ + i);
-}
+/*inline const Tensor& OpInputList::operator[](int i) const {*/
+/*  DCHECK_GE(i, 0);*/
+/*  DCHECK_LT(i, stop_ - start_);*/
+/*  return ctx_->input(start_ + i);*/
+/*}*/
 
-inline mutex* OpMutableInputList::ref_mutex(int i) {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, stop_ - start_);
-  return ctx_->input_ref_mutex(start_ + i);
-}
+/*inline mutex* OpMutableInputList::ref_mutex(int i) {*/
+/*  DCHECK_GE(i, 0);*/
+/*  DCHECK_LT(i, stop_ - start_);*/
+/*  return ctx_->input_ref_mutex(start_ + i);*/
+/*}*/
 
-inline Tensor OpMutableInputList::at(int i, bool lock_held) {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, stop_ - start_);
-  return ctx_->mutable_input(start_ + i, lock_held);
-}
+/*inline Tensor OpMutableInputList::at(int i, bool lock_held) {*/
+/*  DCHECK_GE(i, 0);*/
+/*  DCHECK_LT(i, stop_ - start_);*/
+/*  return ctx_->mutable_input(start_ + i, lock_held);*/
+/*}*/
 
-inline Tensor* OpOutputList::operator[](int i) {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, stop_ - start_);
-  return ctx_->mutable_output(start_ + i);
-}
+/*inline Tensor* OpOutputList::operator[](int i) {*/
+/*  DCHECK_GE(i, 0);*/
+/*  DCHECK_LT(i, stop_ - start_);*/
+/*  return ctx_->mutable_output(start_ + i);*/
+/*}*/
 
-inline bool OpOutputList::required(int i) const {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, stop_ - start_);
-  return ctx_->output_required(start_ + i);
-}
+/*inline bool OpOutputList::required(int i) const {*/
+/*  DCHECK_GE(i, 0);*/
+/*  DCHECK_LT(i, stop_ - start_);*/
+/*  return ctx_->output_required(start_ + i);*/
+/*}*/
 
-inline DataType OpOutputList::expected_output_dtype(int i) const {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, stop_ - start_);
-  return ctx_->expected_output_dtype(start_ + i);
-}
+/*inline DataType OpOutputList::expected_output_dtype(int i) const {*/
+/*  DCHECK_GE(i, 0);*/
+/*  DCHECK_LT(i, stop_ - start_);*/
+/*  return ctx_->expected_output_dtype(start_ + i);*/
+/*}*/
 
-inline Status OpOutputList::allocate(int i, const TensorShape& shape,
-                                     Tensor** output) {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, stop_ - start_);
-  return ctx_->allocate_output(start_ + i, shape, output);
-}
+/*inline Status OpOutputList::allocate(int i, const TensorShape& shape,*/
+/*                                     Tensor** output) {*/
+/*  DCHECK_GE(i, 0);*/
+/*  DCHECK_LT(i, stop_ - start_);*/
+/*  return ctx_->allocate_output(start_ + i, shape, output);*/
+/*}*/
 
-inline void OpOutputList::set(int i, const Tensor& tensor) {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, stop_ - start_);
-  ctx_->set_output(start_ + i, tensor);
-}
+/*inline void OpOutputList::set(int i, const Tensor& tensor) {*/
+/*  DCHECK_GE(i, 0);*/
+/*  DCHECK_LT(i, stop_ - start_);*/
+/*  ctx_->set_output(start_ + i, tensor);*/
+/*}*/
 
-inline void OpOutputList::set(int i, Tensor&& tensor) {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, stop_ - start_);
-  ctx_->set_output(start_ + i, std::move(tensor));
-}
+/*inline void OpOutputList::set(int i, Tensor&& tensor) {*/
+/*  DCHECK_GE(i, 0);*/
+/*  DCHECK_LT(i, stop_ - start_);*/
+/*  ctx_->set_output(start_ + i, std::move(tensor));*/
+/*}*/
 
-inline void OpOutputList::set_ref(int i, mutex* mu, Tensor* tensor_for_ref) {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, stop_ - start_);
-  ctx_->set_output_ref(i, mu, tensor_for_ref);
-}
+/*inline void OpOutputList::set_ref(int i, mutex* mu, Tensor* tensor_for_ref) {*/
+/*  DCHECK_GE(i, 0);*/
+/*  DCHECK_LT(i, stop_ - start_);*/
+/*  ctx_->set_output_ref(i, mu, tensor_for_ref);*/
+/*}*/
 
 // Generate a fatal error if OP_REQUIRES or OP_REQUIRES_OK are used in
 // AsyncOpKernel implementations. If these macros are used and the condition
@@ -1705,10 +1692,10 @@ inline void OpOutputList::set_ref(int i, mutex* mu, Tensor* tensor_for_ref) {
 // to distinguish between OpKernelConstruction* and OpKernelContext* context
 // types.
 class XlaOpKernelContext;
-inline void CheckNotInComputeAsync(XlaOpKernelContext*, const char*) {}
-inline void CheckNotInComputeAsync(OpKernelConstruction*, const char*) {}
-void CheckNotInComputeAsync(OpKernelContext* ctx,
-                            const char* correct_macro_name);
+/*inline void CheckNotInComputeAsync(XlaOpKernelContext*, const char*) {}*/
+/*inline void CheckNotInComputeAsync(OpKernelConstruction*, const char*) {}*/
+/*void CheckNotInComputeAsync(OpKernelContext* ctx,*/
+/*                            const char* correct_macro_name);*/
 
 }  // namespace tensorflow
 
