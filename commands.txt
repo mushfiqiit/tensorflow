@@ -1,0 +1,3 @@
+1. (base) mushfiqur@mushfiqur-MS-7C94:~/Desktop/Github/tensorflow/tensorflow$ ./compile_tensorflow_harness.sh   /home/mushfiqur/Desktop/Github/tensorflow/tensorflow/tensorflow_harness.cc   /home/mushfiqur/Desktop/Github/tensorflow/build/bitcode/output.bc
+
+2. (base) mushfiqur@mushfiqur-MS-7C94:~/Desktop/Github/tensorflow/tensorflow$ ~/tools/klee/build/bin/klee /home/mushfiqur/Desktop/Github/tensorflow/build/bitcode/output.bc
