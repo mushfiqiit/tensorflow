@@ -3,5 +3,6 @@
 using tensorflow::DynamicStitchOp;
 
 int main() {
-
+    DynamicStitchOp dsop;
+    
 }
