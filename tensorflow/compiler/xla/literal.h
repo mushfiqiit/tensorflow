@@ -33,6 +33,7 @@
 /*#include "tensorflow/core/lib/core/status.h"*/
 /*#include "tensorflow/core/platform/logging.h"*/
 /*#include "tensorflow/core/platform/protobuf.h"*/
+#include "tensorflow/compiler/xla/shape.h"
 
 namespace xla {
 
@@ -50,10 +51,10 @@ class LiteralBase {
   // values. Layout is not compared.
   bool operator==(const LiteralBase& other) const;
   bool operator!=(const LiteralBase& other) const { return !(*this == other); }
-
+*/
   // Returns the shape of the literal.
-  const Shape& shape() const { return root_piece().subshape(); }
-
+  const Shape& shape() const { return /* root_piece().subshape(); */ Shape(); }
+/*
   // Serialize to proto.
   LiteralProto ToProto() const;
 

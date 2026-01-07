@@ -4,5 +4,5 @@ using tensorflow::DynamicStitchOp;
 
 int main() {
     DynamicStitchOp dsop;
-    
+    dsop.Compile();
 }

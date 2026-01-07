@@ -1,12 +1,15 @@
 #include "tensorflow/compiler/tf2xla/xla_op_kernel.h"
 #include <vector>
+#include "tensorflow/compiler/xla/literal.h"
+#include <cstdint>
+#include "klee/klee.h"
 
 namespace tensorflow {
 namespace {
 
 class DynamicStitchOp : public XlaOpKernel {
  public:
-    void Compile(XlaOpKernelContext* ctx) /* override */ {
+    void Compile(/* XlaOpKernelContext* ctx */) /* override */ {
     // Validate that data_shape[i] = indices[i].shape() + constant
     
     std::vector<xla::Literal> indices_input;
@@ -16,9 +19,9 @@ class DynamicStitchOp : public XlaOpKernel {
     std::vector<xla::XlaOp> data;
     std::vector<TensorShape> data_shapes;
     OP_REQUIRES_OK(ctx, ctx->InputList("data", &data, &data_shapes));
-
+*/
     std::vector<xla::Literal> indices(indices_input.size());
-
+/*
     const TensorShape& data0_shape = data_shapes[0];
     TensorShape indices0_shape;
     OP_REQUIRES_OK(
@@ -72,13 +75,17 @@ class DynamicStitchOp : public XlaOpKernel {
     // source slices to the same destination slice if there are
     // repeated indices, whereas the XLA code works out which
     // source slice will 'win' and only uses that in the Concat.
+    */
     int max_index = -1;
+    /*
     for (int input_num = 0; input_num < indices.size(); input_num++) {
       for (int i = 0; i < indices[input_num].shape().dimensions(0); ++i) {
         max_index = std::max(max_index, indices[input_num].Get<int>({i}));
       }
     }
+      */
     int number_of_indices = max_index + 1;
+    /*
     int64_t result_rank = 1 + data0_shape.dims() - indices0_shape.dims();
     if (number_of_indices == 0) {
       std::vector<int64_t> result_shape(result_rank);
@@ -92,16 +99,17 @@ class DynamicStitchOp : public XlaOpKernel {
       ctx->SetOutput(0, xla::ConstantLiteral(ctx->builder(), empty_literal));
       return;
     }
-
+*/
     // Construct the reverse mapping, for each index, of which slice of which
     // input it comes from.
-    std::vector<int32> src_input_vector(number_of_indices);
-    std::vector<int32> src_slice_vector(number_of_indices);
+    std::vector<int> src_input_vector(number_of_indices);
+    std::vector<int> src_slice_vector(number_of_indices);
     std::vector<bool> src_index_used(number_of_indices);
     int index_used_count = 0;
-    for (int input_num = 0; input_num < indices.size(); input_num++) {
-      for (int i = 0; i < indices[input_num].shape().dimensions(0); ++i) {
-        int index = indices[input_num].Get<int>({i});
+    for (int input_num = 0; input_num < 10 /* indices.size() */; input_num++) {
+      for (int i = 0; i < 1 /* indices[input_num].shape().dimensions(0) */; ++i) {
+        int index /* = indices[input_num].Get<int>({i}) */;
+        klee_make_symbolic(&index, sizeof(index), "ind");
         src_input_vector[index] = input_num;
         src_slice_vector[index] = i;
         if (!src_index_used[index]) {
@@ -110,6 +118,7 @@ class DynamicStitchOp : public XlaOpKernel {
         }
       }
     }
+    /*
     OP_REQUIRES(ctx, index_used_count == number_of_indices,
                 errors::InvalidArgument("not all indices are used"));
 
