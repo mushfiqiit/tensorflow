@@ -9,7 +9,7 @@ namespace {
 
 class DynamicStitchOp : public XlaOpKernel {
  public:
-    void Compile(/* XlaOpKernelContext* ctx */) /* override */ {
+    void Compile(XlaOpKernelContext* ctx ) /* override */ {
     // Validate that data_shape[i] = indices[i].shape() + constant
     
     std::vector<xla::Literal> indices_input;
